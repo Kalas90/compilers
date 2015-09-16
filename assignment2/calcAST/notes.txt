@@ -1,0 +1,28 @@
+Answers 2.1:
+
+1: Warning: Resolved Shift-Reduce conflict by selecting (MUL: SHIFT; goto 3) over (MUL: REDUCE exp = exp.a MUL exp.b) using precedence.
+
+2: Because the parser does not know if an expression should be shifted or reduced.
+
+3: No.
+
+4: a * b * c
+
+5: REDUCE: (a * b) * c 
+   SHIFT: a * (b * c)
+
+6: A factor cant be reduced to another expression.
+
+
+Answers 2.2:
+
+1: Warning: Resolved Shift-Reduce conflict by selecting (ID: SHIFT; goto 26) over (ID: REDUCE binding_list = ) using precedence.
+
+2: ???
+
+
+Answers 2.3:
+
+1: The parser doesn't recognize the Expr type.
+
+2: Missing return statement.

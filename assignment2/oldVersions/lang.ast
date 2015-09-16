@@ -1,0 +1,29 @@
+Program ::= FunctionDec*;
+
+abstract Expr;
+Comparison: Expr ::= ArithmeticExpr ArithmeticExpr;
+Arithmetic: Expr ::= ArithmeticExpr;
+
+abstract ArithmeticExpr; 
+AddSubExpr: ArithmeticExpr ::= ArithmeticExpr Term;
+TermExpr: ArithmeticExpr ::= Term; 
+
+Abstract Term;
+MultDiv : Term ::= Term Factor;
+SimpleTerm : Term ::= Factor;
+
+abstract Factor;
+IdFactor : Factor ::= <ID>;
+IntFactor : Factor ::= <INT>;
+CompoundFactor : Factor ::= AddSubExpr;
+
+abstract Stmt;
+FunctionStmt : Stmt ::= FunctionCall;
+ReturnStmt : Stmt ::= Return;
+CompoundStmt : Stmt ::= Stmt*;
+
+FunctionCall ::= Expr*;
+Return ::= ArithmeticExpr;
+
+FunctionDec ::= idDecl* CompoundStmt;
+IdDecl ::= <ID>;

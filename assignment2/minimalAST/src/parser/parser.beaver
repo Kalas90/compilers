@@ -1,0 +1,152 @@
+%class "LangParser";
+%package "lang.ast";
+
+%embed {:
+	static public class SyntaxError extends RuntimeException { public SyntaxError(String msg) {super(msg);}}
+	// Disable syntax error recovery
+	protected void recoverFromError(Symbol token, TokenStream in) {
+		throw new SyntaxError("Cannot recover from the syntax error");
+	}
+:};
+
+%terminals ID, INT, LPAR, RPAR, MUL, DIV, MOD, PLUS, MINUS, NEQ, EQ, GEQ, LEQ, GREATER, LESS, COMMA, INTW, LBR, RBR, RETURN, ASSIGN, IF, WHILE, SEMI;
+
+%typeof program = "Program";
+%typeof program_component_list = "List";
+%typeof program_component = "ProgramComponent";
+%typeof function_dec = "FunctionDec";
+%typeof param_list = "List";
+%typeof param = "Param";
+%typeof stmt_list = "List";
+%typeof stmt = "Stmt";
+%typeof compound_stmt = "Stmt";
+%typeof if_stmt = "Stmt";
+%typeof while_stmt = "Stmt";
+%typeof assign_stmt = "Stmt";
+%typeof function_stmt = "Stmt";
+%typeof return_stmt = "Stmt";
+/*%typeof expr = "Expr";*/
+%typeof comparison = "Expr";
+%typeof add_sub_expr = "Expr";
+%typeof add_sub_expr_binding = "AddSubExpr";
+%typeof term = "List";
+%typeof term_binding = "Term";
+%typeof factor = "Factor";
+%typeof add_sub_list = "List";
+%typeof operator1 = "Operator1";
+%typeof operator2 = "Operator2"; 
+%typeof operator3 = "Operator3"; 
+%typeof id_use = "IdUse";
+%typeof id_decl = "IdDecl";
+ 
+%goal program;
+
+program = program_component_list.a {: return new Program(a); :} ;
+
+program_component_list =
+	program_component.a {: return new List().add(a); :}
+	| program_component_list.a program_component.b {: return a.add(b); :}
+	;
+
+program_component = 
+	id_decl.a LPAR param_list.b RPAR compound_stmt.c {: return new FunctionDec(a, b, c); :} ;
+	/* | comment TODO */	
+
+param_list = 
+	/* epsilon */
+	| param.a {: return new List().add(a); :}
+	| param_list.a COMMA param.b {: return a.add(b); :}
+	;
+
+param = id_decl.a {: return new IdDecl(a); :} ;
+
+stmt_list =
+	/* epsilon */
+	| stmt.a {: return new List().add(a); :}
+	| stmt_list.a stmt.b {: return a.add(b); :}
+	;  
+
+stmt =
+	compound_stmt.a {: return new Stmt(a); :}
+	| if_stmt.a {: return new Stmt(a); :}
+	| while_stmt.a {: return new Stmt(a); :}
+	| function_stmt.a SEMI {: return new Stmt(a); :}
+	| return_stmt.a SEMI {: return new Stmt(a); :}
+	| assign_stmt.a SEMI {: return new Stmt(a); :}
+	;
+
+compound_stmt = LBR stmt_list.a RBR {: return new CompoundStmt(a); :} ;
+
+function_stmt = id_use.a LPAR add_sub_list.b RPAR {: return new FunctionStmt(a, b); :} ;
+
+return_stmt = RETURN add_sub_expr.a {: return new ReturnStmt(a); :} ;
+
+assign_stmt = id_decl.a ASSIGN add_sub_expr.b {: return new AssignStmt(a, b); :} ;
+
+if_stmt = IF LPAR comparison.a RPAR compound_stmt.b {: return new IfStmt(a, b); :} ;
+
+while_stmt = WHILE LPAR comparison.a RPAR compound_stmt.b {: return new WhileStmt(a, b); :} ;
+
+add_sub_list =
+	/* epsilon */
+	| add_sub_expr.a {: return new List().add(a); :}
+	| add_sub_list.a COMMA add_sub_expr.b {: return a.add(b); :}
+	;
+
+add_sub_expr =
+	add_sub_expr_binding.a {: return new List().add(a); :}
+	| add_sub_expr.a add_sub_expr_binding.b {: return a.add(b); :}
+	;
+
+add_sub_expr_binding = 
+	term.a operator1 add_sub_expr.c {: return new AddSubExpr(a, b, c); :}
+	| term.a {: return new AddSubExpr(a); :}
+	;
+
+term =
+	term_binding.a {: return new List().add(a); :}
+	| term.a term_binding.b {: return a.add(b); :}
+	;
+
+term_binding =
+	factor.a operator2.b term.c {: return new Term(a, b, c); :}
+	| factor.a {: return new Term(a); :}
+	;
+
+factor =
+	id_use.a {: return new Factor(a); :}
+	| INT.a {: return new Factor(a); :}
+	| LPAR add_sub_expr.a RPAR {: return new Factor(a); :}
+	| function_stmt.a {: return new Factor(a); :}
+	;
+
+operator1 =
+	PLUS.a {: return new Operator1(a); :}
+	| MINUS.a {: return new Operator1(a); :}
+	;
+
+operator2 =
+	MUL.a {: return new Operator2(a); :}
+	| DIV.a {: return new Operator2(a); :}
+	| MOD.a {: return new Operator2(a); :}
+	;
+
+operator3 = 
+	EQ.a {: return new Operator3(a); :}
+	| NEQ.a {: return new Operator3(a); :}
+	| GEQ.a {: return new Operator3(a); :}
+	| LEQ.a {: return new Operator3(a); :}
+	| GREATER.a {: return new Operator3(a); :}
+	| LESS.a {: return new Operator3(a); :}
+	;
+
+/*expr =
+	add_sub_expr.a {: return new Expr(a); :}
+	| comparison.a {: return new Expr(a); :}
+	;
+*/
+comparison = add_sub_expr.a operator3.b add_sub_expr.c {: return new Comparison(a, b, c); :} ;
+
+id_use = ID.id {: return new IdUse(id); :} ;
+
+id_decl = INTW ID.id {: return new IdDecl(id); :} ;
