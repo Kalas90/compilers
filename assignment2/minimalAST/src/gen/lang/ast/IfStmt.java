@@ -7,7 +7,7 @@ import java.io.PrintStream;
 /**
  * @ast node
  * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:29
- * @production IfStmt : {@link Stmt} ::= <span class="component">{@link Expr}</span> <span class="component">{@link AddSubExpr}</span>;
+ * @production IfStmt : {@link Stmt} ::= <span class="component">{@link Expr}</span> <span class="component">{@link Stmt}</span>;
 
  */
 public class IfStmt extends Stmt implements Cloneable {
@@ -30,7 +30,7 @@ public class IfStmt extends Stmt implements Cloneable {
   /**
    * @declaredat ASTNode:13
    */
-  public IfStmt(Expr p0, AddSubExpr p1) {
+  public IfStmt(Expr p0, Stmt p1) {
     setChild(p0, 0);
     setChild(p1, 1);
   }
@@ -157,29 +157,29 @@ public class IfStmt extends Stmt implements Cloneable {
     return (Expr) getChildNoTransform(0);
   }
   /**
-   * Replaces the AddSubExpr child.
-   * @param node The new node to replace the AddSubExpr child.
+   * Replaces the Stmt child.
+   * @param node The new node to replace the Stmt child.
    * @apilevel high-level
    */
-  public void setAddSubExpr(AddSubExpr node) {
+  public void setStmt(Stmt node) {
     setChild(node, 1);
   }
   /**
-   * Retrieves the AddSubExpr child.
-   * @return The current node used as the AddSubExpr child.
+   * Retrieves the Stmt child.
+   * @return The current node used as the Stmt child.
    * @apilevel high-level
    */
-  @ASTNodeAnnotation.Child(name="AddSubExpr")
-  public AddSubExpr getAddSubExpr() {
-    return (AddSubExpr) getChild(1);
+  @ASTNodeAnnotation.Child(name="Stmt")
+  public Stmt getStmt() {
+    return (Stmt) getChild(1);
   }
   /**
-   * Retrieves the AddSubExpr child.
+   * Retrieves the Stmt child.
    * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The current node used as the AddSubExpr child.
+   * @return The current node used as the Stmt child.
    * @apilevel low-level
    */
-  public AddSubExpr getAddSubExprNoTransform() {
-    return (AddSubExpr) getChildNoTransform(1);
+  public Stmt getStmtNoTransform() {
+    return (Stmt) getChildNoTransform(1);
   }
 }

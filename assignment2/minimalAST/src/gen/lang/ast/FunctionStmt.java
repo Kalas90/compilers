@@ -7,7 +7,7 @@ import java.io.PrintStream;
 /**
  * @ast node
  * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:25
- * @production FunctionStmt : {@link Stmt} ::= <span class="component">{@link IdUse}</span> <span class="component">{@link AddSubExpr}*</span>;
+ * @production FunctionStmt : {@link Stmt} ::= <span class="component">{@link IdUse}</span> <span class="component">{@link IdDecl}*</span>;
 
  */
 public class FunctionStmt extends Stmt implements Cloneable {
@@ -31,7 +31,7 @@ public class FunctionStmt extends Stmt implements Cloneable {
   /**
    * @declaredat ASTNode:14
    */
-  public FunctionStmt(IdUse p0, List<AddSubExpr> p1) {
+  public FunctionStmt(IdUse p0, List<IdDecl> p1) {
     setChild(p0, 0);
     setChild(p1, 1);
   }
@@ -158,107 +158,107 @@ public class FunctionStmt extends Stmt implements Cloneable {
     return (IdUse) getChildNoTransform(0);
   }
   /**
-   * Replaces the AddSubExpr list.
-   * @param list The new list node to be used as the AddSubExpr list.
+   * Replaces the IdDecl list.
+   * @param list The new list node to be used as the IdDecl list.
    * @apilevel high-level
    */
-  public void setAddSubExprList(List<AddSubExpr> list) {
+  public void setIdDeclList(List<IdDecl> list) {
     setChild(list, 1);
   }
   /**
-   * Retrieves the number of children in the AddSubExpr list.
-   * @return Number of children in the AddSubExpr list.
+   * Retrieves the number of children in the IdDecl list.
+   * @return Number of children in the IdDecl list.
    * @apilevel high-level
    */
-  public int getNumAddSubExpr() {
-    return getAddSubExprList().getNumChild();
+  public int getNumIdDecl() {
+    return getIdDeclList().getNumChild();
   }
   /**
-   * Retrieves the number of children in the AddSubExpr list.
+   * Retrieves the number of children in the IdDecl list.
    * Calling this method will not trigger rewrites.
-   * @return Number of children in the AddSubExpr list.
+   * @return Number of children in the IdDecl list.
    * @apilevel low-level
    */
-  public int getNumAddSubExprNoTransform() {
-    return getAddSubExprListNoTransform().getNumChildNoTransform();
+  public int getNumIdDeclNoTransform() {
+    return getIdDeclListNoTransform().getNumChildNoTransform();
   }
   /**
-   * Retrieves the element at index {@code i} in the AddSubExpr list.
+   * Retrieves the element at index {@code i} in the IdDecl list.
    * @param i Index of the element to return.
-   * @return The element at position {@code i} in the AddSubExpr list.
+   * @return The element at position {@code i} in the IdDecl list.
    * @apilevel high-level
    */
-  public AddSubExpr getAddSubExpr(int i) {
-    return (AddSubExpr) getAddSubExprList().getChild(i);
+  public IdDecl getIdDecl(int i) {
+    return (IdDecl) getIdDeclList().getChild(i);
   }
   /**
-   * Check whether the AddSubExpr list has any children.
+   * Check whether the IdDecl list has any children.
    * @return {@code true} if it has at least one child, {@code false} otherwise.
    * @apilevel high-level
    */
-  public boolean hasAddSubExpr() {
-    return getAddSubExprList().getNumChild() != 0;
+  public boolean hasIdDecl() {
+    return getIdDeclList().getNumChild() != 0;
   }
   /**
-   * Append an element to the AddSubExpr list.
-   * @param node The element to append to the AddSubExpr list.
+   * Append an element to the IdDecl list.
+   * @param node The element to append to the IdDecl list.
    * @apilevel high-level
    */
-  public void addAddSubExpr(AddSubExpr node) {
-    List<AddSubExpr> list = (parent == null) ? getAddSubExprListNoTransform() : getAddSubExprList();
+  public void addIdDecl(IdDecl node) {
+    List<IdDecl> list = (parent == null) ? getIdDeclListNoTransform() : getIdDeclList();
     list.addChild(node);
   }
   /**
    * @apilevel low-level
    */
-  public void addAddSubExprNoTransform(AddSubExpr node) {
-    List<AddSubExpr> list = getAddSubExprListNoTransform();
+  public void addIdDeclNoTransform(IdDecl node) {
+    List<IdDecl> list = getIdDeclListNoTransform();
     list.addChild(node);
   }
   /**
-   * Replaces the AddSubExpr list element at index {@code i} with the new node {@code node}.
+   * Replaces the IdDecl list element at index {@code i} with the new node {@code node}.
    * @param node The new node to replace the old list element.
    * @param i The list index of the node to be replaced.
    * @apilevel high-level
    */
-  public void setAddSubExpr(AddSubExpr node, int i) {
-    List<AddSubExpr> list = getAddSubExprList();
+  public void setIdDecl(IdDecl node, int i) {
+    List<IdDecl> list = getIdDeclList();
     list.setChild(node, i);
   }
   /**
-   * Retrieves the AddSubExpr list.
-   * @return The node representing the AddSubExpr list.
+   * Retrieves the IdDecl list.
+   * @return The node representing the IdDecl list.
    * @apilevel high-level
    */
-  @ASTNodeAnnotation.ListChild(name="AddSubExpr")
-  public List<AddSubExpr> getAddSubExprList() {
-    List<AddSubExpr> list = (List<AddSubExpr>) getChild(1);
+  @ASTNodeAnnotation.ListChild(name="IdDecl")
+  public List<IdDecl> getIdDeclList() {
+    List<IdDecl> list = (List<IdDecl>) getChild(1);
     return list;
   }
   /**
-   * Retrieves the AddSubExpr list.
+   * Retrieves the IdDecl list.
    * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The node representing the AddSubExpr list.
+   * @return The node representing the IdDecl list.
    * @apilevel low-level
    */
-  public List<AddSubExpr> getAddSubExprListNoTransform() {
-    return (List<AddSubExpr>) getChildNoTransform(1);
+  public List<IdDecl> getIdDeclListNoTransform() {
+    return (List<IdDecl>) getChildNoTransform(1);
   }
   /**
-   * Retrieves the AddSubExpr list.
-   * @return The node representing the AddSubExpr list.
+   * Retrieves the IdDecl list.
+   * @return The node representing the IdDecl list.
    * @apilevel high-level
    */
-  public List<AddSubExpr> getAddSubExprs() {
-    return getAddSubExprList();
+  public List<IdDecl> getIdDecls() {
+    return getIdDeclList();
   }
   /**
-   * Retrieves the AddSubExpr list.
+   * Retrieves the IdDecl list.
    * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The node representing the AddSubExpr list.
+   * @return The node representing the IdDecl list.
    * @apilevel low-level
    */
-  public List<AddSubExpr> getAddSubExprsNoTransform() {
-    return getAddSubExprListNoTransform();
+  public List<IdDecl> getIdDeclsNoTransform() {
+    return getIdDeclListNoTransform();
   }
 }

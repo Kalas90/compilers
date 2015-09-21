@@ -16,31 +16,24 @@
 %typeof program_component = "ProgramComponent";
 %typeof function_dec = "FunctionDec"; /* CHANGED */
 %typeof param_list = "List";
-%typeof param = "Param";
 %typeof stmt_list = "List";
 %typeof stmt = "Stmt";
-%typeof compound_stmt = "Stmt";
-%typeof if_stmt = "Stmt";
-%typeof while_stmt = "Stmt";
-%typeof assign_stmt = "Stmt";
-%typeof function_stmt = "Stmt";
-%typeof return_stmt = "Stmt";
+%typeof compound_stmt = "CompoundStmt";
+%typeof if_stmt = "IfStmt";
+%typeof while_stmt = "WhileStmt";
+%typeof assign_stmt = "AssignStmt";
+%typeof function_stmt = "FunctionStmt";
+%typeof return_stmt = "ReturnStmt";
 /*%typeof expr = "Expr";*/
 %typeof comparison = "Expr";
-%typeof add_sub_expr = "Expr";
+%typeof add_sub_expr = "List";
 %typeof add_sub_expr_binding = "AddSubExpr";
 %typeof term = "List";
 %typeof term_binding = "Term";
 %typeof factor = "Factor";
 %typeof add_sub_list = "List";
-%typeof operator1 = "Operator1";
-%typeof operator2 = "Operator2"; 
-%typeof operator3 = "Operator3"; 
 %typeof id_use = "IdUse";
 %typeof id_decl = "IdDecl";
-/* NEW */
-%typeof component_opt = "Opt";
-%typeof add_sub_list_opt = "Opt";
 
 %goal program;
 
@@ -51,30 +44,23 @@ program_component_list =
 	| program_component_list.a program_component.b {: return a.add(b); :}
 	;
 
-program_component = /* CHANGED */
-	id_decl.a LPAR component_opt.b RPAR compound_stmt.c {: return new FunctionDec(a, b, c); :} ;
+program_component = 
+	function_dec	
 	/* | comment TODO */	
-
-component_opt = /* NEW */
-	param_list.a {: return new Opt(a); :}
-	| /* epsilon */ {: return new Opt(); :}
 	;
+
+function_dec = id_decl.a LPAR param_list.b RPAR compound_stmt.c {: return new FunctionDec(a, b, c); :} ;
 
 param_list = 
-	param.a {: return new List().add(a); :}
-	| param_list.a COMMA param.b {: return a.add(b); :}
-	;
-
-param = id_decl.a {: return new IdDecl(a); :} ;
-
-stmt_list_opt = /* NEW */
-	/* epsilon */ {: return new Opt(); :}
-	| stmt_list.a {: return new Opt(a); :}
+	id_decl.a {: return new List().add(a); :}
+	| param_list.a COMMA id_decl.b {: return a.add(b); :}
+	| /* epsilon */ {: return new List(); :}
 	;
 
 stmt_list =
 	stmt.a {: return new List().add(a); :}
 	| stmt_list.a stmt.b {: return a.add(b); :}
+	| /* epsilon */ {: return new List(); :}
 	;  
 
 stmt =
@@ -86,9 +72,9 @@ stmt =
 	| assign_stmt SEMI
 	;
 
-compound_stmt = LBR stmt_list_opt.a RBR {: return new CompoundStmt(a); :} ;
+compound_stmt = LBR stmt_list.a RBR {: return new CompoundStmt(a); :} ;
 
-function_stmt = id_use.a LPAR add_sub_list_opt.b RPAR {: return new FunctionStmt(a, b); :} ;
+function_stmt = id_use.a LPAR add_sub_list.b RPAR {: return new FunctionStmt(a, b); :} ;
 
 return_stmt = RETURN add_sub_expr.a {: return new ReturnStmt(a); :} ;
 
@@ -98,14 +84,10 @@ if_stmt = IF LPAR comparison.a RPAR compound_stmt.b {: return new IfStmt(a, b); 
 
 while_stmt = WHILE LPAR comparison.a RPAR compound_stmt.b {: return new WhileStmt(a, b); :} ;
 
-add_sub_list_opt = /* NEW */
-	/* epsilon */ {: return new Opt(); :}
-	| add_sub_list.a {: return new Opt(a); :}
-	;
-
 add_sub_list =
 	add_sub_expr.a {: return new List().add(a); :}
 	| add_sub_list.a COMMA add_sub_expr.b {: return a.add(b); :}
+	| /* epsilon */ {: return new List(); :}
 	;
 
 add_sub_expr =
@@ -114,7 +96,7 @@ add_sub_expr =
 	;
 
 add_sub_expr_binding = 
-	term.a operator1 add_sub_expr.c {: return new AssociativeExpr(a, b, c); :}
+	term.a operator1 add_sub_expr.b {: return new AssociativeExpr(a, b); :}
 	| term.a {: return new TermExpr(a); :}
 	;
 
@@ -124,7 +106,7 @@ term =
 	;
 
 term_binding =
-	factor.a operator2.b term.c {: return new MultDiv(a, b, c); :}
+	factor.a operator2 term.b {: return new MultDiv(a, b); :}
 	| factor.a {: return new SimpleTerm(a); :}
 	;
 
@@ -136,23 +118,23 @@ factor =
 	;
 
 operator1 =
-	PLUS.a {: return new Operator1(a); :}
-	| MINUS.a {: return new Operator1(a); :}
+	PLUS
+	| MINUS
 	;
 
 operator2 =
-	MUL.a {: return new Operator2(a); :}
-	| DIV.a {: return new Operator2(a); :}
-	| MOD.a {: return new Operator2(a); :}
+	MUL
+	| DIV
+	| MOD
 	;
 
 operator3 = 
-	EQ.a {: return new Operator3(a); :}
-	| NEQ.a {: return new Operator3(a); :}
-	| GEQ.a {: return new Operator3(a); :}
-	| LEQ.a {: return new Operator3(a); :}
-	| GREATER.a {: return new Operator3(a); :}
-	| LESS.a {: return new Operator3(a); :}
+	EQ
+	| NEQ
+	| GEQ
+	| LEQ
+	| GREATER
+	| LESS
 	;
 
 /*expr =
@@ -160,7 +142,7 @@ operator3 =
 	| comparison.a {: return new Expr(a); :}
 	;
 */
-comparison = add_sub_expr.a operator3.b add_sub_expr.c {: return new Comparison(a, b, c); :} ;
+comparison = add_sub_expr.a operator3 add_sub_expr.b {: return new Comparison(a, b); :} ;
 
 id_use = ID.id {: return new IdUse(id); :} ;
 

@@ -6,15 +6,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 /**
  * @ast node
- * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:35
- * @production IdUse : {@link ASTNode} ::= <span class="component">&lt;ID:String&gt;</span>;
+ * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:32
+ * @production Operator1 : {@link ASTNode};
 
  */
-public class IdUse extends ASTNode<ASTNode> implements Cloneable {
+public class Operator1 extends ASTNode<ASTNode> implements Cloneable {
   /**
    * @declaredat ASTNode:1
    */
-  public IdUse() {
+  public Operator1() {
     super();
   }
   /**
@@ -27,53 +27,41 @@ public class IdUse extends ASTNode<ASTNode> implements Cloneable {
   public void init$Children() {
   }
   /**
-   * @declaredat ASTNode:12
-   */
-  public IdUse(String p0) {
-    setID(p0);
-  }
-  /**
-   * @declaredat ASTNode:15
-   */
-  public IdUse(beaver.Symbol p0) {
-    setID(p0);
-  }
-  /**
    * @apilevel low-level
-   * @declaredat ASTNode:21
+   * @declaredat ASTNode:15
    */
   protected int numChildren() {
     return 0;
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:27
+   * @declaredat ASTNode:21
    */
   public void flushAttrCache() {
     super.flushAttrCache();
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:33
+   * @declaredat ASTNode:27
    */
   public void flushCollectionCache() {
     super.flushCollectionCache();
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:39
+   * @declaredat ASTNode:33
    */
-  public IdUse clone() throws CloneNotSupportedException {
-    IdUse node = (IdUse) super.clone();
+  public Operator1 clone() throws CloneNotSupportedException {
+    Operator1 node = (Operator1) super.clone();
     return node;
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:46
+   * @declaredat ASTNode:40
    */
-  public IdUse copy() {
+  public Operator1 copy() {
     try {
-      IdUse node = (IdUse) clone();
+      Operator1 node = (Operator1) clone();
       node.parent = null;
       if (children != null) {
         node.children = (ASTNode[]) children.clone();
@@ -89,10 +77,10 @@ public class IdUse extends ASTNode<ASTNode> implements Cloneable {
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
    * @deprecated Please use treeCopy or treeCopyNoTransform instead
-   * @declaredat ASTNode:65
+   * @declaredat ASTNode:59
    */
   @Deprecated
-  public IdUse fullCopy() {
+  public Operator1 fullCopy() {
     return treeCopyNoTransform();
   }
   /**
@@ -100,10 +88,10 @@ public class IdUse extends ASTNode<ASTNode> implements Cloneable {
    * The copy is dangling, i.e. has no parent.
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
-   * @declaredat ASTNode:75
+   * @declaredat ASTNode:69
    */
-  public IdUse treeCopyNoTransform() {
-    IdUse tree = (IdUse) copy();
+  public Operator1 treeCopyNoTransform() {
+    Operator1 tree = (Operator1) copy();
     if (children != null) {
       for (int i = 0; i < children.length; ++i) {
         ASTNode child = (ASTNode) children[i];
@@ -121,56 +109,17 @@ public class IdUse extends ASTNode<ASTNode> implements Cloneable {
    * The copy is dangling, i.e. has no parent.
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
-   * @declaredat ASTNode:95
+   * @declaredat ASTNode:89
    */
-  public IdUse treeCopy() {
+  public Operator1 treeCopy() {
     doFullTraversal();
     return treeCopyNoTransform();
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:102
+   * @declaredat ASTNode:96
    */
   protected boolean is$Equal(ASTNode node) {
-    return super.is$Equal(node) && (tokenString_ID == ((IdUse)node).tokenString_ID);    
-  }
-  /**
-   * Replaces the lexeme ID.
-   * @param value The new value for the lexeme ID.
-   * @apilevel high-level
-   */
-  public void setID(String value) {
-    tokenString_ID = value;
-  }
-  /**
-   * @apilevel internal
-   */
-  protected String tokenString_ID;
-  /**
-   */
-  public int IDstart;
-  /**
-   */
-  public int IDend;
-  /**
-   * JastAdd-internal setter for lexeme ID using the Beaver parser.
-   * @param symbol Symbol containing the new value for the lexeme ID
-   * @apilevel internal
-   */
-  public void setID(beaver.Symbol symbol) {
-    if (symbol.value != null && !(symbol.value instanceof String))
-    throw new UnsupportedOperationException("setID is only valid for String lexemes");
-    tokenString_ID = (String)symbol.value;
-    IDstart = symbol.getStart();
-    IDend = symbol.getEnd();
-  }
-  /**
-   * Retrieves the value for the lexeme ID.
-   * @return The value for the lexeme ID.
-   * @apilevel high-level
-   */
-  @ASTNodeAnnotation.Token(name="ID")
-  public String getID() {
-    return tokenString_ID != null ? tokenString_ID : "";
+    return super.is$Equal(node);    
   }
 }

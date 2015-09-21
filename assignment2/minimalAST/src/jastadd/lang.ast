@@ -1,7 +1,7 @@
 Program ::= ProgramComponent*;
 
 abstract ProgramComponent;
-FunctionDec: ProgramComponent ::= IdDecl* Stmt;
+FunctionDec: ProgramComponent ::= IdDecl Param:IdDecl* Stmt;
 
 abstract Expr;
 Comparison: Expr ::= Left:AddSubExpr Right:AddSubExpr;
@@ -16,18 +16,20 @@ MultDiv : Term ::= Term Factor;
 SimpleTerm : Term ::= Factor;
 
 abstract Factor;
-IdFactor : Factor ::= <ID>;
+IdFactor : Factor ::= IdUse;
 IntFactor : Factor ::= <INT>;
 CompoundFactor : Factor ::= AddSubExpr;
 FunctionFactor : Factor ::= Stmt;
 
 abstract Stmt;
-FunctionStmt : Stmt ::= IdUse AddSubExpr*;
-ReturnStmt : Stmt ::= AddSubExpr;
+FunctionStmt : Stmt ::= IdUse IdDecl*;
+ReturnStmt : Stmt ::= AddSubExpr*;
 CompoundStmt : Stmt ::= Stmt*;
-WhileStmt : Stmt ::= Expr AddSubExpr;
-IfStmt : Stmt ::= Expr AddSubExpr;
-AssignStmt: Stmt ::= IdDecl AddSubExpr;
+WhileStmt : Stmt ::= Expr Stmt;
+IfStmt : Stmt ::= Expr Stmt;
+AssignStmt: Stmt ::= IdDecl AddSubExpr*;
+
+Operator1 ::= ;
 
 IdDecl ::= <ID>;
 IdUse ::= <ID>;
