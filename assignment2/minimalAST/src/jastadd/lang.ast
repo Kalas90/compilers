@@ -1,7 +1,7 @@
 Program ::= ProgramComponent*;
 
 abstract ProgramComponent;
-FunctionDec: ProgramComponent ::= First:IdDecl Rest:IdDecl* Stmt;
+FunctionDec: ProgramComponent ::= IdDecl* Stmt;
 
 abstract Expr;
 Comparison: Expr ::= Left:AddSubExpr Right:AddSubExpr;
