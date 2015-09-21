@@ -7,7 +7,7 @@ import java.io.PrintStream;
 /**
  * @ast node
  * @declaredat /Users/JohanMac/programmering/compilers/assignment2/minimalAST/src/jastadd/lang.ast:7
- * @production Comparison : {@link Expr} ::= <span class="component">Left:{@link AddSubExpr}</span> <span class="component">Right:{@link AddSubExpr}</span>;
+ * @production Comparison : {@link Expr} ::= <span class="component">Left:{@link Term}*</span> <span class="component">Right:{@link Term}*</span>;
 
  */
 public class Comparison extends Expr implements Cloneable {
@@ -26,38 +26,40 @@ public class Comparison extends Expr implements Cloneable {
    */
   public void init$Children() {
     children = new ASTNode[2];
+    setChild(new List(), 0);
+    setChild(new List(), 1);
   }
   /**
-   * @declaredat ASTNode:13
+   * @declaredat ASTNode:15
    */
-  public Comparison(AddSubExpr p0, AddSubExpr p1) {
+  public Comparison(List<Term> p0, List<Term> p1) {
     setChild(p0, 0);
     setChild(p1, 1);
   }
   /**
    * @apilevel low-level
-   * @declaredat ASTNode:20
+   * @declaredat ASTNode:22
    */
   protected int numChildren() {
     return 2;
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:26
+   * @declaredat ASTNode:28
    */
   public void flushAttrCache() {
     super.flushAttrCache();
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:32
+   * @declaredat ASTNode:34
    */
   public void flushCollectionCache() {
     super.flushCollectionCache();
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:38
+   * @declaredat ASTNode:40
    */
   public Comparison clone() throws CloneNotSupportedException {
     Comparison node = (Comparison) super.clone();
@@ -65,7 +67,7 @@ public class Comparison extends Expr implements Cloneable {
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:45
+   * @declaredat ASTNode:47
    */
   public Comparison copy() {
     try {
@@ -85,7 +87,7 @@ public class Comparison extends Expr implements Cloneable {
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
    * @deprecated Please use treeCopy or treeCopyNoTransform instead
-   * @declaredat ASTNode:64
+   * @declaredat ASTNode:66
    */
   @Deprecated
   public Comparison fullCopy() {
@@ -96,7 +98,7 @@ public class Comparison extends Expr implements Cloneable {
    * The copy is dangling, i.e. has no parent.
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
-   * @declaredat ASTNode:74
+   * @declaredat ASTNode:76
    */
   public Comparison treeCopyNoTransform() {
     Comparison tree = (Comparison) copy();
@@ -117,7 +119,7 @@ public class Comparison extends Expr implements Cloneable {
    * The copy is dangling, i.e. has no parent.
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
-   * @declaredat ASTNode:94
+   * @declaredat ASTNode:96
    */
   public Comparison treeCopy() {
     doFullTraversal();
@@ -125,61 +127,217 @@ public class Comparison extends Expr implements Cloneable {
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:101
+   * @declaredat ASTNode:103
    */
   protected boolean is$Equal(ASTNode node) {
     return super.is$Equal(node);    
   }
   /**
-   * Replaces the Left child.
-   * @param node The new node to replace the Left child.
+   * Replaces the Left list.
+   * @param list The new list node to be used as the Left list.
    * @apilevel high-level
    */
-  public void setLeft(AddSubExpr node) {
-    setChild(node, 0);
+  public void setLeftList(List<Term> list) {
+    setChild(list, 0);
   }
   /**
-   * Retrieves the Left child.
-   * @return The current node used as the Left child.
+   * Retrieves the number of children in the Left list.
+   * @return Number of children in the Left list.
    * @apilevel high-level
    */
-  @ASTNodeAnnotation.Child(name="Left")
-  public AddSubExpr getLeft() {
-    return (AddSubExpr) getChild(0);
+  public int getNumLeft() {
+    return getLeftList().getNumChild();
   }
   /**
-   * Retrieves the Left child.
-   * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The current node used as the Left child.
+   * Retrieves the number of children in the Left list.
+   * Calling this method will not trigger rewrites.
+   * @return Number of children in the Left list.
    * @apilevel low-level
    */
-  public AddSubExpr getLeftNoTransform() {
-    return (AddSubExpr) getChildNoTransform(0);
+  public int getNumLeftNoTransform() {
+    return getLeftListNoTransform().getNumChildNoTransform();
   }
   /**
-   * Replaces the Right child.
-   * @param node The new node to replace the Right child.
+   * Retrieves the element at index {@code i} in the Left list.
+   * @param i Index of the element to return.
+   * @return The element at position {@code i} in the Left list.
    * @apilevel high-level
    */
-  public void setRight(AddSubExpr node) {
-    setChild(node, 1);
+  public Term getLeft(int i) {
+    return (Term) getLeftList().getChild(i);
   }
   /**
-   * Retrieves the Right child.
-   * @return The current node used as the Right child.
+   * Check whether the Left list has any children.
+   * @return {@code true} if it has at least one child, {@code false} otherwise.
    * @apilevel high-level
    */
-  @ASTNodeAnnotation.Child(name="Right")
-  public AddSubExpr getRight() {
-    return (AddSubExpr) getChild(1);
+  public boolean hasLeft() {
+    return getLeftList().getNumChild() != 0;
   }
   /**
-   * Retrieves the Right child.
-   * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The current node used as the Right child.
+   * Append an element to the Left list.
+   * @param node The element to append to the Left list.
+   * @apilevel high-level
+   */
+  public void addLeft(Term node) {
+    List<Term> list = (parent == null) ? getLeftListNoTransform() : getLeftList();
+    list.addChild(node);
+  }
+  /**
    * @apilevel low-level
    */
-  public AddSubExpr getRightNoTransform() {
-    return (AddSubExpr) getChildNoTransform(1);
+  public void addLeftNoTransform(Term node) {
+    List<Term> list = getLeftListNoTransform();
+    list.addChild(node);
+  }
+  /**
+   * Replaces the Left list element at index {@code i} with the new node {@code node}.
+   * @param node The new node to replace the old list element.
+   * @param i The list index of the node to be replaced.
+   * @apilevel high-level
+   */
+  public void setLeft(Term node, int i) {
+    List<Term> list = getLeftList();
+    list.setChild(node, i);
+  }
+  /**
+   * Retrieves the Left list.
+   * @return The node representing the Left list.
+   * @apilevel high-level
+   */
+  @ASTNodeAnnotation.ListChild(name="Left")
+  public List<Term> getLeftList() {
+    List<Term> list = (List<Term>) getChild(0);
+    return list;
+  }
+  /**
+   * Retrieves the Left list.
+   * <p><em>This method does not invoke AST transformations.</em></p>
+   * @return The node representing the Left list.
+   * @apilevel low-level
+   */
+  public List<Term> getLeftListNoTransform() {
+    return (List<Term>) getChildNoTransform(0);
+  }
+  /**
+   * Retrieves the Left list.
+   * @return The node representing the Left list.
+   * @apilevel high-level
+   */
+  public List<Term> getLefts() {
+    return getLeftList();
+  }
+  /**
+   * Retrieves the Left list.
+   * <p><em>This method does not invoke AST transformations.</em></p>
+   * @return The node representing the Left list.
+   * @apilevel low-level
+   */
+  public List<Term> getLeftsNoTransform() {
+    return getLeftListNoTransform();
+  }
+  /**
+   * Replaces the Right list.
+   * @param list The new list node to be used as the Right list.
+   * @apilevel high-level
+   */
+  public void setRightList(List<Term> list) {
+    setChild(list, 1);
+  }
+  /**
+   * Retrieves the number of children in the Right list.
+   * @return Number of children in the Right list.
+   * @apilevel high-level
+   */
+  public int getNumRight() {
+    return getRightList().getNumChild();
+  }
+  /**
+   * Retrieves the number of children in the Right list.
+   * Calling this method will not trigger rewrites.
+   * @return Number of children in the Right list.
+   * @apilevel low-level
+   */
+  public int getNumRightNoTransform() {
+    return getRightListNoTransform().getNumChildNoTransform();
+  }
+  /**
+   * Retrieves the element at index {@code i} in the Right list.
+   * @param i Index of the element to return.
+   * @return The element at position {@code i} in the Right list.
+   * @apilevel high-level
+   */
+  public Term getRight(int i) {
+    return (Term) getRightList().getChild(i);
+  }
+  /**
+   * Check whether the Right list has any children.
+   * @return {@code true} if it has at least one child, {@code false} otherwise.
+   * @apilevel high-level
+   */
+  public boolean hasRight() {
+    return getRightList().getNumChild() != 0;
+  }
+  /**
+   * Append an element to the Right list.
+   * @param node The element to append to the Right list.
+   * @apilevel high-level
+   */
+  public void addRight(Term node) {
+    List<Term> list = (parent == null) ? getRightListNoTransform() : getRightList();
+    list.addChild(node);
+  }
+  /**
+   * @apilevel low-level
+   */
+  public void addRightNoTransform(Term node) {
+    List<Term> list = getRightListNoTransform();
+    list.addChild(node);
+  }
+  /**
+   * Replaces the Right list element at index {@code i} with the new node {@code node}.
+   * @param node The new node to replace the old list element.
+   * @param i The list index of the node to be replaced.
+   * @apilevel high-level
+   */
+  public void setRight(Term node, int i) {
+    List<Term> list = getRightList();
+    list.setChild(node, i);
+  }
+  /**
+   * Retrieves the Right list.
+   * @return The node representing the Right list.
+   * @apilevel high-level
+   */
+  @ASTNodeAnnotation.ListChild(name="Right")
+  public List<Term> getRightList() {
+    List<Term> list = (List<Term>) getChild(1);
+    return list;
+  }
+  /**
+   * Retrieves the Right list.
+   * <p><em>This method does not invoke AST transformations.</em></p>
+   * @return The node representing the Right list.
+   * @apilevel low-level
+   */
+  public List<Term> getRightListNoTransform() {
+    return (List<Term>) getChildNoTransform(1);
+  }
+  /**
+   * Retrieves the Right list.
+   * @return The node representing the Right list.
+   * @apilevel high-level
+   */
+  public List<Term> getRights() {
+    return getRightList();
+  }
+  /**
+   * Retrieves the Right list.
+   * <p><em>This method does not invoke AST transformations.</em></p>
+   * @return The node representing the Right list.
+   * @apilevel low-level
+   */
+  public List<Term> getRightsNoTransform() {
+    return getRightListNoTransform();
   }
 }

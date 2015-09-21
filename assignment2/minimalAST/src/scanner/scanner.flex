@@ -37,8 +37,7 @@ INT = [0-9]+
 {WhiteSpace}  { }
 
 // token definitions
-{ID}          	{ return sym(Terminals.ID); }
-{INT}     	{ return sym(Terminals.INT); }
+"int"	  	{ return sym(Terminals.INTW); }
 "("	  	{ return sym(Terminals.LPAR); }
 ")"	  	{ return sym(Terminals.RPAR); }
 "*"	  	{ return sym(Terminals.MUL); }
@@ -53,7 +52,6 @@ INT = [0-9]+
 ">"		{ return sym(Terminals.GREATER); }
 "<"	  	{ return sym(Terminals.LESS); }
 ","	  	{ return sym(Terminals.COMMA); }
-"int"	  	{ return sym(Terminals.INTW); }
 "{"	  	{ return sym(Terminals.LBR); }
 "}"	  	{ return sym(Terminals.RBR); }
 "return"	{ return sym(Terminals.RETURN); }
@@ -61,6 +59,8 @@ INT = [0-9]+
 "if"	  	{ return sym(Terminals.IF); }
 "while"	  	{ return sym(Terminals.WHILE); }
 ";"	  	{ return sym(Terminals.SEMI); }
+{ID}          	{ return sym(Terminals.ID); }
+{INT}     	{ return sym(Terminals.INT); }
 <<EOF>>       { return sym(Terminals.EOF); }
 
 /* error fallback */

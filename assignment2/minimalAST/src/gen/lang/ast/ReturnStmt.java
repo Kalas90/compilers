@@ -6,8 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 /**
  * @ast node
- * @declaredat /Users/JohanMac/programmering/compilers/assignment2/minimalAST/src/jastadd/lang.ast:26
- * @production ReturnStmt : {@link Stmt} ::= <span class="component">{@link AddSubExpr}*</span>;
+ * @declaredat /Users/JohanMac/programmering/compilers/assignment2/minimalAST/src/jastadd/lang.ast:25
+ * @production ReturnStmt : {@link Stmt} ::= <span class="component">{@link Term}*</span>;
 
  */
 public class ReturnStmt extends Stmt implements Cloneable {
@@ -31,7 +31,7 @@ public class ReturnStmt extends Stmt implements Cloneable {
   /**
    * @declaredat ASTNode:14
    */
-  public ReturnStmt(List<AddSubExpr> p0) {
+  public ReturnStmt(List<Term> p0) {
     setChild(p0, 0);
   }
   /**
@@ -131,107 +131,107 @@ public class ReturnStmt extends Stmt implements Cloneable {
     return super.is$Equal(node);    
   }
   /**
-   * Replaces the AddSubExpr list.
-   * @param list The new list node to be used as the AddSubExpr list.
+   * Replaces the Term list.
+   * @param list The new list node to be used as the Term list.
    * @apilevel high-level
    */
-  public void setAddSubExprList(List<AddSubExpr> list) {
+  public void setTermList(List<Term> list) {
     setChild(list, 0);
   }
   /**
-   * Retrieves the number of children in the AddSubExpr list.
-   * @return Number of children in the AddSubExpr list.
+   * Retrieves the number of children in the Term list.
+   * @return Number of children in the Term list.
    * @apilevel high-level
    */
-  public int getNumAddSubExpr() {
-    return getAddSubExprList().getNumChild();
+  public int getNumTerm() {
+    return getTermList().getNumChild();
   }
   /**
-   * Retrieves the number of children in the AddSubExpr list.
+   * Retrieves the number of children in the Term list.
    * Calling this method will not trigger rewrites.
-   * @return Number of children in the AddSubExpr list.
+   * @return Number of children in the Term list.
    * @apilevel low-level
    */
-  public int getNumAddSubExprNoTransform() {
-    return getAddSubExprListNoTransform().getNumChildNoTransform();
+  public int getNumTermNoTransform() {
+    return getTermListNoTransform().getNumChildNoTransform();
   }
   /**
-   * Retrieves the element at index {@code i} in the AddSubExpr list.
+   * Retrieves the element at index {@code i} in the Term list.
    * @param i Index of the element to return.
-   * @return The element at position {@code i} in the AddSubExpr list.
+   * @return The element at position {@code i} in the Term list.
    * @apilevel high-level
    */
-  public AddSubExpr getAddSubExpr(int i) {
-    return (AddSubExpr) getAddSubExprList().getChild(i);
+  public Term getTerm(int i) {
+    return (Term) getTermList().getChild(i);
   }
   /**
-   * Check whether the AddSubExpr list has any children.
+   * Check whether the Term list has any children.
    * @return {@code true} if it has at least one child, {@code false} otherwise.
    * @apilevel high-level
    */
-  public boolean hasAddSubExpr() {
-    return getAddSubExprList().getNumChild() != 0;
+  public boolean hasTerm() {
+    return getTermList().getNumChild() != 0;
   }
   /**
-   * Append an element to the AddSubExpr list.
-   * @param node The element to append to the AddSubExpr list.
+   * Append an element to the Term list.
+   * @param node The element to append to the Term list.
    * @apilevel high-level
    */
-  public void addAddSubExpr(AddSubExpr node) {
-    List<AddSubExpr> list = (parent == null) ? getAddSubExprListNoTransform() : getAddSubExprList();
+  public void addTerm(Term node) {
+    List<Term> list = (parent == null) ? getTermListNoTransform() : getTermList();
     list.addChild(node);
   }
   /**
    * @apilevel low-level
    */
-  public void addAddSubExprNoTransform(AddSubExpr node) {
-    List<AddSubExpr> list = getAddSubExprListNoTransform();
+  public void addTermNoTransform(Term node) {
+    List<Term> list = getTermListNoTransform();
     list.addChild(node);
   }
   /**
-   * Replaces the AddSubExpr list element at index {@code i} with the new node {@code node}.
+   * Replaces the Term list element at index {@code i} with the new node {@code node}.
    * @param node The new node to replace the old list element.
    * @param i The list index of the node to be replaced.
    * @apilevel high-level
    */
-  public void setAddSubExpr(AddSubExpr node, int i) {
-    List<AddSubExpr> list = getAddSubExprList();
+  public void setTerm(Term node, int i) {
+    List<Term> list = getTermList();
     list.setChild(node, i);
   }
   /**
-   * Retrieves the AddSubExpr list.
-   * @return The node representing the AddSubExpr list.
+   * Retrieves the Term list.
+   * @return The node representing the Term list.
    * @apilevel high-level
    */
-  @ASTNodeAnnotation.ListChild(name="AddSubExpr")
-  public List<AddSubExpr> getAddSubExprList() {
-    List<AddSubExpr> list = (List<AddSubExpr>) getChild(0);
+  @ASTNodeAnnotation.ListChild(name="Term")
+  public List<Term> getTermList() {
+    List<Term> list = (List<Term>) getChild(0);
     return list;
   }
   /**
-   * Retrieves the AddSubExpr list.
+   * Retrieves the Term list.
    * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The node representing the AddSubExpr list.
+   * @return The node representing the Term list.
    * @apilevel low-level
    */
-  public List<AddSubExpr> getAddSubExprListNoTransform() {
-    return (List<AddSubExpr>) getChildNoTransform(0);
+  public List<Term> getTermListNoTransform() {
+    return (List<Term>) getChildNoTransform(0);
   }
   /**
-   * Retrieves the AddSubExpr list.
-   * @return The node representing the AddSubExpr list.
+   * Retrieves the Term list.
+   * @return The node representing the Term list.
    * @apilevel high-level
    */
-  public List<AddSubExpr> getAddSubExprs() {
-    return getAddSubExprList();
+  public List<Term> getTerms() {
+    return getTermList();
   }
   /**
-   * Retrieves the AddSubExpr list.
+   * Retrieves the Term list.
    * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The node representing the AddSubExpr list.
+   * @return The node representing the Term list.
    * @apilevel low-level
    */
-  public List<AddSubExpr> getAddSubExprsNoTransform() {
-    return getAddSubExprListNoTransform();
+  public List<Term> getTermsNoTransform() {
+    return getTermListNoTransform();
   }
 }
