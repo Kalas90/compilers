@@ -12,12 +12,12 @@ import java.io.PrintStream;
 public class ASTNode<T extends ASTNode> extends beaver.Symbol implements Cloneable, Iterable<T> {
   /**
    * @aspect DumpTree
-   * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/DumpTree.jrag:6
+   * @declaredat /Users/JohanMac/programmering/compilers/assignment2/minimalAST/src/jastadd/DumpTree.jrag:6
    */
   private String DUMP_TREE_INDENT = "  ";
   /**
    * @aspect DumpTree
-   * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/DumpTree.jrag:8
+   * @declaredat /Users/JohanMac/programmering/compilers/assignment2/minimalAST/src/jastadd/DumpTree.jrag:8
    */
   public String dumpTree() {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -26,7 +26,7 @@ public class ASTNode<T extends ASTNode> extends beaver.Symbol implements Cloneab
 	}
   /**
    * @aspect DumpTree
-   * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/DumpTree.jrag:14
+   * @declaredat /Users/JohanMac/programmering/compilers/assignment2/minimalAST/src/jastadd/DumpTree.jrag:14
    */
   public void dumpTree(PrintStream out) {
 		dumpTree(out, 0);
@@ -34,7 +34,7 @@ public class ASTNode<T extends ASTNode> extends beaver.Symbol implements Cloneab
 	}
   /**
    * @aspect DumpTree
-   * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/DumpTree.jrag:19
+   * @declaredat /Users/JohanMac/programmering/compilers/assignment2/minimalAST/src/jastadd/DumpTree.jrag:19
    */
   public void dumpTree(PrintStream out, int indent) {
 		for (int i = 0; i < indent; i++) {

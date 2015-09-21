@@ -24,12 +24,9 @@
 %typeof assign_stmt = "AssignStmt";
 %typeof function_stmt = "FunctionStmt";
 %typeof return_stmt = "ReturnStmt";
-/*%typeof expr = "Expr";*/
 %typeof comparison = "Expr";
 %typeof add_sub_expr = "List";
-%typeof add_sub_expr_binding = "AddSubExpr";
 %typeof term = "List";
-%typeof term_binding = "Term";
 %typeof factor = "Factor";
 %typeof add_sub_list = "List";
 %typeof id_use = "IdUse";
@@ -91,23 +88,13 @@ add_sub_list =
 	;
 
 add_sub_expr =
-	add_sub_expr_binding.a {: return new List().add(a); :}
-	| add_sub_expr.a add_sub_expr_binding.b {: return a.add(b); :}
-	;
-
-add_sub_expr_binding = 
-	term.a operator1 add_sub_expr.b {: return new AssociativeExpr(a, b); :}
-	| term.a {: return new TermExpr(a); :}
+	term.a {: return new List().add(a); :}
+	| add_sub_expr.a operator1 term.b {: return a.add(b); :}
 	;
 
 term =
-	term_binding.a {: return new List().add(a); :}
-	| term.a term_binding.b {: return a.add(b); :}
-	;
-
-term_binding =
-	factor.a operator2 term.b {: return new MultDiv(a, b); :}
-	| factor.a {: return new SimpleTerm(a); :}
+	factor.a {: return new List().add(a); :}
+	| term.a operator2 factor.b {: return a.add(b); :}
 	;
 
 factor =

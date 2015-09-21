@@ -8,7 +8,7 @@ Comparison: Expr ::= Left:AddSubExpr Right:AddSubExpr;
 Arithmetic: Expr ::= AddSubExpr;
 
 abstract AddSubExpr; 
-AssociativeExpr: AddSubExpr ::= AddSubExpr Term;
+AssociativeExpr: AddSubExpr ::= Term*;
 TermExpr: AddSubExpr ::= Term; 
 
 abstract Term;

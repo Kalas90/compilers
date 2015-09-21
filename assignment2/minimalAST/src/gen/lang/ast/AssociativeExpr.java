@@ -6,8 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 /**
  * @ast node
- * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:11
- * @production AssociativeExpr : {@link AddSubExpr} ::= <span class="component">{@link AddSubExpr}</span> <span class="component">{@link Term}</span>;
+ * @declaredat /Users/JohanMac/programmering/compilers/assignment2/minimalAST/src/jastadd/lang.ast:11
+ * @production AssociativeExpr : {@link AddSubExpr} ::= <span class="component">{@link Term}*</span>;
 
  */
 public class AssociativeExpr extends AddSubExpr implements Cloneable {
@@ -25,21 +25,21 @@ public class AssociativeExpr extends AddSubExpr implements Cloneable {
    * @declaredat ASTNode:10
    */
   public void init$Children() {
-    children = new ASTNode[2];
+    children = new ASTNode[1];
+    setChild(new List(), 0);
   }
   /**
-   * @declaredat ASTNode:13
+   * @declaredat ASTNode:14
    */
-  public AssociativeExpr(AddSubExpr p0, Term p1) {
+  public AssociativeExpr(List<Term> p0) {
     setChild(p0, 0);
-    setChild(p1, 1);
   }
   /**
    * @apilevel low-level
    * @declaredat ASTNode:20
    */
   protected int numChildren() {
-    return 2;
+    return 1;
   }
   /**
    * @apilevel internal
@@ -131,55 +131,107 @@ public class AssociativeExpr extends AddSubExpr implements Cloneable {
     return super.is$Equal(node);    
   }
   /**
-   * Replaces the AddSubExpr child.
-   * @param node The new node to replace the AddSubExpr child.
+   * Replaces the Term list.
+   * @param list The new list node to be used as the Term list.
    * @apilevel high-level
    */
-  public void setAddSubExpr(AddSubExpr node) {
-    setChild(node, 0);
+  public void setTermList(List<Term> list) {
+    setChild(list, 0);
   }
   /**
-   * Retrieves the AddSubExpr child.
-   * @return The current node used as the AddSubExpr child.
+   * Retrieves the number of children in the Term list.
+   * @return Number of children in the Term list.
    * @apilevel high-level
    */
-  @ASTNodeAnnotation.Child(name="AddSubExpr")
-  public AddSubExpr getAddSubExpr() {
-    return (AddSubExpr) getChild(0);
+  public int getNumTerm() {
+    return getTermList().getNumChild();
   }
   /**
-   * Retrieves the AddSubExpr child.
-   * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The current node used as the AddSubExpr child.
+   * Retrieves the number of children in the Term list.
+   * Calling this method will not trigger rewrites.
+   * @return Number of children in the Term list.
    * @apilevel low-level
    */
-  public AddSubExpr getAddSubExprNoTransform() {
-    return (AddSubExpr) getChildNoTransform(0);
+  public int getNumTermNoTransform() {
+    return getTermListNoTransform().getNumChildNoTransform();
   }
   /**
-   * Replaces the Term child.
-   * @param node The new node to replace the Term child.
+   * Retrieves the element at index {@code i} in the Term list.
+   * @param i Index of the element to return.
+   * @return The element at position {@code i} in the Term list.
    * @apilevel high-level
    */
-  public void setTerm(Term node) {
-    setChild(node, 1);
+  public Term getTerm(int i) {
+    return (Term) getTermList().getChild(i);
   }
   /**
-   * Retrieves the Term child.
-   * @return The current node used as the Term child.
+   * Check whether the Term list has any children.
+   * @return {@code true} if it has at least one child, {@code false} otherwise.
    * @apilevel high-level
    */
-  @ASTNodeAnnotation.Child(name="Term")
-  public Term getTerm() {
-    return (Term) getChild(1);
+  public boolean hasTerm() {
+    return getTermList().getNumChild() != 0;
   }
   /**
-   * Retrieves the Term child.
-   * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The current node used as the Term child.
+   * Append an element to the Term list.
+   * @param node The element to append to the Term list.
+   * @apilevel high-level
+   */
+  public void addTerm(Term node) {
+    List<Term> list = (parent == null) ? getTermListNoTransform() : getTermList();
+    list.addChild(node);
+  }
+  /**
    * @apilevel low-level
    */
-  public Term getTermNoTransform() {
-    return (Term) getChildNoTransform(1);
+  public void addTermNoTransform(Term node) {
+    List<Term> list = getTermListNoTransform();
+    list.addChild(node);
+  }
+  /**
+   * Replaces the Term list element at index {@code i} with the new node {@code node}.
+   * @param node The new node to replace the old list element.
+   * @param i The list index of the node to be replaced.
+   * @apilevel high-level
+   */
+  public void setTerm(Term node, int i) {
+    List<Term> list = getTermList();
+    list.setChild(node, i);
+  }
+  /**
+   * Retrieves the Term list.
+   * @return The node representing the Term list.
+   * @apilevel high-level
+   */
+  @ASTNodeAnnotation.ListChild(name="Term")
+  public List<Term> getTermList() {
+    List<Term> list = (List<Term>) getChild(0);
+    return list;
+  }
+  /**
+   * Retrieves the Term list.
+   * <p><em>This method does not invoke AST transformations.</em></p>
+   * @return The node representing the Term list.
+   * @apilevel low-level
+   */
+  public List<Term> getTermListNoTransform() {
+    return (List<Term>) getChildNoTransform(0);
+  }
+  /**
+   * Retrieves the Term list.
+   * @return The node representing the Term list.
+   * @apilevel high-level
+   */
+  public List<Term> getTerms() {
+    return getTermList();
+  }
+  /**
+   * Retrieves the Term list.
+   * <p><em>This method does not invoke AST transformations.</em></p>
+   * @return The node representing the Term list.
+   * @apilevel low-level
+   */
+  public List<Term> getTermsNoTransform() {
+    return getTermListNoTransform();
   }
 }
