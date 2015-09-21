@@ -57,6 +57,7 @@ INT = [0-9]+
 "return"	{ return sym(Terminals.RETURN); }
 "="		{ return sym(Terminals.ASSIGN); }
 "if"	  	{ return sym(Terminals.IF); }
+"else"		{ return sym(Terminals.ELSE); }
 "while"	  	{ return sym(Terminals.WHILE); }
 ";"	  	{ return sym(Terminals.SEMI); }
 {ID}          	{ return sym(Terminals.ID); }

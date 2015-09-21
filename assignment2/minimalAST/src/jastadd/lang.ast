@@ -24,8 +24,8 @@ abstract Stmt;
 FunctionStmt : Stmt ::= IdUse IdDecl*;
 ReturnStmt : Stmt ::= Term*;
 CompoundStmt : Stmt ::= Stmt*;
-WhileStmt : Stmt ::= Expr Stmt;
-IfStmt : Stmt ::= Expr Stmt;
+WhileStmt : Stmt ::= Expr CompoundStmt;
+IfStmt : Stmt ::= If:Expr Then:CompoundStmt Else:CompoundStmt;
 AssignStmt: Stmt ::= IdDecl AddSubExpr*;
 
 Operator1 ::= ;
