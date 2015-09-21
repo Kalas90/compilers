@@ -7,7 +7,7 @@ import java.io.PrintStream;
 /**
  * @ast node
  * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:4
- * @production FunctionDec : {@link ProgramComponent} ::= <span class="component">{@link IdDecl}</span> <span class="component">Param:{@link IdDecl}*</span> <span class="component">{@link Stmt}</span>;
+ * @production FunctionDec : {@link ProgramComponent} ::= <span class="component">{@link IdDecl}</span> <span class="component">Param:{@link IdDecl}*</span> <span class="component">{@link CompoundStmt}</span>;
 
  */
 public class FunctionDec extends ProgramComponent implements Cloneable {
@@ -31,7 +31,7 @@ public class FunctionDec extends ProgramComponent implements Cloneable {
   /**
    * @declaredat ASTNode:14
    */
-  public FunctionDec(IdDecl p0, List<IdDecl> p1, Stmt p2) {
+  public FunctionDec(IdDecl p0, List<IdDecl> p1, CompoundStmt p2) {
     setChild(p0, 0);
     setChild(p1, 1);
     setChild(p2, 2);
@@ -263,29 +263,29 @@ public class FunctionDec extends ProgramComponent implements Cloneable {
     return getParamListNoTransform();
   }
   /**
-   * Replaces the Stmt child.
-   * @param node The new node to replace the Stmt child.
+   * Replaces the CompoundStmt child.
+   * @param node The new node to replace the CompoundStmt child.
    * @apilevel high-level
    */
-  public void setStmt(Stmt node) {
+  public void setCompoundStmt(CompoundStmt node) {
     setChild(node, 2);
   }
   /**
-   * Retrieves the Stmt child.
-   * @return The current node used as the Stmt child.
+   * Retrieves the CompoundStmt child.
+   * @return The current node used as the CompoundStmt child.
    * @apilevel high-level
    */
-  @ASTNodeAnnotation.Child(name="Stmt")
-  public Stmt getStmt() {
-    return (Stmt) getChild(2);
+  @ASTNodeAnnotation.Child(name="CompoundStmt")
+  public CompoundStmt getCompoundStmt() {
+    return (CompoundStmt) getChild(2);
   }
   /**
-   * Retrieves the Stmt child.
+   * Retrieves the CompoundStmt child.
    * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The current node used as the Stmt child.
+   * @return The current node used as the CompoundStmt child.
    * @apilevel low-level
    */
-  public Stmt getStmtNoTransform() {
-    return (Stmt) getChildNoTransform(2);
+  public CompoundStmt getCompoundStmtNoTransform() {
+    return (CompoundStmt) getChildNoTransform(2);
   }
 }

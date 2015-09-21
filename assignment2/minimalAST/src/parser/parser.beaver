@@ -61,8 +61,7 @@ stmt_list =
 	;  
 
 stmt =
-	compound_stmt
-	| if_stmt
+	if_stmt
 	| while_stmt
 	| function_stmt SEMI
 	| return_stmt SEMI

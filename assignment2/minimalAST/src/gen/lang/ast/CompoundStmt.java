@@ -7,10 +7,10 @@ import java.io.PrintStream;
 /**
  * @ast node
  * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:26
- * @production CompoundStmt : {@link Stmt} ::= <span class="component">{@link Stmt}*</span>;
+ * @production CompoundStmt : {@link ASTNode} ::= <span class="component">{@link Stmt}*</span>;
 
  */
-public class CompoundStmt extends Stmt implements Cloneable {
+public class CompoundStmt extends ASTNode<ASTNode> implements Cloneable {
   /**
    * @declaredat ASTNode:1
    */
