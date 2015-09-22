@@ -55,8 +55,8 @@ param_list =
 	;
 
 stmt_list =
-	stmt.a {: return new List().add(a); :}
-	| stmt_list.a stmt.b {: return a.add(b); :}
+	//stmt.a {: return new List().add(a); :}
+	stmt_list.a stmt.b {: return a.add(b); :}
 	| /* epsilon */ {: return new List(); :}
 	;  
 
