@@ -1,0 +1,33 @@
+Program ::= ProgramComponent*;
+
+abstract ProgramComponent;
+FunctionDec: ProgramComponent ::= IdDecl Param:IdDecl* CompoundStmt;
+
+abstract Expr;
+Comparison: Expr ::= Left:Term* Right:Term*;
+Arithmetic: Expr ::= AddSubExpr;
+
+abstract AddSubExpr; 
+AssociativeExpr: AddSubExpr ::= Term*;
+
+abstract Term;
+MultDiv : Term ::= Term Factor;
+SimpleTerm : Term ::= Factor;
+
+abstract Factor;
+IdFactor : Factor ::= IdUse;
+IntFactor : Factor ::= <INT>;
+CompoundFactor : Factor ::= Term*;
+FunctionFactor : Factor ::= Stmt;
+
+abstract Stmt;
+FunctionStmt : Stmt ::= IdUse IdDecl*;
+ReturnStmt : Stmt ::= Term*;
+WhileStmt : Stmt ::= Expr CompoundStmt;
+IfStmt : Stmt ::= If:Expr Then:CompoundStmt Else:CompoundStmt;
+AssignStmt: Stmt ::= IdDecl AddSubExpr*;
+
+CompoundStmt ::= Stmt*;
+
+IdDecl ::= <ID>;
+IdUse ::= <ID>;

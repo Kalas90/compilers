@@ -28,9 +28,9 @@ import lang.ast.LangParser.SyntaxError;
 
 // macros
 WhiteSpace = [ ] | \t | \f | \n | \r
-ID = [A-Z,a-z]+ (Int* | [A-Z,a-z]*)*
 INT = [0-9]+
-
+ID = [A-Za-z]+ [A-Za-z0-9]*
+COMMENT = [\/\*] [.*|\n]* [\*\/]
 %%
 
 // discard whitespace information
@@ -62,6 +62,7 @@ INT = [0-9]+
 ";"	  	{ return sym(Terminals.SEMI); }
 {ID}          	{ return sym(Terminals.ID); }
 {INT}     	{ return sym(Terminals.INT); }
+{COMMENT}	{ return sym(Terminals.COMMENT); }
 <<EOF>>       { return sym(Terminals.EOF); }
 
 /* error fallback */

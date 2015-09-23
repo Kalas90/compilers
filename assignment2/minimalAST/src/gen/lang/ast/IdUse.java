@@ -6,11 +6,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 /**
  * @ast node
- * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:32
- * @production IdUse : {@link ASTNode} ::= <span class="component">&lt;ID:String&gt;</span>;
+ * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:33
+ * @production IdUse : {@link Expr} ::= <span class="component">&lt;ID:String&gt;</span>;
 
  */
-public class IdUse extends ASTNode<ASTNode> implements Cloneable {
+public class IdUse extends Expr implements Cloneable {
   /**
    * @declaredat ASTNode:1
    */
