@@ -27,10 +27,10 @@ import lang.ast.LangParser.SyntaxError;
 %}
 
 // macros
+COMMENT = [\/\*] (.* | [ ] | \t | \f | \n | \r)* [\*\/]
 WhiteSpace = [ ] | \t | \f | \n | \r
 INT = [0-9]+
 ID = [A-Za-z]+ [A-Za-z0-9]*
-COMMENT = [\/\*] [.*|\n]* [\*\/]
 %%
 
 // discard whitespace information

@@ -58,6 +58,7 @@ Program
                 Mod
                   IdUse
                   IdUse
+    Comment
     FunctionDec
       IdDecl
       List
