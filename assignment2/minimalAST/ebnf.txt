@@ -7,7 +7,8 @@ Comment -> COMMENT
 Expr -> BinExpr | IdUse | IntUse | FunctionFactor 
 IdUse -> ID
 IntUse -> INT
-FunctionFactor -> IdUse //TODOTODOTODO
+FunctionFactor -> IdUse "(" [AddSubList] ")" 
+AddSubList -> AddSub | AddSubList "," AddSub 
 BinExpr -> AddSub | Term | Factor | CompExpr 
 
 AddSub -> Add | Sub | Term 
