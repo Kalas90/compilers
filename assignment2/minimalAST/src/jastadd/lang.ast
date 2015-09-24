@@ -1,11 +1,15 @@
 Program ::= ProgramComponent*;
 
 abstract ProgramComponent;
-FunctionDec: ProgramComponent ::= IdDecl Param:IdDecl* CompoundStmt;
+FunctionDec: ProgramComponent ::= IdDecl [Param] CompoundStmt;
 Comment: ProgramComponent;
 
+Param : Opt ::= First:IdDecl IdDecl*;
 abstract Expr;
 BinExpr: Expr ::= Left:Expr Right:Expr;
+IdUse: Expr ::= <ID>; 
+IntUse: Expr ::= <INT>;
+FunctionFactor : Expr ::= IdUse Expr*;
 
 Add : BinExpr;
 Sub : BinExpr;
@@ -29,7 +33,4 @@ AssignStmt: Stmt ::= IdUse Expr;
 DeclStmt : Stmt ::= IdDecl [Expr];
 
 CompoundStmt ::= Stmt*;
-FunctionFactor : Expr ::= IdUse Expr*;
-IdUse : Expr ::= <ID>;
-IntUse : Expr ::= <INT>;
 IdDecl ::= <ID>;

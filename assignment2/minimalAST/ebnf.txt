@@ -1,21 +1,42 @@
-Program -> FunctionDec*
-Expr -> AddSubExpr | Comparison
-AddSubExpr -> AddSubExpr Operator1 Term | Term
-Term -> Term Operator2 Factor | Factor
-Factor -> ID | Int | "(" AddSubExpr ")" | FunctionStmt
-Operator2 -> "*" | "/" | "%"
-Operator1 -> "+" | "-"
-Comparison -> AddSubExpr Operator3 AddSubExpr
-Operator3 -> "!=" | "==" | ">=" | "<=" | "<" | ">"
-FunctionDec -> "int" ID "(" ("()" | "int" ID ("," "int" ID)*) ")" CompoundStmt
-Stmt -> CompoundStmt | (FunctionStmt | ReturnStmt | AssignStmt) ";"
-CompundStmt -> "{" Stmt* "}"		
-ReturnStmt -> "return" AddSubExpr
-FunctionStmt -> ID "(" ("()" | AddSubExpr ("," AddSubExpr)*) ")"
-AssignStmt -> "int" ID "=" AddSubExpr
+Program -> ProgramComponent*
+
+ProgramComponent -> FunctionDec | Comment
+FunctionDec -> IdDecl "(" [IdDecl ("," IdDecl)*] ")" CompoundStmt
+Comment -> COMMENT 
+
+Expr -> BinExpr | IdUse | IntUse | FunctionFactor 
+IdUse -> ID
+IntUse -> INT
+FunctionFactor -> IdUse //TODOTODOTODO
+BinExpr -> AddSub | Term | Factor | CompExpr 
+
+AddSub -> Add | Sub | Term 
+Term -> Mul | Div | Mod | Factor
+Factor -> IdUse | IntUse | "(" AddSub ")" | FunctionFactor
+CompExpr -> Equal | Nequal | Greater | Less | GreaterEqual | LessEqual
+Add -> AddSub "+" Term
+Sub -> AddSub "-" Term
+Mul -> Term "*" Factor
+Div -> Term "/" Factor
+Mod -> Term "%" Factor
+
+Equal -> AddSub "==" AddSub
+NEqual -> AddSub "!=" AddSub
+Greater -> AddSub ">" AddSub
+Less -> AddSub "<" AddSub
+GreaterEqual -> AddSub ">=" AddSub
+LessEqual -> AddSub "<=" AddSub
+
+Stmt -> FunctionStmt | ReturnStmt | AssignStmt | WhileStmt | IfStmt | DeclStmt
+FunctionStmt -> FunctionFactor ";" 
+ReturnStmt -> "return" AddSub ";"
+AssignStmt -> IdUse "=" AddSub ";"
+IfStmt -> "if" "(" CompExpr ")" CompoundStmt ["else" CompoundStmt]
+WhileStmt -> "while" "(" CompExpr ")" CompoundStmt
+DeclStmt -> IdDecl ["=" AddSub] ";" 
+
 IdDecl -> "int" ID ";"
-IfStmt -> "if" "(" Comparison ")" CompoundStmt
+CompundStmt -> "{" Stmt* "}"		
+
 Int -> [0-9]+
-ID -> [A-Z,a-z]+ (Int* | [A-Z,a-z]*)*
-WhileStmt -> "while" "(" Comparison ")" CompoundStmt
-IfStmt -> "if" "(" Comparison ")" CompoundStmt
+ID -> [A-Za-z]+ [A-Za-z0-9]*
