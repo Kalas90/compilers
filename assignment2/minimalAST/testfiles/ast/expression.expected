@@ -17,6 +17,7 @@ Program
                   IdUse
               Add
                 IntUse
-                Div
-                  IntUse
-                  IdUse
+                ParExpr
+                  Div
+                    IntUse
+                    IdUse

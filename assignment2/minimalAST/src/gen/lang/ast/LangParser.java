@@ -25,17 +25,17 @@ public class LangParser extends Parser {
 		static public final short MOD = 12;
 		static public final short ASSIGN = 13;
 		static public final short COMMA = 14;
-		static public final short EQ = 15;
-		static public final short NEQ = 16;
-		static public final short GREATER = 17;
-		static public final short LESS = 18;
-		static public final short GEQ = 19;
-		static public final short LEQ = 20;
-		static public final short IF = 21;
-		static public final short ELSE = 22;
-		static public final short WHILE = 23;
-		static public final short RBR = 24;
-		static public final short RETURN = 25;
+		static public final short IF = 15;
+		static public final short ELSE = 16;
+		static public final short WHILE = 17;
+		static public final short RBR = 18;
+		static public final short RETURN = 19;
+		static public final short EQ = 20;
+		static public final short NEQ = 21;
+		static public final short GREATER = 22;
+		static public final short LESS = 23;
+		static public final short GEQ = 24;
+		static public final short LEQ = 25;
 
 		static public final String[] NAMES = {
 			"EOF",
@@ -53,38 +53,38 @@ public class LangParser extends Parser {
 			"MOD",
 			"ASSIGN",
 			"COMMA",
+			"IF",
+			"ELSE",
+			"WHILE",
+			"RBR",
+			"RETURN",
 			"EQ",
 			"NEQ",
 			"GREATER",
 			"LESS",
 			"GEQ",
-			"LEQ",
-			"IF",
-			"ELSE",
-			"WHILE",
-			"RBR",
-			"RETURN"
+			"LEQ"
 		};
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9obbKjmL4KKXlyxaynCGW8eIT0yI9Zm2WanX82Y8l8GVA4O1UCBDgvSkMBjWWqR5rgbPRb" +
-		"mOvMMUnUMArSgRvKtlX04HA880eB0uRkTdZizunsAAk$Kr$$VVRhFxUxRrID5tLgdHrNKY6" +
-		"PgWPvrxbxSGergXlhqZ9hqj7EJDKLJTOVkr3HN7xCVbLEzyrargawTMge7j4pBjQB2btFUb" +
-		"vB$IJslMMQQ4yGwDAQ2sYfQ5gj1ZsWGNKAq7EaA$3orQ99MgLcF1wtt1Fx#m3yO#8S2$t3W" +
-		"LmR#2LRRQbUrYVVNiU9C4kjEtFnuLVQrd#TqtMN7NMo0MAoBq5Tyz6vovDMk5tszH$qQzZu" +
-		"iUrCYgztk3TKSSzkb$U8obUZLtCGtQgsTjYkQhJLwIezfezRRJtf9psc3dT8BxCBBpBx3qS" +
-		"btw4dS37QaZjqgiX#pd1laAmonXyFiG5mliFA84R7lvSlE3avNIuKFS$utVvxy$HAx6iOAd" +
-		"CnYHKk6yrtaZHdEQg5cpbPMpJVZozJgyNzy3#$FiTe2gsrWdykniejNDUBdcMFEkIHMtkM9" +
-		"Q1ivvj1ZdgytSlARlAyiqoBnUtAt67ExPSvbAX5nIvHy0tFB4uz$pRYOFF41fnbseOVljla" +
-		"DkQS5LiNUrxlWBLW3xK7xQCdNWkSTs0WVmzlm4NpgOvtm6JJ05$0vVEbZU#4JAPhawrTXEq" +
-		"o6NV0Lx0lUSn0EURyVZjMOpuTm0gx3AJ0umtiYT1ojHy#XUVG8NC0tGTt4#AZPvxa4ItrRZ" +
-		"k8AEiNNfrAqeGMOvljVmxElKRllqmYjAVFROZnLRUzv7V6wd2udqzQNag$VwvjUFmXYAxnk" +
-		"ZPMSfuFOzAeyQxrky$fk41kjwll#BUOpvdMJrrUzlkRrzQ1lQRtZLJcsX7NcNH6l7iFJbHA" +
-		"$KLNVF25stQx9F$QlNQIyP7$OttR1pjjVTix#JA8duLVdVW3Ed#splQu#xigVuG1yPtjSVR" +
-		"TnBkrRssKxROTzOyUeVGz7WPDcX#5GafqpQcUT#zstd4bYltdTxif$xBBTm2nnTzLSHuQRB" +
-		"U9cg#TM4aJSJ5btE$KHwwDjFZwDcVJhuCuOejz2$31#4Jh0c07Q1jt$Hvv$a7ftr$SpPe4Z" +
-		"o#qVEOhuDBeJ8cxNR434NL0YwxGTkjo$KaQBRmBqnoFw");
+		"U9ozLSbI544GVJqD33Cm2ee80upCe2A889ixxlkAAwxSl7dqeYUDq9Ct$GD$G8yQHdZIS1V" +
+		"5VSCTS0T5HHJJrzKrsDtHGtYo9rw#p9UrT6LNrG16ETPY1HAeGHnJK8qDQ57H31KrOYQoKO" +
+		"UfgCK8Z4GESZ4Aep4U6PZeQbU462gGxz7IaOcbC966C8en2tCm5$EnqATdiu#snQMLkA99h" +
+		"gZU5SrsHKskQ9uhMk2A5hcYrLor5LUfs5cLSSX328iHmIg7MidLMc#zYwlDGa1bfgkCNR#T" +
+		"CY0lqIAN4CGORDEgRKin6TDSYct7#cJ2QfQ6b7s6jmLMRn6iSQajyaADcaGPoeVyC0gbMtu" +
+		"WIdKT9c0pbc0vjcCPDZAt5Ikn7fka2pi0LYdARsUXcDyhnZsLwOZ6yPqhOR0s9gjIe#Ulvp" +
+		"eCridTBetLBFDeSUwwCkwz2Qn#7ckOp$eKeF0VUlff$piAE69tLKPohzZdogd6rLjRgwtWr" +
+		"$YRiUjdrIA3upJm71ey3RPgsp3tNxPBiMs6JoQaPl7B$8jDgDxWZdQgcHpFqfCmU7Sa$H3l" +
+		"a23p2QeHSeISO3w3vop4ta7zYtEFPdBarWCOUWOiNyTHuWHHGLGwz2D9FnNud2PoY8j46s0" +
+		"OH53dIeapH1DnbZX5dBDpHXxDINAkRZj8N22M4PU9yyJDOUQzJTpHVZlHuSWT9vvpRCj$HG" +
+		"wGkyXfvBTagnOVo66YW7uFEPyOez#jK8$pXUZJMeZc9pcguooYIBVxJR#OAD6v217pUUT3H" +
+		"CIZ7TEyJ$D14UbCjMvFNrDpiWwV7Ra6pVijvfZToHpzJvvnPci#h7dlC7CkzCH7FV4ApSsQ" +
+		"MpGdzzvkHzk8vdxF67iySQd3xtNubSvsjcQOdhwjDicW$89#vATyfVqc7wLFliXdwPKU#JI" +
+		"KxIHUomFQfyHzuexSL9aFoZuZxX6tvOQqoNMvAbUKVatkqjwITk7UamxY2V6OU4Gy71gVEr" +
+		"BUA##TLjug#qP7bvNjb#$2VSL$fGPkv7A506ymWtTOEkyfwBlALFTL1NFgzDBtGuBjYdXdJ" +
+		"6MxMlfrzEl9LUnJHQsQOrRpfgWXJwPc$ujOC7dNfuB14svg6BnbJGSCth1knAX7oIL4d7Cs" +
+		"$W7u4Y47");
 
 	static public class SyntaxError extends RuntimeException { public SyntaxError(String msg) {super(msg);}}
 	// Disable syntax error recovery
@@ -204,7 +204,7 @@ public class LangParser extends Parser {
 					 return new ReturnStmt(a);
 				}
 			},
-			new Action() {	// [21] assign_stmt = id_use.a ASSIGN comp_add_sub_expr.b SEMI
+			new Action() {	// [21] assign_stmt = id_use.a ASSIGN expr.b SEMI
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final IdUse a = (IdUse) _symbol_a.value;
@@ -227,14 +227,14 @@ public class LangParser extends Parser {
 					 return new Opt();
 				}
 			},
-			new Action() {	// [24] opt_assign = ASSIGN comp_add_sub_expr.a
+			new Action() {	// [24] opt_assign = ASSIGN expr.a
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 2];
 					final Expr a = (Expr) _symbol_a.value;
 					 return new Opt(a);
 				}
 			},
-			new Action() {	// [25] if_stmt = IF LPAR comp_expr.a RPAR compound_stmt.b
+			new Action() {	// [25] if_stmt = IF LPAR expr.a RPAR compound_stmt.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 3];
 					final Expr a = (Expr) _symbol_a.value;
@@ -243,7 +243,7 @@ public class LangParser extends Parser {
 					 return new IfStmt(a, b, new CompoundStmt(new List()));
 				}
 			},
-			new Action() {	// [26] if_stmt = IF LPAR comp_expr.a RPAR compound_stmt.b ELSE compound_stmt.c
+			new Action() {	// [26] if_stmt = IF LPAR expr.a RPAR compound_stmt.b ELSE compound_stmt.c
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 3];
 					final Expr a = (Expr) _symbol_a.value;
@@ -254,7 +254,7 @@ public class LangParser extends Parser {
 					 return new IfStmt(a, b, c);
 				}
 			},
-			new Action() {	// [27] while_stmt = WHILE LPAR comp_expr.a RPAR compound_stmt.b
+			new Action() {	// [27] while_stmt = WHILE LPAR expr.a RPAR compound_stmt.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 3];
 					final Expr a = (Expr) _symbol_a.value;
@@ -285,9 +285,7 @@ public class LangParser extends Parser {
 					 return a.add(b);
 				}
 			},
-			Action.RETURN,	// [32] comp_add_sub_expr = comp_expr
-			Action.RETURN,	// [33] comp_add_sub_expr = add_sub
-			new Action() {	// [34] comp_expr = add_sub.a EQ add_sub.b
+			new Action() {	// [32] expr = add_sub.a EQ add_sub.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -296,7 +294,7 @@ public class LangParser extends Parser {
 					 return new Equal(a, b);
 				}
 			},
-			new Action() {	// [35] comp_expr = add_sub.a NEQ add_sub.b
+			new Action() {	// [33] expr = add_sub.a NEQ add_sub.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -305,7 +303,7 @@ public class LangParser extends Parser {
 					 return new NEqual(a, b);
 				}
 			},
-			new Action() {	// [36] comp_expr = add_sub.a GREATER add_sub.b
+			new Action() {	// [34] expr = add_sub.a GREATER add_sub.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -314,7 +312,7 @@ public class LangParser extends Parser {
 					 return new Greater(a, b);
 				}
 			},
-			new Action() {	// [37] comp_expr = add_sub.a LESS add_sub.b
+			new Action() {	// [35] expr = add_sub.a LESS add_sub.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -323,7 +321,7 @@ public class LangParser extends Parser {
 					 return new Less(a, b);
 				}
 			},
-			new Action() {	// [38] comp_expr = add_sub.a GEQ add_sub.b
+			new Action() {	// [36] expr = add_sub.a GEQ add_sub.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -332,7 +330,7 @@ public class LangParser extends Parser {
 					 return new GreaterEqual(a, b);
 				}
 			},
-			new Action() {	// [39] comp_expr = add_sub.a LEQ add_sub.b
+			new Action() {	// [37] expr = add_sub.a LEQ add_sub.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -341,7 +339,8 @@ public class LangParser extends Parser {
 					 return new LessEqual(a, b);
 				}
 			},
-			new Action() {	// [40] add_sub = add_sub.a PLUS term.b
+			Action.RETURN,	// [38] expr = add_sub
+			new Action() {	// [39] add_sub = add_sub.a PLUS term.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -350,7 +349,7 @@ public class LangParser extends Parser {
 					 return new Add(a, b);
 				}
 			},
-			new Action() {	// [41] add_sub = add_sub.a MINUS term.b
+			new Action() {	// [40] add_sub = add_sub.a MINUS term.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -359,8 +358,8 @@ public class LangParser extends Parser {
 					 return new Sub(a, b);
 				}
 			},
-			Action.RETURN,	// [42] add_sub = term
-			new Action() {	// [43] term = term.a MUL factor.b
+			Action.RETURN,	// [41] add_sub = term
+			new Action() {	// [42] term = term.a MUL factor.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -369,7 +368,7 @@ public class LangParser extends Parser {
 					 return new Mul(a, b);
 				}
 			},
-			new Action() {	// [44] term = term.a DIV factor.b
+			new Action() {	// [43] term = term.a DIV factor.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -378,7 +377,7 @@ public class LangParser extends Parser {
 					 return new Div(a, b);
 				}
 			},
-			new Action() {	// [45] term = term.a MOD factor.b
+			new Action() {	// [44] term = term.a MOD factor.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -387,17 +386,18 @@ public class LangParser extends Parser {
 					 return new Mod(a, b);
 				}
 			},
-			Action.RETURN,	// [46] term = factor
-			Action.RETURN,	// [47] factor = id_use
-			Action.RETURN,	// [48] factor = int_use
-			new Action() {	// [49] factor = LPAR add_sub.e RPAR
+			Action.RETURN,	// [45] term = factor
+			Action.RETURN,	// [46] factor = id_use
+			Action.RETURN,	// [47] factor = int_use
+			Action.RETURN,	// [48] factor = par_expr
+			Action.RETURN,	// [49] factor = function_call
+			new Action() {	// [50] par_expr = LPAR add_sub.a RPAR
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					final Symbol _symbol_e = _symbols[offset + 2];
-					final Expr e = (Expr) _symbol_e.value;
-					 return e;
+					final Symbol _symbol_a = _symbols[offset + 2];
+					final Expr a = (Expr) _symbol_a.value;
+					 return new ParExpr(a);
 				}
 			},
-			Action.RETURN,	// [50] factor = function_call
 			new Action() {	// [51] id_use = ID.id
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol id = _symbols[offset + 1];

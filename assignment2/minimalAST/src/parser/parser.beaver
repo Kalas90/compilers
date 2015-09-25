@@ -27,9 +27,10 @@
 %typeof decl_stmt = "Stmt";
 %typeof opt_assign = "Opt";
 %typeof add_sub = "Expr";
-%typeof comp_expr = "Expr";
+%typeof expr = "Expr";
 %typeof term = "Expr";
 %typeof factor = "Expr";
+%typeof par_expr = "Expr";
 %typeof add_sub_list = "List";
 %typeof int_use = "IntUse";
 %typeof id_decl = "IdDecl";
@@ -37,7 +38,6 @@
 %typeof function_call = "FunctionCall";
 %typeof param_opt = "List";
 %typeof arg_opt = "List";
-%typeof comp_add_sub_expr = "Expr";
 %goal program;
 
 program = program_component_list.a {: return new Program(a); :} ;
@@ -82,19 +82,19 @@ function_stmt = function_call.a SEMI {: return new FunctionStmt(a); :} ;
 
 return_stmt = RETURN add_sub.a SEMI{: return new ReturnStmt(a); :} ;
 
-assign_stmt = id_use.a ASSIGN comp_add_sub_expr.b SEMI {: return new AssignStmt(a, b); :} ;
+assign_stmt = id_use.a ASSIGN expr.b SEMI {: return new AssignStmt(a, b); :} ;
 
 decl_stmt = id_decl.a opt_assign.b SEMI {: return new DeclStmt(a, b); :} ;
 
 opt_assign = /*epsilon*/ {: return new Opt(); :}
-	    |ASSIGN comp_add_sub_expr.a {: return new Opt(a); :}
+	    |ASSIGN expr.a {: return new Opt(a); :}
 	    ;
 
-if_stmt = IF LPAR comp_expr.a RPAR compound_stmt.b {: return new IfStmt(a, b, new CompoundStmt(new List())); :}
-	| IF LPAR comp_expr.a RPAR compound_stmt.b ELSE compound_stmt.c {: return new IfStmt(a, b, c); :}
+if_stmt = IF LPAR expr.a RPAR compound_stmt.b {: return new IfStmt(a, b, new CompoundStmt(new List())); :}
+	| IF LPAR expr.a RPAR compound_stmt.b ELSE compound_stmt.c {: return new IfStmt(a, b, c); :}
 	;
 
-while_stmt = WHILE LPAR comp_expr.a RPAR compound_stmt.b {: return new WhileStmt(a, b); :} ;
+while_stmt = WHILE LPAR expr.a RPAR compound_stmt.b {: return new WhileStmt(a, b); :} ;
 
 arg_opt = /* epsilon */ {: return new List(); :}
 	| add_sub_list
@@ -105,16 +105,13 @@ add_sub_list =
 	| add_sub_list.a COMMA add_sub.b {: return a.add(b); :}
 	;
 
-comp_add_sub_expr = comp_expr 
-		  | add_sub
-		  ;
-
-comp_expr = add_sub.a EQ add_sub.b {: return new Equal(a, b); :}
+expr = add_sub.a EQ add_sub.b {: return new Equal(a, b); :}
 	   |add_sub.a NEQ add_sub.b {: return new NEqual(a, b); :} 
 	   |add_sub.a GREATER add_sub.b {: return new Greater(a, b); :} 
 	   |add_sub.a LESS add_sub.b {: return new Less(a, b); :} 
 	   |add_sub.a GEQ add_sub.b {: return new GreaterEqual(a, b); :} 
 	   |add_sub.a LEQ add_sub.b {: return new LessEqual(a, b); :} 
+	   |add_sub
 	   ;
 
 add_sub =
@@ -133,10 +130,11 @@ term =
 factor =
 	id_use
 	| int_use 
-	| LPAR add_sub.e RPAR {: return e; :}
+	| par_expr 
 	| function_call
 	;
 
+par_expr = LPAR add_sub.a RPAR {: return new ParExpr(a); :} ;
 
 id_use = ID.id {: return new IdUse(id); :} ;
 int_use = INT.i {: return new IntUse(i); :} ;

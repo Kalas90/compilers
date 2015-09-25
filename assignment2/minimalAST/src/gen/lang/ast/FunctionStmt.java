@@ -6,8 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 /**
  * @ast node
- * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:26
- * @production FunctionStmt : {@link Stmt} ::= <span class="component">{@link Expr}</span>;
+ * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:27
+ * @production FunctionStmt : {@link Stmt} ::= <span class="component">{@link FunctionCall}</span>;
 
  */
 public class FunctionStmt extends Stmt implements Cloneable {
@@ -30,7 +30,7 @@ public class FunctionStmt extends Stmt implements Cloneable {
   /**
    * @declaredat ASTNode:13
    */
-  public FunctionStmt(Expr p0) {
+  public FunctionStmt(FunctionCall p0) {
     setChild(p0, 0);
   }
   /**
@@ -130,29 +130,29 @@ public class FunctionStmt extends Stmt implements Cloneable {
     return super.is$Equal(node);    
   }
   /**
-   * Replaces the Expr child.
-   * @param node The new node to replace the Expr child.
+   * Replaces the FunctionCall child.
+   * @param node The new node to replace the FunctionCall child.
    * @apilevel high-level
    */
-  public void setExpr(Expr node) {
+  public void setFunctionCall(FunctionCall node) {
     setChild(node, 0);
   }
   /**
-   * Retrieves the Expr child.
-   * @return The current node used as the Expr child.
+   * Retrieves the FunctionCall child.
+   * @return The current node used as the FunctionCall child.
    * @apilevel high-level
    */
-  @ASTNodeAnnotation.Child(name="Expr")
-  public Expr getExpr() {
-    return (Expr) getChild(0);
+  @ASTNodeAnnotation.Child(name="FunctionCall")
+  public FunctionCall getFunctionCall() {
+    return (FunctionCall) getChild(0);
   }
   /**
-   * Retrieves the Expr child.
+   * Retrieves the FunctionCall child.
    * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The current node used as the Expr child.
+   * @return The current node used as the FunctionCall child.
    * @apilevel low-level
    */
-  public Expr getExprNoTransform() {
-    return (Expr) getChildNoTransform(0);
+  public FunctionCall getFunctionCallNoTransform() {
+    return (FunctionCall) getChildNoTransform(0);
   }
 }
