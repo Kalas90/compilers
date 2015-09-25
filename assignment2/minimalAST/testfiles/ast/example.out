@@ -2,11 +2,9 @@ Program
   List
     FunctionDec
       IdDecl
-      Opt
-        Param
-          IdDecl
-          List
-            IdDecl
+      List
+        IdDecl
+        IdDecl
       CompoundStmt
         List
           WhileStmt
@@ -37,11 +35,9 @@ Program
             IdUse
     FunctionDec
       IdDecl
-      Opt
-        Param
-          IdDecl
-          List
-            IdDecl
+      List
+        IdDecl
+        IdDecl
       CompoundStmt
         List
           IfStmt
@@ -65,7 +61,7 @@ Program
     Comment
     FunctionDec
       IdDecl
-      Opt
+      List
       CompoundStmt
         List
           DeclStmt

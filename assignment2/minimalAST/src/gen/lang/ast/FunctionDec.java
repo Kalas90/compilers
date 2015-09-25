@@ -7,7 +7,7 @@ import java.io.PrintStream;
 /**
  * @ast node
  * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:4
- * @production FunctionDec : {@link ProgramComponent} ::= <span class="component">{@link IdDecl}</span> <span class="component">[{@link Param}]</span> <span class="component">{@link CompoundStmt}</span>;
+ * @production FunctionDec : {@link ProgramComponent} ::= <span class="component">{@link IdDecl}</span> <span class="component">List:{@link IdDecl}*</span> <span class="component">{@link CompoundStmt}</span>;
 
  */
 public class FunctionDec extends ProgramComponent implements Cloneable {
@@ -26,12 +26,12 @@ public class FunctionDec extends ProgramComponent implements Cloneable {
    */
   public void init$Children() {
     children = new ASTNode[3];
-    setChild(new Opt(), 1);
+    setChild(new List(), 1);
   }
   /**
    * @declaredat ASTNode:14
    */
-  public FunctionDec(IdDecl p0, Opt<Param> p1, CompoundStmt p2) {
+  public FunctionDec(IdDecl p0, List<IdDecl> p1, CompoundStmt p2) {
     setChild(p0, 0);
     setChild(p1, 1);
     setChild(p2, 2);
@@ -159,55 +159,108 @@ public class FunctionDec extends ProgramComponent implements Cloneable {
     return (IdDecl) getChildNoTransform(0);
   }
   /**
-   * Replaces the optional node for the Param child. This is the <code>Opt</code>
-   * node containing the child Param, not the actual child!
-   * @param opt The new node to be used as the optional node for the Param child.
-   * @apilevel low-level
-   */
-  public void setParamOpt(Opt<Param> opt) {
-    setChild(opt, 1);
-  }
-  /**
-   * Replaces the (optional) Param child.
-   * @param node The new node to be used as the Param child.
+   * Replaces the List list.
+   * @param list The new list node to be used as the List list.
    * @apilevel high-level
    */
-  public void setParam(Param node) {
-    getParamOpt().setChild(node, 0);
+  public void setListList(List<IdDecl> list) {
+    setChild(list, 1);
   }
   /**
-   * Check whether the optional Param child exists.
-   * @return {@code true} if the optional Param child exists, {@code false} if it does not.
+   * Retrieves the number of children in the List list.
+   * @return Number of children in the List list.
    * @apilevel high-level
    */
-  public boolean hasParam() {
-    return getParamOpt().getNumChild() != 0;
+  public int getNumList() {
+    return getListList().getNumChild();
   }
   /**
-   * Retrieves the (optional) Param child.
-   * @return The Param child, if it exists. Returns {@code null} otherwise.
+   * Retrieves the number of children in the List list.
+   * Calling this method will not trigger rewrites.
+   * @return Number of children in the List list.
    * @apilevel low-level
    */
-  public Param getParam() {
-    return (Param) getParamOpt().getChild(0);
+  public int getNumListNoTransform() {
+    return getListListNoTransform().getNumChildNoTransform();
   }
   /**
-   * Retrieves the optional node for the Param child. This is the <code>Opt</code> node containing the child Param, not the actual child!
-   * @return The optional node for child the Param child.
+   * Retrieves the element at index {@code i} in the List list.
+   * @param i Index of the element to return.
+   * @return The element at position {@code i} in the List list.
+   * @apilevel high-level
+   */
+  public IdDecl getList(int i) {
+    return (IdDecl) getListList().getChild(i);
+  }
+  /**
+   * Check whether the List list has any children.
+   * @return {@code true} if it has at least one child, {@code false} otherwise.
+   * @apilevel high-level
+   */
+  public boolean hasList() {
+    return getListList().getNumChild() != 0;
+  }
+  /**
+   * Append an element to the List list.
+   * @param node The element to append to the List list.
+   * @apilevel high-level
+   */
+  public void addList(IdDecl node) {
+    List<IdDecl> list = (parent == null) ? getListListNoTransform() : getListList();
+    list.addChild(node);
+  }
+  /**
    * @apilevel low-level
    */
-  @ASTNodeAnnotation.OptChild(name="Param")
-  public Opt<Param> getParamOpt() {
-    return (Opt<Param>) getChild(1);
+  public void addListNoTransform(IdDecl node) {
+    List<IdDecl> list = getListListNoTransform();
+    list.addChild(node);
   }
   /**
-   * Retrieves the optional node for child Param. This is the <code>Opt</code> node containing the child Param, not the actual child!
+   * Replaces the List list element at index {@code i} with the new node {@code node}.
+   * @param node The new node to replace the old list element.
+   * @param i The list index of the node to be replaced.
+   * @apilevel high-level
+   */
+  public void setList(IdDecl node, int i) {
+    List<IdDecl> list = getListList();
+    list.setChild(node, i);
+  }
+  /**
+   * Retrieves the List list.
+   * @return The node representing the List list.
+   * @apilevel high-level
+   */
+  @ASTNodeAnnotation.ListChild(name="List")
+  public List<IdDecl> getListList() {
+    List<IdDecl> list = (List<IdDecl>) getChild(1);
+    return list;
+  }
+  /**
+   * Retrieves the List list.
    * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The optional node for child Param.
+   * @return The node representing the List list.
    * @apilevel low-level
    */
-  public Opt<Param> getParamOptNoTransform() {
-    return (Opt<Param>) getChildNoTransform(1);
+  public List<IdDecl> getListListNoTransform() {
+    return (List<IdDecl>) getChildNoTransform(1);
+  }
+  /**
+   * Retrieves the List list.
+   * @return The node representing the List list.
+   * @apilevel high-level
+   */
+  public List<IdDecl> getLists() {
+    return getListList();
+  }
+  /**
+   * Retrieves the List list.
+   * <p><em>This method does not invoke AST transformations.</em></p>
+   * @return The node representing the List list.
+   * @apilevel low-level
+   */
+  public List<IdDecl> getListsNoTransform() {
+    return getListListNoTransform();
   }
   /**
    * Replaces the CompoundStmt child.
