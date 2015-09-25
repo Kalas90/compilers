@@ -6,7 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 /**
  * @ast node
- * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:29
+ * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:28
  * @production WhileStmt : {@link Stmt} ::= <span class="component">{@link Expr}</span> <span class="component">{@link CompoundStmt}</span>;
 
  */

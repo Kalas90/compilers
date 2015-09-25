@@ -1,0 +1,22 @@
+Program
+  List
+    FunctionDec
+      IdDecl
+      List
+      CompoundStmt
+        List
+          AssignStmt
+            IdUse
+            Greater
+              Add
+                Mul
+                  IdUse
+                  IdUse
+                Mul
+                  IdUse
+                  IdUse
+              Add
+                IntUse
+                Div
+                  IntUse
+                  IdUse

@@ -9,12 +9,11 @@
 	}
 :};
 
-%terminals ID, INT, LPAR, RPAR, MUL, DIV, MOD, PLUS, MINUS, NEQ, EQ, GEQ, LEQ, GREATER, LESS, COMMA, INTW, LBR, RBR, RETURN, ASSIGN, IF, ELSE, WHILE, SEMI, COMMENT;
+%terminals ID, INT, LPAR, RPAR, MUL, DIV, MOD, PLUS, MINUS, NEQ, EQ, GEQ, LEQ, GREATER, LESS, COMMA, INTW, LBR, RBR, RETURN, ASSIGN, IF, ELSE, WHILE, SEMI;
 
 %typeof program = "Program";
 %typeof program_component_list = "List";
 %typeof program_component = "ProgramComponent";
-%typeof comment = "ProgramComponent";
 %typeof function_dec = "ProgramComponent";
 %typeof param_list = "List";
 %typeof stmt_list = "List";
@@ -35,10 +34,10 @@
 %typeof int_use = "IntUse";
 %typeof id_decl = "IdDecl";
 %typeof id_use = "IdUse";
-%typeof function_factor = "FunctionFactor";
+%typeof function_call = "FunctionCall";
 %typeof param_opt = "List";
 %typeof arg_opt = "List";
-
+%typeof comp_add_sub_expr = "Expr";
 %goal program;
 
 program = program_component_list.a {: return new Program(a); :} ;
@@ -50,7 +49,6 @@ program_component_list =
 
 program_component = 
 	function_dec	
-	| comment 	
 	;
 
 function_dec = id_decl.a LPAR param_opt.b RPAR compound_stmt.c {: return new FunctionDec(a, b, c); :} ;
@@ -62,8 +60,6 @@ param_opt = /* epsilon */ {: return new List(); :}
 param_list = param_list.a COMMA id_decl.b {: return a.add(b); :}
 	| id_decl.a {: return new List(a); :}
 	;
-
-comment = COMMENT {: return new Comment(); :} ;
 
 stmt_list =
 	stmt_list.a stmt.b {: return a.add(b); :}
@@ -81,17 +77,17 @@ stmt =
 
 compound_stmt = LBR stmt_list.a RBR {: return new CompoundStmt(a); :} ;
 
-function_factor = id_use.a LPAR arg_opt.b RPAR {: return new FunctionFactor(a, b); :} ;
-function_stmt = function_factor.a SEMI {: return new FunctionStmt(a); :} ;
+function_call = id_use.a LPAR arg_opt.b RPAR {: return new FunctionCall(a, b); :} ;
+function_stmt = function_call.a SEMI {: return new FunctionStmt(a); :} ;
 
 return_stmt = RETURN add_sub.a SEMI{: return new ReturnStmt(a); :} ;
 
-assign_stmt = id_use.a ASSIGN add_sub.b SEMI {: return new AssignStmt(a, b); :} ;
+assign_stmt = id_use.a ASSIGN comp_add_sub_expr.b SEMI {: return new AssignStmt(a, b); :} ;
 
 decl_stmt = id_decl.a opt_assign.b SEMI {: return new DeclStmt(a, b); :} ;
 
 opt_assign = /*epsilon*/ {: return new Opt(); :}
-	    |ASSIGN add_sub.a {: return new Opt(a); :}
+	    |ASSIGN comp_add_sub_expr.a {: return new Opt(a); :}
 	    ;
 
 if_stmt = IF LPAR comp_expr.a RPAR compound_stmt.b {: return new IfStmt(a, b, new CompoundStmt(new List())); :}
@@ -108,6 +104,10 @@ add_sub_list =
 	add_sub.a {: return new List().add(a); :}
 	| add_sub_list.a COMMA add_sub.b {: return a.add(b); :}
 	;
+
+comp_add_sub_expr = comp_expr 
+		  | add_sub
+		  ;
 
 comp_expr = add_sub.a EQ add_sub.b {: return new Equal(a, b); :}
 	   |add_sub.a NEQ add_sub.b {: return new NEqual(a, b); :} 
@@ -133,8 +133,8 @@ term =
 factor =
 	id_use
 	| int_use 
-	| LPAR add_sub RPAR 
-	| function_factor
+	| LPAR add_sub.e RPAR {: return e; :}
+	| function_call
 	;
 
 

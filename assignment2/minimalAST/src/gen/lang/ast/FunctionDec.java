@@ -7,7 +7,7 @@ import java.io.PrintStream;
 /**
  * @ast node
  * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:4
- * @production FunctionDec : {@link ProgramComponent} ::= <span class="component">{@link IdDecl}</span> <span class="component">List:{@link IdDecl}*</span> <span class="component">{@link CompoundStmt}</span>;
+ * @production FunctionDec : {@link ProgramComponent} ::= <span class="component">{@link IdDecl}</span> <span class="component">Param:{@link IdDecl}*</span> <span class="component">{@link CompoundStmt}</span>;
 
  */
 public class FunctionDec extends ProgramComponent implements Cloneable {
@@ -159,108 +159,108 @@ public class FunctionDec extends ProgramComponent implements Cloneable {
     return (IdDecl) getChildNoTransform(0);
   }
   /**
-   * Replaces the List list.
-   * @param list The new list node to be used as the List list.
+   * Replaces the Param list.
+   * @param list The new list node to be used as the Param list.
    * @apilevel high-level
    */
-  public void setListList(List<IdDecl> list) {
+  public void setParamList(List<IdDecl> list) {
     setChild(list, 1);
   }
   /**
-   * Retrieves the number of children in the List list.
-   * @return Number of children in the List list.
+   * Retrieves the number of children in the Param list.
+   * @return Number of children in the Param list.
    * @apilevel high-level
    */
-  public int getNumList() {
-    return getListList().getNumChild();
+  public int getNumParam() {
+    return getParamList().getNumChild();
   }
   /**
-   * Retrieves the number of children in the List list.
+   * Retrieves the number of children in the Param list.
    * Calling this method will not trigger rewrites.
-   * @return Number of children in the List list.
+   * @return Number of children in the Param list.
    * @apilevel low-level
    */
-  public int getNumListNoTransform() {
-    return getListListNoTransform().getNumChildNoTransform();
+  public int getNumParamNoTransform() {
+    return getParamListNoTransform().getNumChildNoTransform();
   }
   /**
-   * Retrieves the element at index {@code i} in the List list.
+   * Retrieves the element at index {@code i} in the Param list.
    * @param i Index of the element to return.
-   * @return The element at position {@code i} in the List list.
+   * @return The element at position {@code i} in the Param list.
    * @apilevel high-level
    */
-  public IdDecl getList(int i) {
-    return (IdDecl) getListList().getChild(i);
+  public IdDecl getParam(int i) {
+    return (IdDecl) getParamList().getChild(i);
   }
   /**
-   * Check whether the List list has any children.
+   * Check whether the Param list has any children.
    * @return {@code true} if it has at least one child, {@code false} otherwise.
    * @apilevel high-level
    */
-  public boolean hasList() {
-    return getListList().getNumChild() != 0;
+  public boolean hasParam() {
+    return getParamList().getNumChild() != 0;
   }
   /**
-   * Append an element to the List list.
-   * @param node The element to append to the List list.
+   * Append an element to the Param list.
+   * @param node The element to append to the Param list.
    * @apilevel high-level
    */
-  public void addList(IdDecl node) {
-    List<IdDecl> list = (parent == null) ? getListListNoTransform() : getListList();
+  public void addParam(IdDecl node) {
+    List<IdDecl> list = (parent == null) ? getParamListNoTransform() : getParamList();
     list.addChild(node);
   }
   /**
    * @apilevel low-level
    */
-  public void addListNoTransform(IdDecl node) {
-    List<IdDecl> list = getListListNoTransform();
+  public void addParamNoTransform(IdDecl node) {
+    List<IdDecl> list = getParamListNoTransform();
     list.addChild(node);
   }
   /**
-   * Replaces the List list element at index {@code i} with the new node {@code node}.
+   * Replaces the Param list element at index {@code i} with the new node {@code node}.
    * @param node The new node to replace the old list element.
    * @param i The list index of the node to be replaced.
    * @apilevel high-level
    */
-  public void setList(IdDecl node, int i) {
-    List<IdDecl> list = getListList();
+  public void setParam(IdDecl node, int i) {
+    List<IdDecl> list = getParamList();
     list.setChild(node, i);
   }
   /**
-   * Retrieves the List list.
-   * @return The node representing the List list.
+   * Retrieves the Param list.
+   * @return The node representing the Param list.
    * @apilevel high-level
    */
-  @ASTNodeAnnotation.ListChild(name="List")
-  public List<IdDecl> getListList() {
+  @ASTNodeAnnotation.ListChild(name="Param")
+  public List<IdDecl> getParamList() {
     List<IdDecl> list = (List<IdDecl>) getChild(1);
     return list;
   }
   /**
-   * Retrieves the List list.
+   * Retrieves the Param list.
    * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The node representing the List list.
+   * @return The node representing the Param list.
    * @apilevel low-level
    */
-  public List<IdDecl> getListListNoTransform() {
+  public List<IdDecl> getParamListNoTransform() {
     return (List<IdDecl>) getChildNoTransform(1);
   }
   /**
-   * Retrieves the List list.
-   * @return The node representing the List list.
+   * Retrieves the Param list.
+   * @return The node representing the Param list.
    * @apilevel high-level
    */
-  public List<IdDecl> getLists() {
-    return getListList();
+  public List<IdDecl> getParams() {
+    return getParamList();
   }
   /**
-   * Retrieves the List list.
+   * Retrieves the Param list.
    * <p><em>This method does not invoke AST transformations.</em></p>
-   * @return The node representing the List list.
+   * @return The node representing the Param list.
    * @apilevel low-level
    */
-  public List<IdDecl> getListsNoTransform() {
-    return getListListNoTransform();
+  public List<IdDecl> getParamsNoTransform() {
+    return getParamListNoTransform();
   }
   /**
    * Replaces the CompoundStmt child.
