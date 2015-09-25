@@ -51,14 +51,13 @@ Program
             CompoundStmt
               List
           ReturnStmt
-            FunctionFactor
+            FunctionCall
               IdUse
               List
                 IdUse
                 Mod
                   IdUse
                   IdUse
-    Comment
     FunctionDec
       IdDecl
       List
@@ -72,28 +71,28 @@ Program
             Opt
           AssignStmt
             IdUse
-            FunctionFactor
+            FunctionCall
               IdUse
               List
           AssignStmt
             IdUse
-            FunctionFactor
+            FunctionCall
               IdUse
               List
           FunctionStmt
-            FunctionFactor
+            FunctionCall
               IdUse
               List
-                FunctionFactor
+                FunctionCall
                   IdUse
                   List
                     IdUse
                     IdUse
           FunctionStmt
-            FunctionFactor
+            FunctionCall
               IdUse
               List
-                FunctionFactor
+                FunctionCall
                   IdUse
                   List
                     IdUse
@@ -102,18 +101,18 @@ Program
             IdDecl
             Opt
               Sub
-                FunctionFactor
+                FunctionCall
                   IdUse
                   List
                     IdUse
                     IdUse
-                FunctionFactor
+                FunctionCall
                   IdUse
                   List
                     IdUse
                     IdUse
           FunctionStmt
-            FunctionFactor
+            FunctionCall
               IdUse
               List
                 IdUse

@@ -28,9 +28,6 @@ public abstract class TraversingVisitor implements lang.ast.Visitor {
 	public Object visit(FunctionDec node, Object data) {
 		return visitChildren(node, data);
 	}
-	public Object visit(Comment node, Object data) {
-		return visitChildren(node, data);
-	}
 	public Object visit(IntUse node, Object data) {
 		return visitChildren(node, data);
 	}
@@ -40,7 +37,7 @@ public abstract class TraversingVisitor implements lang.ast.Visitor {
 	public Object visit(IdUse node, Object data) {
 		return visitChildren(node, data);
 	}
-	public Object visit(FunctionFactor node, Object data) {
+	public Object visit(FunctionCall node, Object data) {
 		return visitChildren(node, data);
 	}
 	public Object visit(Add node, Object data) {

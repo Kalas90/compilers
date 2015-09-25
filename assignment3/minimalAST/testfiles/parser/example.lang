@@ -14,9 +14,7 @@ int gcd2(int a, int b) {
 	}
 	return gcd2(b, a % b);
 }
-/* Test two different implementations of GCD algorithms and print the result.
-* The results should be equal provided that both inputs are positive.
-*/
+
 int main() {
 	int a;
 	int b;

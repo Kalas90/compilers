@@ -32,8 +32,8 @@ public class Compiler {
 			LangScanner scanner = new LangScanner(new FileReader(filename));
 			LangParser parser = new LangParser();
 			Program program = (Program) parser.parse(scanner);
-			program.prettyPrint(System.out);
-            System.out.println("Found interactive statement(s): " + CheckInteractiveVisitor.result(program));
+			
+			System.out.println("Found interactive statement(s): " + MsnVisitor.result(program));
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found!");
 			System.exit(1);

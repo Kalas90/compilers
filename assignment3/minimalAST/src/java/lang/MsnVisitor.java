@@ -10,15 +10,19 @@ public class MsnVisitor extends TraversingVisitor {
     public static int result(ASTNode n) {
         MsnVisitor v = new MsnVisitor();
         n.accept(v, null);
-        return v.isInteractive;
+        return v.maxDepth;
     }
     
     // state variables
-    private boolean isInteractive = false;
-
-    public Object visit(Program node, Object data) {
-	
-	isInteractive = true;
-        return data;
+    private int maxDepth = 1;
+    private int currentDepth = 1;
+    
+    public Object visit(CompoundStmt node, Object data) {
+	currentDepth++;
+        if(currentDepth > maxDepth) maxDepth = currentDepth;
+	super.visit(node, data);
+	currentDepth--;
+	return data;
     }
+    
 }
