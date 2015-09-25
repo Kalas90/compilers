@@ -36,12 +36,12 @@ public final class LangScanner extends beaver.Scanner {
    * Translates characters to character classes
    */
   private static final String ZZ_CMAP_PACKED = 
-    "\11\0\1\1\1\2\1\0\1\1\1\1\22\0\1\1\1\20\3\0"+
-    "\1\15\2\0\1\13\1\14\1\7\1\16\1\24\1\17\1\6\1\5"+
-    "\12\3\1\0\1\37\1\23\1\21\1\22\2\0\32\4\6\0\4\4"+
-    "\1\30\1\32\1\4\1\36\1\10\2\4\1\33\1\4\1\11\3\4"+
-    "\1\27\1\34\1\12\1\31\1\4\1\35\3\4\1\25\1\6\1\26"+
-    "\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff92\0";
+    "\11\0\1\2\1\2\1\3\1\2\1\2\22\0\1\2\1\17\3\0"+
+    "\1\14\2\0\1\11\1\12\1\13\1\15\1\23\1\16\1\0\1\1"+
+    "\12\4\1\0\1\36\1\22\1\20\1\21\2\0\32\5\6\0\4\5"+
+    "\1\27\1\31\1\5\1\35\1\6\2\5\1\32\1\5\1\7\3\5"+
+    "\1\26\1\33\1\10\1\30\1\5\1\34\3\5\1\24\1\0\1\25"+
+    "\7\0\1\3\u1fa2\0\1\3\1\3\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
 
   /** 
    * Translates characters to character classes
@@ -54,14 +54,14 @@ public final class LangScanner extends beaver.Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\4"+
-    "\1\7\1\10\1\11\1\12\1\13\1\1\1\14\1\15"+
-    "\1\16\1\17\1\20\1\21\3\4\1\22\1\0\2\23"+
-    "\1\4\1\24\1\25\1\26\1\27\1\30\3\4\1\31"+
-    "\4\4\1\32\2\4\1\33\1\34";
+    "\1\0\1\1\1\2\1\3\1\4\2\5\1\6\1\7"+
+    "\1\10\1\11\1\12\1\13\1\1\1\14\1\15\1\16"+
+    "\1\17\1\20\1\21\3\5\1\22\1\0\1\23\1\5"+
+    "\1\24\1\25\1\26\1\27\1\30\3\5\1\31\4\5"+
+    "\1\32\2\5\1\33\1\34";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[46];
+    int [] result = new int[45];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -86,15 +86,15 @@ public final class LangScanner extends beaver.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\40\0\40\0\100\0\140\0\200\0\200\0\240"+
-    "\0\40\0\40\0\40\0\40\0\40\0\300\0\340\0\u0100"+
-    "\0\u0120\0\40\0\40\0\40\0\u0140\0\u0160\0\u0180\0\40"+
-    "\0\200\0\40\0\200\0\u01a0\0\140\0\40\0\40\0\40"+
-    "\0\40\0\u01c0\0\u01e0\0\u0200\0\140\0\u0220\0\u0240\0\u0260"+
-    "\0\u0280\0\140\0\u02a0\0\u02c0\0\140\0\140";
+    "\0\0\0\37\0\76\0\37\0\135\0\174\0\233\0\37"+
+    "\0\37\0\76\0\37\0\37\0\37\0\272\0\331\0\370"+
+    "\0\u0117\0\37\0\37\0\37\0\u0136\0\u0155\0\u0174\0\37"+
+    "\0\76\0\76\0\u0193\0\174\0\37\0\37\0\37\0\37"+
+    "\0\u01b2\0\u01d1\0\u01f0\0\174\0\u020f\0\u022e\0\u024d\0\u026c"+
+    "\0\174\0\u028b\0\u02aa\0\174\0\174";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[46];
+    int [] result = new int[45];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -117,29 +117,26 @@ public final class LangScanner extends beaver.Scanner {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\2\3\1\4\1\5\1\6\1\2\1\7\1\10"+
-    "\2\5\1\11\1\12\1\13\1\14\1\15\1\16\1\17"+
-    "\1\20\1\21\1\22\1\23\1\24\1\25\1\26\4\5"+
-    "\1\27\1\5\1\30\43\0\1\4\37\0\2\5\3\0"+
-    "\3\5\14\0\10\5\3\0\1\31\2\0\1\32\1\31"+
-    "\1\33\33\0\2\5\3\0\1\5\1\34\1\5\14\0"+
-    "\3\5\1\35\4\5\22\0\1\36\37\0\1\37\37\0"+
-    "\1\40\37\0\1\41\21\0\2\5\3\0\3\5\14\0"+
-    "\1\5\1\42\6\5\4\0\2\5\3\0\3\5\14\0"+
-    "\4\5\1\43\3\5\4\0\2\5\3\0\3\5\14\0"+
-    "\7\5\1\44\4\0\2\5\3\0\2\5\1\45\14\0"+
-    "\10\5\4\0\2\5\3\0\2\5\1\46\14\0\10\5"+
-    "\4\0\2\5\3\0\3\5\14\0\5\5\1\47\2\5"+
-    "\4\0\2\5\3\0\1\50\2\5\14\0\10\5\4\0"+
-    "\2\5\3\0\3\5\14\0\2\5\1\51\5\5\4\0"+
-    "\2\5\3\0\3\5\14\0\1\5\1\52\6\5\4\0"+
-    "\2\5\3\0\3\5\14\0\4\5\1\53\3\5\4\0"+
-    "\2\5\3\0\3\5\14\0\1\54\7\5\4\0\2\5"+
-    "\3\0\3\5\14\0\1\5\1\55\6\5\4\0\2\5"+
-    "\3\0\1\5\1\56\1\5\14\0\10\5\1\0";
+    "\1\2\1\3\1\4\1\2\1\5\1\6\1\7\2\6"+
+    "\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17"+
+    "\1\20\1\21\1\22\1\23\1\24\1\25\1\26\4\6"+
+    "\1\27\1\6\1\30\37\0\1\31\1\32\1\31\1\0"+
+    "\7\31\1\32\23\31\4\0\1\5\36\0\5\6\15\0"+
+    "\10\6\5\0\3\6\1\33\1\6\15\0\3\6\1\34"+
+    "\4\6\21\0\1\35\36\0\1\36\36\0\1\37\36\0"+
+    "\1\40\22\0\5\6\15\0\1\6\1\41\6\6\5\0"+
+    "\5\6\15\0\4\6\1\42\3\6\5\0\5\6\15\0"+
+    "\7\6\1\43\5\0\4\6\1\44\15\0\10\6\5\0"+
+    "\4\6\1\45\15\0\10\6\5\0\5\6\15\0\5\6"+
+    "\1\46\2\6\5\0\2\6\1\47\2\6\15\0\10\6"+
+    "\5\0\5\6\15\0\2\6\1\50\5\6\5\0\5\6"+
+    "\15\0\1\6\1\51\6\6\5\0\5\6\15\0\4\6"+
+    "\1\52\3\6\5\0\5\6\15\0\1\53\7\6\5\0"+
+    "\5\6\15\0\1\6\1\54\6\6\5\0\3\6\1\55"+
+    "\1\6\15\0\10\6\1\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[736];
+    int [] result = new int[713];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -177,11 +174,11 @@ public final class LangScanner extends beaver.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\2\11\5\1\5\11\4\1\3\11\3\1\1\11"+
-    "\1\0\1\11\3\1\4\11\15\1";
+    "\1\0\1\11\1\1\1\11\3\1\2\11\1\1\3\11"+
+    "\4\1\3\11\3\1\1\11\1\0\3\1\4\11\15\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[46];
+    int [] result = new int[45];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -282,7 +279,7 @@ public final class LangScanner extends beaver.Scanner {
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 134) {
+    while (i < 144) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
@@ -631,31 +628,31 @@ public final class LangScanner extends beaver.Scanner {
           }
         case 29: break;
         case 2: 
-          { 
+          { return sym(Terminals.DIV);
           }
         case 30: break;
         case 3: 
-          { return sym(Terminals.INT);
+          { 
           }
         case 31: break;
         case 4: 
-          { return sym(Terminals.ID);
+          { return sym(Terminals.INT);
           }
         case 32: break;
         case 5: 
-          { return sym(Terminals.DIV);
+          { return sym(Terminals.ID);
           }
         case 33: break;
         case 6: 
-          { return sym(Terminals.MUL);
+          { return sym(Terminals.LPAR);
           }
         case 34: break;
         case 7: 
-          { return sym(Terminals.LPAR);
+          { return sym(Terminals.RPAR);
           }
         case 35: break;
         case 8: 
-          { return sym(Terminals.RPAR);
+          { return sym(Terminals.MUL);
           }
         case 36: break;
         case 9: 

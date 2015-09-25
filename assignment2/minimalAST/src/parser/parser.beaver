@@ -32,6 +32,7 @@
 %typeof term = "Expr";
 %typeof factor = "Expr";
 %typeof add_sub_list = "List";
+%typeof int_use = "IntUse";
 %typeof id_decl = "IdDecl";
 %typeof id_use = "IdUse";
 %typeof function_factor = "FunctionFactor";

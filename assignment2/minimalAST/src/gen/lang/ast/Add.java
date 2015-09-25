@@ -6,7 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 /**
  * @ast node
- * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:10
+ * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:14
  * @production Add : {@link BinExpr};
 
  */

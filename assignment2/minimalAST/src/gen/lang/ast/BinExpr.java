@@ -6,11 +6,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 /**
  * @ast node
- * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:8
+ * @declaredat /Users/Klas/School/edan65/assignment2/minimalAST/src/jastadd/lang.ast:9
  * @production BinExpr : {@link Expr} ::= <span class="component">Left:{@link Expr}</span> <span class="component">Right:{@link Expr}</span>;
 
  */
-public class BinExpr extends Expr implements Cloneable {
+public abstract class BinExpr extends Expr implements Cloneable {
   /**
    * @declaredat ASTNode:1
    */
@@ -64,72 +64,32 @@ public class BinExpr extends Expr implements Cloneable {
     return node;
   }
   /**
-   * @apilevel internal
-   * @declaredat ASTNode:45
-   */
-  public BinExpr copy() {
-    try {
-      BinExpr node = (BinExpr) clone();
-      node.parent = null;
-      if (children != null) {
-        node.children = (ASTNode[]) children.clone();
-      }
-      return node;
-    } catch (CloneNotSupportedException e) {
-      throw new Error("Error: clone not supported for " + getClass().getName());
-    }
-  }
-  /**
    * Create a deep copy of the AST subtree at this node.
    * The copy is dangling, i.e. has no parent.
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
    * @deprecated Please use treeCopy or treeCopyNoTransform instead
-   * @declaredat ASTNode:64
+   * @declaredat ASTNode:49
    */
   @Deprecated
-  public BinExpr fullCopy() {
-    return treeCopyNoTransform();
-  }
+  public abstract BinExpr fullCopy();
   /**
    * Create a deep copy of the AST subtree at this node.
    * The copy is dangling, i.e. has no parent.
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
-   * @declaredat ASTNode:74
+   * @declaredat ASTNode:57
    */
-  public BinExpr treeCopyNoTransform() {
-    BinExpr tree = (BinExpr) copy();
-    if (children != null) {
-      for (int i = 0; i < children.length; ++i) {
-        ASTNode child = (ASTNode) children[i];
-        if (child != null) {
-          child = child.treeCopyNoTransform();
-          tree.setChild(child, i);
-        }
-      }
-    }
-    return tree;
-  }
+  public abstract BinExpr treeCopyNoTransform();
   /**
    * Create a deep copy of the AST subtree at this node.
    * The subtree of this node is traversed to trigger rewrites before copy.
    * The copy is dangling, i.e. has no parent.
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
-   * @declaredat ASTNode:94
+   * @declaredat ASTNode:65
    */
-  public BinExpr treeCopy() {
-    doFullTraversal();
-    return treeCopyNoTransform();
-  }
-  /**
-   * @apilevel internal
-   * @declaredat ASTNode:101
-   */
-  protected boolean is$Equal(ASTNode node) {
-    return super.is$Equal(node);    
-  }
+  public abstract BinExpr treeCopy();
   /**
    * Replaces the Left child.
    * @param node The new node to replace the Left child.

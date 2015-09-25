@@ -6,7 +6,7 @@ Comment: ProgramComponent;
 
 Param : Opt ::= First:IdDecl IdDecl*;
 abstract Expr;
-BinExpr: Expr ::= Left:Expr Right:Expr;
+abstract BinExpr: Expr ::= Left:Expr Right:Expr;
 IdUse: Expr ::= <ID>; 
 IntUse: Expr ::= <INT>;
 FunctionFactor : Expr ::= IdUse Expr*;
