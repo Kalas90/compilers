@@ -12,9 +12,8 @@
 %terminals ID, INT, LPAR, RPAR, MUL, DIV, MOD, PLUS, MINUS, NEQ, EQ, GEQ, LEQ, GREATER, LESS, COMMA, INTW, LBR, RBR, RETURN, ASSIGN, IF, ELSE, WHILE, SEMI;
 
 %typeof program = "Program";
-%typeof program_component_list = "List";
-%typeof program_component = "ProgramComponent";
-%typeof function_dec = "ProgramComponent";
+%typeof function_dec_list = "List";
+%typeof function_dec = "FunctionDec";
 %typeof param_list = "List";
 %typeof stmt_list = "List";
 %typeof stmt = "Stmt";
@@ -38,17 +37,14 @@
 %typeof function_call = "FunctionCall";
 %typeof param_opt = "List";
 %typeof arg_opt = "List";
+%typeof else_opt = "Opt";
 %goal program;
 
-program = program_component_list.a {: return new Program(a); :} ;
+program = function_dec_list.a {: return new Program(a); :} ;
 
-program_component_list =
-	program_component.a {: return new List().add(a); :}
-	| program_component_list.a program_component.b {: return a.add(b); :}
-	;
-
-program_component = 
-	function_dec	
+function_dec_list=
+	function_dec.a {: return new List().add(a); :}
+	| function_dec_list.a function_dec.b {: return a.add(b); :}
 	;
 
 function_dec = id_decl.a LPAR param_opt.b RPAR compound_stmt.c {: return new FunctionDec(a, b, c); :} ;
@@ -90,9 +86,11 @@ opt_assign = /*epsilon*/ {: return new Opt(); :}
 	    |ASSIGN expr.a {: return new Opt(a); :}
 	    ;
 
-if_stmt = IF LPAR expr.a RPAR compound_stmt.b {: return new IfStmt(a, b, new CompoundStmt(new List())); :}
-	| IF LPAR expr.a RPAR compound_stmt.b ELSE compound_stmt.c {: return new IfStmt(a, b, c); :}
-	;
+if_stmt = IF LPAR expr.a RPAR compound_stmt.b else_opt.c {: return new IfStmt(a, b, c); :};
+
+else_opt = ELSE compound_stmt.a {: return new Opt(a); :}
+	  |/* epsilon */ {: return new Opt(); :}
+	  ;
 
 while_stmt = WHILE LPAR expr.a RPAR compound_stmt.b {: return new WhileStmt(a, b); :} ;
 

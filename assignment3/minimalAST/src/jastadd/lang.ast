@@ -1,7 +1,6 @@
-Program ::= ProgramComponent*;
+Program ::= FunctionDec*; 
 
-abstract ProgramComponent;
-FunctionDec: ProgramComponent ::= IdDecl Param:IdDecl* CompoundStmt;
+FunctionDec ::= IdDecl Param:IdDecl* CompoundStmt;
 
 abstract Expr;
 abstract BinExpr: Expr ::= Left:Expr Right:Expr;
@@ -27,7 +26,7 @@ abstract Stmt;
 FunctionStmt : Stmt ::= FunctionCall;
 ReturnStmt : Stmt ::= Expr;
 WhileStmt : Stmt ::= Expr CompoundStmt;
-IfStmt : Stmt ::= If:Expr Then:CompoundStmt Else:CompoundStmt;
+IfStmt : Stmt ::= If:Expr Then:CompoundStmt [Else:CompoundStmt];
 AssignStmt: Stmt ::= IdUse Expr;
 DeclStmt : Stmt ::= IdDecl [Expr];
 

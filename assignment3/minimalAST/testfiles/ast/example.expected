@@ -24,13 +24,14 @@ Program
                         Sub
                           IdUse
                           IdUse
-                  CompoundStmt
-                    List
-                      AssignStmt
-                        IdUse
-                        Sub
+                  Opt
+                    CompoundStmt
+                      List
+                        AssignStmt
                           IdUse
-                          IdUse
+                          Sub
+                            IdUse
+                            IdUse
           ReturnStmt
             IdUse
     FunctionDec
@@ -48,8 +49,7 @@ Program
               List
                 ReturnStmt
                   IdUse
-            CompoundStmt
-              List
+            Opt
           ReturnStmt
             FunctionCall
               IdUse
