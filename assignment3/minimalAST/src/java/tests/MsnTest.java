@@ -7,6 +7,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import lang.ast.Program;
+import lang.MsnVisitor;
 
 /**
  * Tests AST dumping
@@ -33,8 +34,9 @@ public class MsnTest extends AbstractParameterizedTest {
 	@Test
 	public void runTest() throws Exception {
 		Program program = (Program) parse(inFile);
-		//String actual = program.dump);
-		compareOutput(actual, outFile, expectedFile);
+		int actual = MsnVisitor.result(program);
+		String actualString = String.valueOf(actual);
+		compareOutput(actualString,outFile, expectedFile);
 	}
 
 	@SuppressWarnings("javadoc")

@@ -14,8 +14,8 @@ public class MsnVisitor extends TraversingVisitor {
     }
     
     // state variables
-    private int maxDepth = 1;
-    private int currentDepth = 1;
+    private int maxDepth = 0;
+    private int currentDepth = 0;
     
     public Object visit(CompoundStmt node, Object data) {
 	currentDepth++;

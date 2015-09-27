@@ -104,6 +104,9 @@ aspect Visitor {
 	public Object IfStmt.accept(Visitor visitor, Object data) {
 		return visitor.visit(this, data);
 	}
+	public Object AssignStmt.accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
+	}
 	public Object DeclStmt.accept(Visitor visitor, Object data) {
 		return visitor.visit(this, data);
 	}
