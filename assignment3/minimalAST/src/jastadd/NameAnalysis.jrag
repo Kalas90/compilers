@@ -1,0 +1,128 @@
+import java.util.Set;
+import java.util.HashSet;
+
+aspect NameAnalysis {
+	public class SymbolTable {
+		private static final SymbolTable BOTTOM = new SymbolTable() {
+			@Override
+			public boolean declare(String name) {
+				throw new UnsupportedOperationException(
+						"can not add name to bottom of name stack");
+			}
+			@Override
+			public boolean lookup(String name) {
+				return false;
+			}
+		};
+
+		private final SymbolTable tail;
+		private final Map<String, String> names = new HashMap<String, String>();
+		
+		public SymbolTable() {
+			tail = BOTTOM;
+		}
+
+		public SymbolTable(SymbolTable tail) {
+			this.tail = tail;
+		}
+
+		/**
+		 * Attempt to add a new name to the symbol table.
+		 * @return true if name was not already declared
+		 */
+		public boolean declare(String name, String type) {
+		       	if(names.containsKey(name)) {
+				if(!names.get(name).equals(type)) {
+					if(type.equals("func")) {
+						if(lookup(name, type)) return false;
+					}
+					names.put(name, type);
+					return true;
+				}
+				return false;
+			}
+			names.put(name, type);
+			return true;
+		}
+
+		/**
+		 * @return true if name has been declared
+		 */
+		public boolean lookup(String name, String type) {
+		        if(names.contains(name) {
+		       		if(names.get(name).equals(type))
+				return true;
+			}
+			return tail.lookup(name, type);
+		}
+
+		/**
+		 * Push a new table on the stack.
+		 * @return the new top of the stack
+		 */
+		public SymbolTable push() {
+			return new SymbolTable(this);
+		}
+	}
+
+	/**
+	 * @param err where to write error messages
+	 */
+	public void Program.checkNames(PrintStream err) {
+		SymbolTable symbols = new SymbolTable();
+		checkNames(err, symbols);
+	}
+
+	/**
+	 * @param err where to write error messages
+	 * @param symbols symbol table
+	 */
+	public void ASTNode.checkNames(PrintStream err, SymbolTable symbols) {
+		for (int i = 0; i < getNumChild(); ++i) {
+			getChild(i).checkNames(err, symbols);
+		}
+	}
+
+	public void FunctionDec.checkNames(PrintStream err, SymbolTable symbols) {
+		getIdDecl().checkNames(err, symbols, "func");
+		getCompoundStmt().checkNames(err, symbols.push(), getParamList());
+	}
+		
+
+	public void CompoundStmt.checkNames(PrintStream err, SymbolTable symbols, List<IdDecl> param) {    	  
+		for (int i = 0; i < param.size(); ++i) {
+		    	 param.get(i).checkNames(err, symbols, "id");
+		}
+		for (int i = 0; i < getNumStmt(); ++i) {
+		    	 getStmt().checkNames(err, symbols);
+		}
+	}
+
+	public void Ask.checkNames(PrintStream err, SymbolTable symbols) {
+		if (hasDefault()) {
+			getDefault().checkNames(err, symbols.push());
+		}
+	}
+
+	public void IdDecl.checkNames(PrintStream err, SymbolTable symbols) {
+		if (!symbols.declare(getID())) {
+			err.format("Error at line %d: symbol \'%s\' is already declared!", getLine(), getID());
+			err.println();
+		}
+	}
+
+	public void IdUse.checkNames(PrintStream err, SymbolTable symbols) {
+		if (!symbols.lookup(getID())) {
+			err.format("Error at line %d: symbol \'%s\' has not been declared before this use!", getLine(), getID());
+			err.println();
+		}
+	}
+
+	/**
+	 * Helper method
+	 * @return line number of this token
+	 */
+	public int ASTNode.getLine() {
+		return getLine(getStart());
+	}
+}
