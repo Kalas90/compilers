@@ -2,18 +2,24 @@ aspect NameAnalysis {
 
 	inh IdDecl IdDecl.lookup(String name);
 	
+	eq Program.getFunctionDec(0).lookup(String name) = unknownDecl();
+
 	syn IdDecl DeclStmt.localLookup(String name) {
 		if (getIdDecl().getID().equals(name)) {
 			return getIdDecl();
 		}
-		return null; 
+		return unknownDecl(); 
 	}
 	
 	eq DeclStmt.getIdDecl().lookup(String name) {
 		IdDecl decl = localLookup(name);
-		if(decl != null)
-			return decl;
-		return null;
+		return !decl.isUnknown() ? decl : lookup(name);
+	}
+
+	inh IdDecl DeclStmt.lookup(String name);
+	syn boolean IdDecl.isMultiplyDeclared() {
+		System.out.println("looking up multiplyDeclared");
+		return lookup(getID()) != this;
 	}
 }
 

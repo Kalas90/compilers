@@ -32,3 +32,4 @@ DeclStmt : Stmt ::= IdDecl [Expr];
 
 CompoundStmt ::= Stmt*;
 IdDecl ::= <ID>;
+UnknownDecl : IdDecl;
