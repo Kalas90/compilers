@@ -228,7 +228,7 @@ public class Program extends ASTNode<ASTNode> implements Cloneable {
     return this;
   }
   /**
-   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:10
+   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:9
    * @apilevel internal
    */
   public IdDecl Define_lookup(ASTNode caller, ASTNode child, String name) {
@@ -236,7 +236,7 @@ public class Program extends ASTNode<ASTNode> implements Cloneable {
     return unknownDecl();
   }
   /**
-   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:34
+   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:33
    * @apilevel internal
    */
   public boolean Define_inExprOf(ASTNode caller, ASTNode child, IdDecl decl) {

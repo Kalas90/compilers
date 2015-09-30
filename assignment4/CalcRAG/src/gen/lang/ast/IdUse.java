@@ -319,7 +319,7 @@ public class IdUse extends Expr implements Cloneable {
   /**
    * @attribute inh
    * @aspect CircularDefinitions
-   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:33
+   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:32
    */
   @ASTNodeAnnotation.Attribute
   public boolean inExprOf(IdDecl decl) {

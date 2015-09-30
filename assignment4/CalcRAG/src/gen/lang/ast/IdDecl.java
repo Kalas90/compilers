@@ -272,7 +272,7 @@ public class IdDecl extends Expr implements Cloneable {
   /**
    * @attribute inh
    * @aspect NameAnalysis
-   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:26
+   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:25
    */
   @ASTNodeAnnotation.Attribute
   public IdDecl lookup(String name) {

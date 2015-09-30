@@ -4,25 +4,38 @@ package lang.ast;
 import java.util.ArrayList;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.HashSet;
 /**
  * @ast node
- * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/calc.ast:12
+ * @declaredat /Users/Klas/School/edan65/assignment3/A3-CalcComp/src/jastadd/calc.ast:11
  * @production Binding : {@link ASTNode} ::= <span class="component">{@link IdDecl}</span> <span class="component">{@link Expr}</span>;
 
  */
 public class Binding extends ASTNode<ASTNode> implements Cloneable {
   /**
+   * @aspect NameAnalysis
+   * @declaredat /Users/Klas/School/edan65/assignment3/A3-CalcComp/src/jastadd/NameAnalysis.jrag:71
+   */
+  public void checkNames(PrintStream err, SymbolTable symbols) {
+		getExpr().checkNames(err, symbols.push());
+		getIdDecl().checkNames(err, symbols);
+	}
+  /**
    * @aspect PrettyPrint
-   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/PrettyPrint.jrag:53
+   * @declaredat /Users/Klas/School/edan65/assignment3/A3-CalcComp/src/jastadd/PrettyPrint.jrag:53
    */
   public void prettyPrint(PrintStream out, String ind) {
 		getIdDecl().prettyPrint(out, ind);
 		out.append(" = ");
 		getExpr().prettyPrint(out, ind+"    ");
+	}
+  /**
+   * @aspect Visitor
+   * @declaredat /Users/Klas/School/edan65/assignment3/A3-CalcComp/src/jastadd/Visitor.jrag:50
+   */
+  public Object accept(Visitor visitor, Object data) {
+		return visitor.visit(this, data);
 	}
   /**
    * @declaredat ASTNode:1
@@ -60,18 +73,17 @@ public class Binding extends ASTNode<ASTNode> implements Cloneable {
    */
   public void flushAttrCache() {
     super.flushAttrCache();
-    inExprOf_IdDecl_reset();
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:33
+   * @declaredat ASTNode:32
    */
   public void flushCollectionCache() {
     super.flushCollectionCache();
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:39
+   * @declaredat ASTNode:38
    */
   public Binding clone() throws CloneNotSupportedException {
     Binding node = (Binding) super.clone();
@@ -79,7 +91,7 @@ public class Binding extends ASTNode<ASTNode> implements Cloneable {
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:46
+   * @declaredat ASTNode:45
    */
   public Binding copy() {
     try {
@@ -99,7 +111,7 @@ public class Binding extends ASTNode<ASTNode> implements Cloneable {
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
    * @deprecated Please use treeCopy or treeCopyNoTransform instead
-   * @declaredat ASTNode:65
+   * @declaredat ASTNode:64
    */
   @Deprecated
   public Binding fullCopy() {
@@ -110,7 +122,7 @@ public class Binding extends ASTNode<ASTNode> implements Cloneable {
    * The copy is dangling, i.e. has no parent.
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
-   * @declaredat ASTNode:75
+   * @declaredat ASTNode:74
    */
   public Binding treeCopyNoTransform() {
     Binding tree = (Binding) copy();
@@ -131,7 +143,7 @@ public class Binding extends ASTNode<ASTNode> implements Cloneable {
    * The copy is dangling, i.e. has no parent.
    * @return dangling copy of the subtree at this node
    * @apilevel low-level
-   * @declaredat ASTNode:95
+   * @declaredat ASTNode:94
    */
   public Binding treeCopy() {
     doFullTraversal();
@@ -139,7 +151,7 @@ public class Binding extends ASTNode<ASTNode> implements Cloneable {
   }
   /**
    * @apilevel internal
-   * @declaredat ASTNode:102
+   * @declaredat ASTNode:101
    */
   protected boolean is$Equal(ASTNode node) {
     return super.is$Equal(node);    
@@ -195,63 +207,5 @@ public class Binding extends ASTNode<ASTNode> implements Cloneable {
    */
   public Expr getExprNoTransform() {
     return (Expr) getChildNoTransform(1);
-  }
-  /**
-   * @attribute inh
-   * @aspect CircularDefinitions
-   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:33
-   */
-  @ASTNodeAnnotation.Attribute
-  public boolean inExprOf(IdDecl decl) {
-    Object _parameters = decl;
-    if (inExprOf_IdDecl_visited == null) inExprOf_IdDecl_visited = new java.util.HashSet(4);
-    if (inExprOf_IdDecl_values == null) inExprOf_IdDecl_values = new java.util.HashMap(4);
-    ASTNode$State state = state();
-    if (inExprOf_IdDecl_values.containsKey(_parameters)) {
-      return (Boolean) inExprOf_IdDecl_values.get(_parameters);
-    }
-    if (inExprOf_IdDecl_visited.contains(_parameters)) {
-      throw new RuntimeException("Circular definition of attr: inExprOf in class: org.jastadd.ast.AST.InhDecl");
-    }
-    inExprOf_IdDecl_visited.add(_parameters);
-    boolean intermediate = state.INTERMEDIATE_VALUE;
-    state.INTERMEDIATE_VALUE = false;
-    boolean inExprOf_IdDecl_value = getParent().Define_inExprOf(this, null, decl);
-    if (true) {
-      inExprOf_IdDecl_values.put(_parameters, inExprOf_IdDecl_value);
-    } else {
-    }
-    state.INTERMEDIATE_VALUE |= intermediate;
-
-    inExprOf_IdDecl_visited.remove(_parameters);
-    return inExprOf_IdDecl_value;
-  }
-  /**
-   * @apilevel internal
-   */
-  protected java.util.Set inExprOf_IdDecl_visited;
-  /**
-   * @apilevel internal
-   */
-  protected java.util.Map inExprOf_IdDecl_values;
-  /**
-   * @apilevel internal
-   */
-  private void inExprOf_IdDecl_reset() {
-    inExprOf_IdDecl_values = null;
-    inExprOf_IdDecl_visited = null;
-  }
-  /**
-   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:33
-   * @apilevel internal
-   */
-  public boolean Define_inExprOf(ASTNode caller, ASTNode child, IdDecl decl) {
-    if (caller == getExprNoTransform()) {
-      // @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:34
-      return getIdDecl() == decl || inExprOf(decl);
-    }
-    else {
-      return getParent().Define_inExprOf(this, caller, decl);
-    }
   }
 }
