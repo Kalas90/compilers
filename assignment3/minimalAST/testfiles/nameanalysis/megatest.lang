@@ -1,0 +1,15 @@
+int func(int a, int b) {
+    int func = 2;
+    while(func(a, func) < b) {
+    	return a;
+    }
+}
+int func2() {
+    int c = 0;
+    int a;
+    if(c < 2) {
+    	 int a = 0;
+    } else {
+      	 int a = 1;
+    }
+}

@@ -199,7 +199,7 @@ public class Binding extends ASTNode<ASTNode> implements Cloneable {
   /**
    * @attribute inh
    * @aspect CircularDefinitions
-   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:33
+   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:34
    */
   @ASTNodeAnnotation.Attribute
   public boolean inExprOf(IdDecl decl) {
@@ -242,12 +242,12 @@ public class Binding extends ASTNode<ASTNode> implements Cloneable {
     inExprOf_IdDecl_visited = null;
   }
   /**
-   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:33
+   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:34
    * @apilevel internal
    */
   public boolean Define_inExprOf(ASTNode caller, ASTNode child, IdDecl decl) {
     if (caller == getExprNoTransform()) {
-      // @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:34
+      // @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:35
       return getIdDecl() == decl || inExprOf(decl);
     }
     else {

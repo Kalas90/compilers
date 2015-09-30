@@ -340,7 +340,7 @@ public class Let extends Expr implements Cloneable {
   /**
    * @attribute inh
    * @aspect NameAnalysis
-   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:9
+   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:10
    */
   @ASTNodeAnnotation.Attribute
   public IdDecl lookup(String name) {
@@ -383,12 +383,12 @@ public class Let extends Expr implements Cloneable {
     lookup_String_visited = null;
   }
   /**
-   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:9
+   * @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:10
    * @apilevel internal
    */
   public IdDecl Define_lookup(ASTNode caller, ASTNode child, String name) {
     if (caller == getBindingListNoTransform()) {
-      // @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:20
+      // @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:21
       int index = caller.getIndexOfChild(child);
       {
       		IdDecl decl = localLookup(name, index);
@@ -396,7 +396,7 @@ public class Let extends Expr implements Cloneable {
       	}
     }
     else if (caller == getExprNoTransform()) {
-      // @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:4
+      // @declaredat /Users/Klas/School/edan65/assignment4/CalcRAG/src/jastadd/NameAnalysis.jrag:5
       {
       		IdDecl decl = localLookup(name, getNumBinding()-1);
       		return !decl.isUnknown() ? decl : lookup(name);

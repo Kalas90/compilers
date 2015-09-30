@@ -1,6 +1,7 @@
 aspect NameAnalysis {
 	syn IdDecl IdUse.decl() = lookup(getID());
 	inh IdDecl IdUse.lookup(String name);
+	
 	eq Let.getExpr().lookup(String name) {
 		IdDecl decl = localLookup(name, getNumBinding()-1);
 		return !decl.isUnknown() ? decl : lookup(name);
