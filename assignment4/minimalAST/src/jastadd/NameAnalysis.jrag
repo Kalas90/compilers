@@ -1,0 +1,19 @@
+aspect NameAnalysis {
+
+	inh IdDecl IdDecl.lookup(String name);
+	
+	syn IdDecl DeclStmt.localLookup(String name) {
+		if (getIdDecl().getID().equals(name)) {
+			return getIdDecl();
+		}
+		return null; 
+	}
+	
+	eq DeclStmt.getIdDecl().lookup(String name) {
+		IdDecl decl = localLookup(name);
+		if(decl != null)
+			return decl;
+		return null;
+	}
+}
+

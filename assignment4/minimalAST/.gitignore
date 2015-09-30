@@ -1,0 +1,10 @@
+src/gen/
+ant-bin/
+*.class
+*.swp
+*.java~
+*.java#
+*.jrag~
+*.jrag#
+*.lang~
+*.lang#
