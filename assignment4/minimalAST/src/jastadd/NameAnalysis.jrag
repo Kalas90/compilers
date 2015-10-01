@@ -1,25 +1,67 @@
 aspect NameAnalysis {
 
 	inh IdDecl IdDecl.lookup(String name);
+	inh IdDecl CompoundStmt.lookup(String name);
 	
-	eq Program.getFunctionDec(0).lookup(String name) = unknownDecl();
-
-	syn IdDecl DeclStmt.localLookup(String name) {
-		if (getIdDecl().getID().equals(name)) {
-			return getIdDecl();
-		}
-		return unknownDecl(); 
+	syn IdDecl Stmt.localLookup(String name) { System.out.println("le dummy"); return unknownDecl(); }
+	eq Program.getChild().lookup(String name) {
+	   System.out.println("Program lookup");
+	   return unknownDecl();
 	}
-	
-	eq DeclStmt.getIdDecl().lookup(String name) {
-		IdDecl decl = localLookup(name);
+
+	eq Program.getFunctionDec(int index).lookup(String name) {
+	   	IdDecl decl = localLookup(name, index);
+		return !decl.isUnknown() ? decl : unknownDecl();
+	}
+
+	syn IdDecl Program.localLookup(String name, int until) {
+	    	System.out.println("until: " + until);
+	    	
+	    	for(int i = 0; i <= until; i++) { // use will check ALL function dec 
+			System.out.println(i);
+			IdDecl decl = getFunctionDec(i).getIdDecl();
+			if(decl.getID().equals(name)) {
+				System.out.println("returning matching decl");
+				return decl;
+			}
+		}
+		return unknownDecl();
+	}
+
+	eq FunctionDec.getCompoundStmt().lookup(String name) {
+	   	return unknownDecl();
+	}	
+
+	syn IdDecl CompoundStmt.localLookup(String name, int until) {
+	    	System.out.println("until: " + until);
+	    	
+	    	for(int i = 0; i <= until; i++) {
+			System.out.println(i);
+			IdDecl decl = getStmt(i).localLookup(name);
+			if(decl.getID().equals(name)) {
+				System.out.println("returning matching decl");
+				return decl;
+			}
+		}
+		return unknownDecl();
+	}	
+
+	eq CompoundStmt.getStmt(int index).lookup(String name) {
+	   	IdDecl decl = localLookup(name, index);
 		return !decl.isUnknown() ? decl : lookup(name);
 	}
 
+	syn IdDecl DeclStmt.localLookup(String name) {
+		return getIdDecl();
+	}
+
 	inh IdDecl DeclStmt.lookup(String name);
+	
 	syn boolean IdDecl.isMultiplyDeclared() {
-		System.out.println("looking up multiplyDeclared");
-		return lookup(getID()) != this;
+	    	System.out.println("looking up "+ getID());
+	    	boolean result = lookup(getID()) != this;
+		System.out.println("multiplyDeclared t/f " + (result ? "true" : "false") );
+		return result;
 	}
 }
 
