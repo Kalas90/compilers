@@ -1,0 +1,7 @@
+aspect PredefinedFunctions {
+       syn nta List<FunctionDec> Program.predefinedFunctions() {
+               List<FunctionDec> list = new List<FunctionDec>();
+               // Create objects of type FunctionDecl and add them to the list
+               return list;
+       }
+}
