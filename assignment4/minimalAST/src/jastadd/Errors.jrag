@@ -31,10 +31,10 @@ aspect Errors {
 
 
 aspect ErrorContributions {
-	/*IdUse contributes error("symbol '" + getID() + "' is not declared")
+	IdUse contributes error("symbol '" + getID() + "' is not declared")
 		when decl().isUnknown()
 		to Program.errors() for program();
-*/
+
 	IdDecl contributes error("symbol '" + getID() + "' is already declared!")
 		when isMultiplyDeclared()
 		to Program.errors() for program();

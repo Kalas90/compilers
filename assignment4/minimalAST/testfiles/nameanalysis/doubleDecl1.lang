@@ -1,9 +1,18 @@
-int main() {
+int main(int d, int duplParam, int duplParam) {
+	int d;
 	int a = 1;
+	duplParam = 1;
 	int a = 2;
 	int b = 1;
 	int a = 1;
+	a = 20;
 	int b;
+	d = 10;
+	if(a == 10) {
+		int a = 10;
+		int c = 1;
+	}	
+	c = 2;
 }
 int main() {
 }
