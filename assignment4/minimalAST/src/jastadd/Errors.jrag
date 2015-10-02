@@ -38,9 +38,9 @@ aspect ErrorContributions {
 	IdDecl contributes error("symbol '" + getID() + "' is already declared!")
 		when isMultiplyDeclared()
 		to Program.errors() for program();
-/*
-	IdUse contributes error("the definition of symbol '" + getID() + "' is circular")
-		when isCircular()
+
+	Expr contributes error("Symbol was " + type().getType() + " but expected " + expectedType().getType())
+		when !type().compatibleType(expectedType())
 		to Program.errors() for program();
-*/
+
 }

@@ -1,0 +1,5 @@
+int gcd1(int a, int b) {
+	int e;
+	int c;
+	a = (b + c) * e;
+}

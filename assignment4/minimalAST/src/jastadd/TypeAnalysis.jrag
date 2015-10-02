@@ -1,0 +1,56 @@
+aspect IntType {
+	syn nta IntType Program.intType() = new IntType("<int>");
+	syn nta BoolType Program.boolType() = new BoolType("<boolean>");
+	syn nta UnknownType Program.unknownType() = new UnknownType("<unknownType>");
+	
+	inh IntType ASTNode.intType();
+	inh BoolType ASTNode.boolType();
+	inh UnknownType ASTNode.unknownType();
+
+	eq Program.getChild().intType() = intType();
+	eq Program.getChild().boolType() = boolType();
+	eq Program.getChild().unknownType() = unknownType();
+	
+	syn boolean IntType.isIntType() = true;
+	syn boolean BoolType.isBoolType() = true;
+	syn boolean UnknownType.isUnknownType() = true;
+
+	syn Type Expr.type();
+	syn Type IdDecl.type() = intType(); 
+	syn Type IdUse.type() = intType();
+	syn Type FunctionCall.type() = intType();	
+	syn Type IntUse.type() = intType();
+	syn Type Add.type() = intType();
+	syn Type Sub.type() = intType(); 	
+	syn Type Mul.type() = intType();
+	syn Type Div.type() = intType();
+	syn Type Mod.type() = intType();
+	syn Type ParExpr.type() = intType();
+		
+	syn Type Equal.type() = boolType();
+	syn Type NEqual.type() = boolType();
+	syn Type Less.type() = boolType();
+	syn Type Greater.type() = boolType();
+	syn Type GreaterEqual.type() = boolType();
+	syn Type LessEqual.type() = boolType();
+
+	inh Type Expr.expectedType();
+	eq BinExpr.getLeft().expectedType() = intType();
+	eq BinExpr.getRight().expectedType() = intType();
+	eq AssignStmt.getExpr().expectedType() = intType();
+	eq AssignStmt.getIdUse().expectedType() = intType();	
+	eq ReturnStmt.getExpr().expectedType() = intType();
+	eq DeclStmt.getExpr().expectedType() = intType();
+	eq DeclStmt.getIdDecl().expectedType() = intType();
+	eq FunctionStmt.getFunctionCall().expectedType() = intType();
+	eq ParExpr.getExpr().expectedType() = intType();
+	eq FunctionCall.getExpr(int index).expectedType() = intType();
+	eq FunctionDec.getIdDecl().expectedType() = intType();
+	eq FunctionDec.getParam(int index).expectedType() = intType();
+
+	eq IfStmt.getIf().expectedType() = boolType();
+	eq WhileStmt.getExpr().expectedType() = boolType();
+
+	syn boolean Type.compatibleType(Type expected) = expected == this; 
+		
+}
