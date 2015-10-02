@@ -1,7 +1,13 @@
 aspect PredefinedFunctions {
        syn nta List<FunctionDec> Program.predefinedFunctions() {
                List<FunctionDec> list = new List<FunctionDec>();
-               // Create objects of type FunctionDecl and add them to the list
+               // Create objects of type FunctionDec and add them to the list
+	       FunctionDec f1 = new FunctionDec();
+	       f1.setIdDecl((new IdDecl()).setID("print"));
+	       FunctionDec f2 = new FunctionDec();
+	       f2.setIdDecl((new IdDecl()).setID("read"));
+	       list.add(f1);
+	       list.add(f2);
                return list;
        }
 }
