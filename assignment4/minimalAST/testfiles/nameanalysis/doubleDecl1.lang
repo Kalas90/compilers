@@ -1,5 +1,6 @@
 int main(int d, int duplParam, int duplParam) {
 	int d;
+	print();
 	int a = 1;
 	duplParam = 1;
 	int a = 2;

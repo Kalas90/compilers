@@ -34,3 +34,8 @@ CompoundStmt ::= Stmt*;
 IdDecl ::= <ID>;
 UnknownDecl : IdDecl;
 PredefinedFunctions : FunctionDec;
+
+abstract Type ::= <Type:String>;
+IntType: Type;
+BoolType: Type;
+UnknownType: Type;

@@ -1,0 +1,14 @@
+aspect BoolType {
+	syn nta BoolType Program.boolType() = new BoolType("<boolean>");
+	
+	inh BoolType ASTNode.boolType();
+	eq Program.getChild().boolType() = boolType();
+	
+	syn boolean BoolType.isBoolType() = true;
+	syn Type Equal.type() = boolType();
+	syn Type NEqual.type() = boolType();
+	syn Type Greater.type() = boolType();
+	syn Type Less.type() = boolType();
+	syn Type GreaterEqual.type() = boolType();
+	syn Type LessEqual.type() = boolType();
+}

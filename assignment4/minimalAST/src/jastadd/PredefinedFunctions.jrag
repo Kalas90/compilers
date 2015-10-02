@@ -3,11 +3,15 @@ aspect PredefinedFunctions {
                List<FunctionDec> list = new List<FunctionDec>();
                // Create objects of type FunctionDec and add them to the list
 	       FunctionDec f1 = new FunctionDec();
-	       f1.setIdDecl((new IdDecl()).setID("print"));
+	       IdDecl print = new IdDecl();
+	       print.setID("print");
+	       f1.setIdDecl(print);
 	       FunctionDec f2 = new FunctionDec();
-	       f2.setIdDecl((new IdDecl()).setID("read"));
+	       IdDecl read = new IdDecl();
+	       read.setID("read");
+	       f2.setIdDecl(read);
 	       list.add(f1);
 	       list.add(f2);
-               return list;
+  	       return list;
        }
 }

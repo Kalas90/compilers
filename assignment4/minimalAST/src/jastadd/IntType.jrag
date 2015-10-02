@@ -1,0 +1,14 @@
+aspect IntType {
+	syn nta IntType Program.intType() = new IntType("<int>");
+	
+	inh IntType ASTNode.intType();
+	eq Program.getChild().intType() = intType();
+	
+	syn boolean IntType.isIntType() = true;
+	syn Type IdDecl.type() = intType(); 
+	syn Type Add.type() = intType();
+	syn Type Sub.type() = intType(); 	
+	syn Type Mul.type() = intType();
+	syn Type Div.type() = intType();
+	syn Type Mod.type() = intType();
+}
