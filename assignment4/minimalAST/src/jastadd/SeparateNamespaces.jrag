@@ -1,0 +1,19 @@
+aspect SeparateNamespaces {
+       inh boolean IdDecl.isVariable();
+       inh boolean IdDecl.isFunction();
+
+       eq FunctionDec.getIdDecl().isVariable() = false;
+       eq FunctionDec.getIdDecl().isFunction() = true;
+
+       eq DeclStmt.getIdDecl().isVariable() = true;
+       eq DeclStmt.getIdDecl().isFunction() = false;
+
+       eq FunctionDec.getParam(int index).isVariable() = true;
+       eq FunctionDec.getParam(int index).isFunction() = false;
+
+       eq Program.unknownDecl().isVariable() = false;
+       eq Program.unknownDecl().isFunction() = false;
+
+       eq Program.predefinedFunctions().getChild(int index).getIdDecl().isVariable() = false;
+       eq Program.predefinedFunctions().getChild(int index).getIdDecl().isFunction() = true;
+}

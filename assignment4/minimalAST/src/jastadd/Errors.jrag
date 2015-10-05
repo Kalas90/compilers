@@ -43,4 +43,12 @@ aspect ErrorContributions {
 		when !type().compatibleType(expectedType())
 		to Program.errors() for program();
 
+	IdUse contributes error("le error")
+	     	when !decl().isVariable()
+		to Program.errors() for program();
+
+	FunctionCall contributes error("le other error")
+	     	when !getIdUse().decl().isFunction()
+		to Program.errors() for program();
+
 }
