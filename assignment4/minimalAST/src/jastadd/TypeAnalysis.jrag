@@ -17,8 +17,8 @@ aspect IntType {
 
 	syn Type Expr.type();
 	syn Type IdDecl.type() = intType(); 
-	syn Type IdUse.type() = intType();
-	syn Type FunctionCall.type() = intType();	
+	eq IdUse.type() = intType();
+	eq FunctionCall.type() = intType();	
 	syn Type IntUse.type() = intType();
 	syn Type Add.type() = intType();
 	syn Type Sub.type() = intType(); 	

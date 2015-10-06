@@ -1,6 +1,7 @@
 aspect SeparateNamespaces {
        inh boolean IdDecl.isVariable();
        inh boolean IdDecl.isFunction();
+       inh boolean IdUse.isFuncCall();       
 
        eq FunctionDec.getIdDecl().isVariable() = false;
        eq FunctionDec.getIdDecl().isFunction() = true;
@@ -16,4 +17,8 @@ aspect SeparateNamespaces {
 
        eq PredefinedFunctions.getIdDecl().isVariable() = false;
        eq PredefinedFunctions.getIdDecl().isFunction() = true;
+
+
+       eq FunctionCall.getIdUse().isFuncCall() = true;
+       eq Program.getChild().isFuncCall() = false;
 }
