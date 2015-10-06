@@ -1,0 +1,30 @@
+aspect NbrOfParams {
+       inh FunctionDec IdDecl.function();
+
+
+       eq FunctionDec.getIdDecl().function() = this;
+       
+       eq FunctionDec.getParam(int index).function() {
+       	  	FunctionDec f = new FunctionDec();
+		f.setIdDecl(unknownDecl());
+		return f;
+       }
+       
+       eq DeclStmt.getIdDecl().function() {
+       	  	FunctionDec f = new FunctionDec();
+		f.setIdDecl(unknownDecl());
+		return f;
+       }
+       
+       eq Program.unknownDecl().function() {
+       	  	FunctionDec f = new FunctionDec();
+		f.setIdDecl(unknownDecl());
+		return f;
+       }
+
+       syn boolean FunctionCall.correctNumParams() {
+       	   	int expected = getIdUse().decl().function().getNumParam();
+		int actual = getNumExpr();
+		return expected == actual;
+       }
+}

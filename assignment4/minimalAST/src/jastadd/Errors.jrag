@@ -43,12 +43,16 @@ aspect ErrorContributions {
 		when !type().compatibleType(expectedType())
 		to Program.errors() for program();
 
-	IdUse contributes error("le error")
+	Expr contributes error("Tried to use function handle as variable.") // tolkar IdUse som functionCall??
 	     	when !decl().isVariable()
 		to Program.errors() for program();
 
-	FunctionCall contributes error("le other error")
+	FunctionCall contributes error("Tried to use variable as function handle.")
 	     	when !getIdUse().decl().isFunction()
+		to Program.errors() for program();
+
+	FunctionCall contributes error("Wrong number of parameters.")
+		when !correctNumParams()
 		to Program.errors() for program();
 
 }

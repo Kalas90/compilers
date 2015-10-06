@@ -6,10 +6,12 @@ aspect PredefinedFunctions {
 	       IdDecl print = new IdDecl();
 	       print.setID("print");
 	       f1.setIdDecl(print);
+	       f1.setParamList(new List<IdDecl>());
 	       FunctionDec f2 = new FunctionDec();
 	       IdDecl read = new IdDecl();
 	       read.setID("read");
 	       f2.setIdDecl(read);
+	       f2.setParamList(new List<IdDecl>());
 	       list.add(f1);
 	       list.add(f2);
   	       return list;
