@@ -2,6 +2,7 @@ aspect NameAnalysis {
 
 	inh IdDecl IdDecl.lookup(String name);
 	inh IdDecl CompoundStmt.lookup(String name);
+	inh IdDecl Stmt.lookup(String name);
 	
 	syn IdDecl Stmt.localLookup(String name) { return unknownDecl(); }
 	eq Program.getChild().lookup(String name) {
@@ -49,22 +50,62 @@ aspect NameAnalysis {
 	eq FunctionDec.getCompoundStmt().lookup(String name) {
 		IdDecl decl = localLookup(name, getNumParam()-1);
 		return !decl.isUnknown() ? decl : lookup(name);
-	}	
-		
-	syn IdDecl CompoundStmt.localLookup(String name, int until) {
-	    	IdDecl param = lookup(name);
+	}
+
+	eq WhileStmt.getCompoundStmt().lookup(String name) {
+	    return lookup(name);
+	}
+
+	eq IfStmt.getChild().lookup(String name) {
+	    return lookup(name);
+	}
+
+	inh IdDecl CompoundStmt.localLookup(String name, int until);
+	
+	eq FunctionDec.getCompoundStmt().localLookup(String name, int until) {
+	    IdDecl param = getCompoundStmt().lookup(name);
 		if(param.getID().equals(name)) {
 			return param;
 		}
 
 	    	for(int i = 0; i <= until; i++) {
-			IdDecl decl = getStmt(i).localLookup(name);
+			IdDecl decl = getCompoundStmt().getStmt(i).localLookup(name);
 			if(decl.getID().equals(name)) {
 				return decl;
 			}
 		}
 		return unknownDecl();
 	}	
+	
+	eq IfStmt.getThen().localLookup(String name, int until) {
+	    	for(int i = 0; i <= until; i++) {
+			IdDecl decl = getThen().getStmt(i).localLookup(name);
+			if(decl.getID().equals(name)) {
+				return decl;
+			}
+		}
+		return unknownDecl();
+	}
+		
+	eq IfStmt.getElse().localLookup(String name, int until) {
+	    	for(int i = 0; i <= until; i++) {
+			IdDecl decl = getElse().getStmt(i).localLookup(name);
+			if(decl.getID().equals(name)) {
+				return decl;
+			}
+		}
+		return unknownDecl();
+	}
+	
+	eq WhileStmt.getCompoundStmt().localLookup(String name, int until) {
+	    	for(int i = 0; i <= until; i++) {
+		    IdDecl decl = getCompoundStmt().getStmt(i).localLookup(name);
+			if(decl.getID().equals(name)) {
+				return decl;
+			}
+		}
+		return unknownDecl();
+	}
 
 	eq CompoundStmt.getStmt(int index).lookup(String name) {
 	   	IdDecl decl = localLookup(name, index);

@@ -1,7 +1,1 @@
-DeclStmt: 0_avalue: 2
-DeclStmt: 1_bvalue: 3
-IdUse name: 0_a
-IdUse name: 1_b
-IdUse name: a
-IdUse name: b
 6

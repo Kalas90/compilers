@@ -50,7 +50,6 @@ aspect Interpreter {
 	if(hasExpr()) {
 	    int value = getExpr().eval(actrec);
 	    String unique = getIdDecl().uniqueName();
-	    System.out.println("DeclStmt: " + unique + "value: " + value);
 	    actrec.put(unique, value);
 	}		
     }
@@ -58,7 +57,6 @@ aspect Interpreter {
     public void AssignStmt.eval(ActivationRecord actrec) {
 	String id = getIdUse().decl().uniqueName();
 	int value = getExpr().eval(actrec);
-	System.out.println("AssignStmt id: " + id + "value: " + value);
 	actrec.put(id, value);
     }
 
@@ -77,7 +75,6 @@ aspect Interpreter {
     }
     
     public int IdUse.eval(ActivationRecord actrec) {
-	System.out.println("IdUse name: " + decl().uniqueName());
 	int result = actrec.get(decl().uniqueName());
 	if(result == 0)
 	    return 0;
