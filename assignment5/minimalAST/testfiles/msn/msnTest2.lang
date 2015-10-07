@@ -1,0 +1,9 @@
+int main() {
+	if(a == b) {
+		while(a != c) {
+			a = c;
+		}
+	} else {
+		print(a);
+	}
+}

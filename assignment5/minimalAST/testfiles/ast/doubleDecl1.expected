@@ -1,0 +1,13 @@
+Program
+  List
+    FunctionDec
+      IdDecl
+      List
+      CompoundStmt
+        List
+          DeclStmt
+            IdDecl
+            Opt
+          DeclStmt
+            IdDecl
+            Opt

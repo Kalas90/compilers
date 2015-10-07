@@ -1,0 +1,87 @@
+aspect NameAnalysis {
+
+	inh IdDecl IdDecl.lookup(String name);
+	inh IdDecl CompoundStmt.lookup(String name);
+	
+	syn IdDecl Stmt.localLookup(String name) { return unknownDecl(); }
+	eq Program.getChild().lookup(String name) {
+	   	return unknownDecl();
+	}
+
+	eq Program.getFunctionDec(int index).lookup(String name) {
+	   	IdDecl decl = localLookup(name);
+		return !decl.isUnknown() ? decl : unknownDecl();
+	}
+
+	syn IdDecl Program.localLookup(String name) {
+		
+		for(FunctionDec funcDecl : predefinedFunctions()) {
+			if(funcDecl.getIdDecl().getID().equals(name)) {
+				return funcDecl.getIdDecl();
+			}	
+		} 
+			    	
+	    	for(int i = 0; i <= getNumFunctionDec() - 1; i++) {
+			IdDecl decl = getFunctionDec(i).getIdDecl();
+			if(decl.getID().equals(name)) {
+				return decl;
+			}
+		}
+		return unknownDecl();
+	}
+
+	eq FunctionDec.getParam(int index).lookup(String name) {
+		return localLookup(name, index);
+	}
+
+	inh IdDecl FunctionDec.lookup(String name);
+
+	syn IdDecl FunctionDec.localLookup(String name, int until) {
+		for(int i = 0; i <= until; i++) {
+			IdDecl decl = getParam(i);
+			if(decl.getID().equals(name)) {
+				return decl;
+			}	
+		} 
+		return unknownDecl();
+	}
+
+	eq FunctionDec.getCompoundStmt().lookup(String name) {
+		IdDecl decl = localLookup(name, getNumParam()-1);
+		return !decl.isUnknown() ? decl : lookup(name);
+	}	
+		
+	syn IdDecl CompoundStmt.localLookup(String name, int until) {
+	    	IdDecl param = lookup(name);
+		if(param.getID().equals(name)) {
+			return param;
+		}
+
+	    	for(int i = 0; i <= until; i++) {
+			IdDecl decl = getStmt(i).localLookup(name);
+			if(decl.getID().equals(name)) {
+				return decl;
+			}
+		}
+		return unknownDecl();
+	}	
+
+	eq CompoundStmt.getStmt(int index).lookup(String name) {
+	   	IdDecl decl = localLookup(name, index);
+		return !decl.isUnknown() ? decl : lookup(name);
+	}
+
+	syn IdDecl DeclStmt.localLookup(String name) {
+		return getIdDecl();
+	}
+
+	inh IdDecl DeclStmt.lookup(String name);
+	
+	syn boolean IdDecl.isMultiplyDeclared() {
+		return lookup(getID()) != this;
+	}
+
+	syn IdDecl IdUse.decl() = lookup(getID());
+	inh IdDecl IdUse.lookup(String name);
+
+}

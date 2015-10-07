@@ -1,1 +1,3 @@
 Error at line 4: Symbol was <boolean> but expected <int>
+Error at line 5: symbol 'c' is not declared
+Error at line 6: symbol 'c' is not declared

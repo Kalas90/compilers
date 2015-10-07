@@ -1,0 +1,8 @@
+Error at line 1: symbol 'duplParam' is already declared!
+Error at line 2: symbol 'd' is already declared!
+Error at line 6: symbol 'a' is already declared!
+Error at line 8: symbol 'a' is already declared!
+Error at line 10: symbol 'b' is already declared!
+Error at line 13: symbol 'a' is already declared!
+Error at line 16: symbol 'c' is not declared
+Error at line 19: symbol 'main' is already declared!
