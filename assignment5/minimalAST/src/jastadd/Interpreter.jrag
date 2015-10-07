@@ -1,6 +1,25 @@
 import java.util.HashMap;
 
 aspect Interpreter {
+
+    inh String CompoundStmt.compIndex();
+    eq WhileStmt.getCompoundStmt().compIndex() = stmtIndex();
+    eq IfStmt.getChild().compIndex() = stmtIndex();
+
+    eq FunctionDec.getCompoundStmt().compIndex() = "";
+
+    inh String Stmt.stmtIndex();
+    eq CompoundStmt.getStmt(int index).stmtIndex() = compIndex() + Integer.toString(index) + "_"; 
+    eq Program.getChild().stmtIndex() = "";
+
+    inh String IdDecl.uniqueName();
+    eq DeclStmt.getIdDecl().uniqueName() = stmtIndex() + getIdDecl().getID();
+    eq FunctionDec.getIdDecl().uniqueName() = "";
+    eq FunctionDec.getParam(int index).uniqueName() = getParam(index).getID();
+    eq PredefinedFunctions.getIdDecl().uniqueName() = "";
+    eq Program.unknownDecl().uniqueName() = "";
+
+  
     public void Program.eval() {
 	IdDecl idDecl = localLookup("main");
 	if(idDecl.isUnknown()) throw new RuntimeException();
@@ -30,14 +49,16 @@ aspect Interpreter {
     public void DeclStmt.eval(ActivationRecord actrec) {
 	if(hasExpr()) {
 	    int value = getExpr().eval(actrec);
-	    String id = getIdDecl().getID();
-	    actrec.put(id, value);
+	    String unique = getIdDecl().uniqueName();
+	    System.out.println("DeclStmt: " + unique + "value: " + value);
+	    actrec.put(unique, value);
 	}		
     }
     
     public void AssignStmt.eval(ActivationRecord actrec) {
-	String id = getIdUse().getID();
+	String id = getIdUse().decl().uniqueName();
 	int value = getExpr().eval(actrec);
+	System.out.println("AssignStmt id: " + id + "value: " + value);
 	actrec.put(id, value);
     }
 
@@ -51,12 +72,13 @@ aspect Interpreter {
 
     public void WhileStmt.eval(ActivationRecord actrec) throws ReturnException{
 	while(getExpr().eval(actrec) == 1) {
-		getCompoundStmt().eval(actrec);
+
 	}
     }
     
     public int IdUse.eval(ActivationRecord actrec) {
-	int result = actrec.get(getID());
+	System.out.println("IdUse name: " + decl().uniqueName());
+	int result = actrec.get(decl().uniqueName());
 	if(result == 0)
 	    return 0;
 	return result;
@@ -129,7 +151,7 @@ aspect Interpreter {
 		ActivationRecord newActrec = new ActivationRecord();
 		FunctionDec func = getIdUse().decl().function();
 		for(int i = 0; i < func.getNumParam(); i++) {
-			newActrec.put(func.getParam(i).getID(), getExpr(i).eval(actrec));	
+			newActrec.put(func.getParam(i).uniqueName(), getExpr(i).eval(actrec));	
 		}
 		return func.eval(newActrec);
 	}

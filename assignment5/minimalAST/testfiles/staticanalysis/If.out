@@ -1,1 +1,7 @@
+DeclStmt: 0_avalue: 420
+DeclStmt: 1_bvalue: 2
+IdUse name: 0_a
+IdUse name: 1_b
+DeclStmt: 2_0_avalue: 20
+IdUse name: 0_a
 420

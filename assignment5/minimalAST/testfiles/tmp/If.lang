@@ -2,7 +2,6 @@ int main() {
     int a = 420;
     int b = 2;
     if(a > b){
-	int a = 20;
 	print(a);
     } else {
     	print(b);
