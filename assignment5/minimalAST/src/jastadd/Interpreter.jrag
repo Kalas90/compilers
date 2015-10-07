@@ -72,7 +72,7 @@ aspect Interpreter {
 
     public void WhileStmt.eval(ActivationRecord actrec) throws ReturnException{
 	while(getExpr().eval(actrec) == 1) {
-
+		getCompoundStmt().eval(actrec);
 	}
     }
     
