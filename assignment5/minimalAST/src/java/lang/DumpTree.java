@@ -32,7 +32,7 @@ public class DumpTree {
 			LangScanner scanner = new LangScanner(new FileReader(filename));
 			LangParser parser = new LangParser();
 			Program program = (Program) parser.parse(scanner);
-			System.out.println(program.dumpTree());
+			program.eval();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found!");
 			System.exit(1);

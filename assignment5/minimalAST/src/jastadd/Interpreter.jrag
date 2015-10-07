@@ -1,0 +1,100 @@
+import java.util.HashMap;
+
+aspect Interpreter {
+    public void Program.eval() {
+	IdDecl idDecl = localLookup("main");
+	if(idDecl.isUnknown()) throw new RuntimeException();
+	idDecl.function().eval(new ActivationRecord());
+    }
+    public int FunctionDec.eval(ActivationRecord actrec) {
+	return getCompoundStmt().eval(actrec);
+    }
+	      
+    public int CompoundStmt.eval(ActivationRecord actrec) {
+	int result = 0;
+	for(Stmt stmt : getStmts()) {
+	    stmt.eval(actrec);
+	}
+	return result;
+    }
+    public void Stmt.eval(ActivationRecord actrec) {
+       
+
+	//throw new RuntimeException();
+    }
+
+    public void DeclStmt.eval(ActivationRecord actrec) {
+	if(hasExpr()) {
+	    int value = getExpr().eval(actrec);
+	    String id = getIdDecl().getID();
+	    actrec.put(id, value);
+	}		
+    }
+    
+    public void AssignStmt.eval(ActivationRecord actrec) {
+	String id = getIdUse().getID();
+	int value = getExpr().eval(actrec);
+	actrec.put(id, value);
+    }
+    
+    public int IdUse.eval(ActivationRecord actrec) {
+	int result = actrec.get(getID());
+	if(result == 0)
+	    return 0;
+	return result;
+    }
+
+    public void FunctionStmt.eval(ActivationRecord actrec) {
+	getFunctionCall().eval(actrec);
+    }
+       
+    public int Expr.eval(ActivationRecord actrec) {
+	return 0;
+    }
+
+    public int IntUse.eval(ActivationRecord actrec) {
+	return Integer.valueOf(getINT());
+    }
+
+    public int Add.eval(ActivationRecord actrec) {
+	return getLeft().eval(actrec) + getRight().eval(actrec);
+    }
+       
+    public int Sub.eval(ActivationRecord actrec) {
+	return getLeft().eval(actrec) - getRight().eval(actrec);
+    }
+       
+    public int Mul.eval(ActivationRecord actrec) {
+	return getLeft().eval(actrec) * getRight().eval(actrec);
+    }
+       
+    public int Div.eval(ActivationRecord actrec) {
+	return getLeft().eval(actrec) / getRight().eval(actrec);
+    }
+       
+    public int Mod.eval(ActivationRecord actrec) {
+	return getLeft().eval(actrec) % getRight().eval(actrec);
+    }
+
+    public int FunctionCall.eval(ActivationRecord actrec) {
+	if(getIdUse().getID().equals("print"))
+	    System.out.println(getExpr(0).eval(actrec));
+	return 0; // TODO
+    }
+       
+    // ActivationRecord
+    public class ActivationRecord {
+
+	private HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+	public int get(String s) {
+	    if(map.containsKey(s)) 
+		return map.get(s);
+	    return 0; 
+	}
+
+	public void put(String s, int i) {
+	    map.put(s, i);
+	}
+    }
+}
