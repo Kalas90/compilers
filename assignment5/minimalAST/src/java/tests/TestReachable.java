@@ -18,18 +18,20 @@ import java.util.HashSet;
  * Tests name analysis
  */
 @RunWith(Parameterized.class)
-public class TestFunctionCalls extends AbstractParameterizedTest {
+public class TestReachable extends AbstractParameterizedTest {
 	/**
 	 * Directory where test files live
 	 */
-	private static final String TEST_DIR = "testfiles/functioncalls";
+	private static final String TEST_DIR = "testfiles/reachable";
+        private static String filename;
     
 	/**
 	 * Construct a new JastAdd test
 	 * @param filename filename of test input file
 	 */
-	public TestFunctionCalls(String filename) {
+	public TestReachable(String filename) {
 		super(TEST_DIR, filename);
+		this.filename = filename;
 	}
 
 	/**
@@ -40,19 +42,20 @@ public class TestFunctionCalls extends AbstractParameterizedTest {
 	    PrintStream out = System.out;
 	    try {
 		Program program = (Program) parse(inFile);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(baos));
+		//ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		//System.setOut(new PrintStream(baos));
+		System.out.println("Reachables: ");
 		for(FunctionDec funcDec : program.getFunctionDecList()) {
-		    HashSet<FunctionDec> funcCalls = funcDec.functionCalls();
+		    HashSet<FunctionDec> reachables = funcDec.reachable();
 		    StringBuilder sb = new StringBuilder();
-		    for(FunctionDec calledFunc : funcCalls) {
+		    for(FunctionDec calledFunc : reachables) {
 			sb.append(calledFunc.getIdDecl().getID()).append(" ");
 		    }
 		    System.out.println(funcDec.getIdDecl().getID() + ":   " + sb.toString());
 		}		    
-		    compareOutput(baos.toString(), outFile, expectedFile);
+		  //  compareOutput(baos.toString(), outFile, expectedFile);
             } finally {
-		    System.setOut(out);
+		 //   System.setOut(out);
 	    }
 	}
 

@@ -2,6 +2,7 @@ aspect PredefinedFunctions {
        syn nta List<FunctionDec> Program.predefinedFunctions() {
                List<FunctionDec> list = new List<FunctionDec>();
                // Create objects of type FunctionDec and add them to the list
+
 	       FunctionDec f1 = new FunctionDec();
 	       IdDecl print = new IdDecl();
 	       print.setID("print");
@@ -10,6 +11,7 @@ aspect PredefinedFunctions {
 	       paramList.add(param);
 	       f1.setIdDecl(print);
 	       f1.setParamList(paramList);
+
 	       FunctionDec f2 = new FunctionDec();
 	       IdDecl read = new IdDecl();
 	       read.setID("read");

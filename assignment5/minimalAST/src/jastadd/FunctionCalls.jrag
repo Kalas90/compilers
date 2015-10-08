@@ -6,7 +6,21 @@ aspect FunctionCalls {
     inh FunctionDec FunctionCall.enclosingFunction();
 
     eq FunctionDec.getChild().enclosingFunction() = this;
+    eq PredefinedFunctions.getChild().enclosingFunction() = this;
     
     FunctionCall contributes getIdUse().decl().function()
 	to FunctionDec.functionCalls() for enclosingFunction();
+
+
+/* REACHABLE */
+
+    syn HashSet<FunctionDec> FunctionDec.reachable() {
+	HashSet<FunctionDec> funcs = new HashSet<FunctionDec>();
+	for(FunctionDec reached : functionCalls()) {
+		funcs.add(reached);
+		funcs.addAll(reached.functionCalls());
+	}
+	return funcs;
+    }
 }
+

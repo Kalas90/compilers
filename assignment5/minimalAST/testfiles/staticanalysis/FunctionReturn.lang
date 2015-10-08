@@ -1,0 +1,13 @@
+int main() {
+    int a = 8;
+    int b = 2;
+    b = equalize(a, b); 
+    print(b);
+}
+
+int equalize(int a, int b) {
+	while(a > b) {
+		b = b + 1;
+	}
+	return b;
+}
