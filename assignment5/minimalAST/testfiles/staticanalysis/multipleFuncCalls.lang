@@ -1,0 +1,18 @@
+int main() {
+    print(func1());
+    print(func2());
+    int c = func3();
+    int d = func1();
+    print(c);
+    print(d);
+}
+int func1() {
+    int a = func2();
+    return 1;
+}
+int func2() {
+    return 2;
+}
+int func3() {
+    return 3;
+}

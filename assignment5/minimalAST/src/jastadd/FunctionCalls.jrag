@@ -1,0 +1,12 @@
+import java.util.HashSet;
+
+aspect FunctionCalls {
+    coll HashSet<FunctionDec> FunctionDec.functionCalls() [new HashSet<FunctionDec>()] with add root FunctionDec;
+
+    inh FunctionDec FunctionCall.enclosingFunction();
+
+    eq FunctionDec.getChild().enclosingFunction() = this;
+    
+    FunctionCall contributes getIdUse().decl().function()
+	to FunctionDec.functionCalls() for enclosingFunction();
+}
