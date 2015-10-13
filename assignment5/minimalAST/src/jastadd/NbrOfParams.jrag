@@ -1,8 +1,8 @@
 aspect NbrOfParams {
        inh FunctionDec IdDecl.function();
-      
-       eq PredefinedFunctions.getIdDecl().function() = this;      
 
+       eq PredefinedFunctions.getChild().function() = this;
+      
        eq FunctionDec.getIdDecl().function() = this;
 	
        eq FunctionDec.getParam(int index).function() = unknownFunc();
