@@ -11,7 +11,7 @@ main:
 	pushq %rbp
 	movq %rsp, %rbp
 	movq $3, %rax
-	pushq %rax
+        pushq %rax
 	movq $4, %rax
         pushq %rax
 	movq $2, %rax
@@ -24,8 +24,8 @@ main:
         movq %rax, %rbx
         popq %rax
         imulq %rbx, %rax
-	movq %rax, %rbx
-	popq %rax
+        movq %rax, %rbx
+        popq %rax
 	addq %rbx, %rax
 	pushq %rax
 	call print

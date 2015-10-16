@@ -11,26 +11,26 @@ main:
 	pushq %rbp
 	movq %rsp, %rbp
 	movq $4, %rax
-	pushq %rax
+        pushq %rax
 	movq $2, %rax
-	movq %rax, %rbx
-	popq %rax
+        movq %rax, %rbx
+        popq %rax
 	addq %rbx, %rax
 	pushq %rax
 	call print
 	movq $4, %rax
-	pushq %rax
+        pushq %rax
 	movq $2, %rax
-	movq %rax, %rbx
-	popq %rax
+        movq %rax, %rbx
+        popq %rax
 	subq %rbx, %rax
 	pushq %rax
 	call print
 	movq $5, %rax
         pushq %rax
 	movq $2, %rax
-	movq %rax, %rbx
-	popq %rax
+        movq %rax, %rbx
+        popq %rax
 	movq $0, %rdx
 	idivq %rbx
 	movq %rdx, %rax

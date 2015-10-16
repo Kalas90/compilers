@@ -48,7 +48,10 @@ aspect CodeGen {
 		getFunctionCall().genEval(out);
 	}
 	public void WhileStmt.genCode(PrintStream out){}
-	public void IfStmt.genCode(PrintStream out){}
+	public void IfStmt.genCode(PrintStream out){
+		getIf().genEval(out);
+		getThen().genCode(out);
+	}
 	public void DeclStmt.genCode(PrintStream out){}
 	public void AssignStmt.genCode(PrintStream out){}
 	/**
@@ -75,102 +78,65 @@ aspect CodeGen {
 		out.println("	call " + getIdUse().getID());
 	}
 
-	public void BinExpr.genConditionalJump(PrintStream out, String label) {
-		out.println("	cmp %rax, %rbx");		
+	public String BinExpr.genConditionalJump(PrintStream out) {
+		String label = generateLabel();
+		return label.concat(getStmtType());
 	} 
-
-	public void Mul.genEval(PrintStream out) {
+	
+	public void BinExpr.genExprEval(PrintStream out) {
 		getLeft().genEval(out);
 		out.println("        pushq %rax");
 		getRight().genEval(out);
 		out.println("        movq %rax, %rbx");
 		out.println("        popq %rax");
+	}
+
+	public void Mul.genEval(PrintStream out) {
+		genExprEval(out);
 		out.println("        imulq %rbx, %rax");
 	}
 
 	public void Div.genEval(PrintStream out) {
-		getLeft().genEval(out);
-		out.println("        pushq %rax");
-		getRight().genEval(out);
-		out.println("        movq %rax, %rbx");
-		out.println("        popq %rax");
+		genExprEval(out);
 		out.println("        movq $0, %rdx");// NB: clear RDX to prepare division RDX:RAX / RBX
 		out.println("        idivq %rbx");
 	}
 
 	public void Add.genEval(PrintStream out) {
-		getLeft().genEval(out);
-		out.println("	pushq %rax");
-		getRight().genEval(out);	
-		out.println("	movq %rax, %rbx");
-		out.println("	popq %rax");
+		genExprEval(out);
 		out.println("	addq %rbx, %rax");
 	}
 	public void Sub.genEval(PrintStream out) {
-		getLeft().genEval(out);
-		out.println("	pushq %rax");
-		getRight().genEval(out);	
-		out.println("	movq %rax, %rbx");
-		out.println("	popq %rax");
+		genExprEval(out);
 		out.println("	subq %rbx, %rax");
 	}
 	public void Mod.genEval(PrintStream out) {
-		getLeft().genEval(out);
-		out.println("        pushq %rax");
-		getRight().genEval(out);
-		out.println("	movq %rax, %rbx");
-		out.println("	popq %rax");
+		genExprEval(out);
 		out.println("	movq $0, %rdx");// NB: clear RDX to prepare division RDX:RAX / RBX
 		out.println("	idivq %rbx");
 		out.println("	movq %rdx, %rax");
 	}
 	public void Equal.genEval(PrintStream out) {
-		getLeft().genEval(out);
-		out.println("	pushq %rax");
-		getRight().genEval(out);	
-		out.println("	movq %rax, %rbx");
-		out.println("	popq %rax");
-		genConditionalJump(out, "tmp");
+		genExprEval(out);
+		String label = genConditionalJump(out);
+		out.println("	cmp %rax, %rbx");		
+		out.println("	je " + label);
+		out.println(label +":");
 	}
 	public void NEqual.genEval(PrintStream out) {
-		getLeft().genEval(out);
-		out.println("	pushq %rax");
-		getRight().genEval(out);	
-		out.println("	movq %rax, %rbx");
-		out.println("	popq %rax");
-		out.println("	subq %rbx, %rax");
+		genExprEval(out);
 	}
 	public void Greater.genEval(PrintStream out) {
-		getLeft().genEval(out);
-		out.println("	pushq %rax");
-		getRight().genEval(out);	
-		out.println("	movq %rax, %rbx");
-		out.println("	popq %rax");
-		out.println("	subq %rbx, %rax");
+		genExprEval(out);
 	}
 	public void Less.genEval(PrintStream out) {
-		getLeft().genEval(out);
-		out.println("	pushq %rax");
-		getRight().genEval(out);	
-		out.println("	movq %rax, %rbx");
-		out.println("	popq %rax");
-		out.println("	subq %rbx, %rax");
+		genExprEval(out);
 	}
 	public void LessEqual.genEval(PrintStream out) {
-		getLeft().genEval(out);
-		out.println("	pushq %rax");
-		getRight().genEval(out);	
-		out.println("	movq %rax, %rbx");
-		out.println("	popq %rax");
-		out.println("	subq %rbx, %rax");
+		genExprEval(out);
 	}
 	public void GreaterEqual.genEval(PrintStream out) {
-		getLeft().genEval(out);
-		out.println("	pushq %rax");
-		getRight().genEval(out);	
-		out.println("	movq %rax, %rbx");
-		out.println("	popq %rax");
-		out.println("	subq %rbx, %rax");
+		genExprEval(out);
 	}
 	public void ParExpr.genEval(PrintStream out) {
 		getExpr().genEval(out);
@@ -268,4 +234,17 @@ aspect CodeGen {
 		out.println("        popq %rbp");
 		out.println("        ret");
 	}
+
+	inh FunctionDec Stmt.enclosingFunction();
+	inh String BinExpr.generateLabel();
+	eq Stmt.getChild().generateLabel(){
+		String function = enclosingFunction().getIdDecl().getID();
+		String index = stmtIndex();
+		function = function.concat("_"+index);
+		return function;
+	}
+	
+	inh String BinExpr.getStmtType();
+	eq IfStmt.getChild().getStmtType() = "if";
+	eq WhileStmt.getChild().getStmtType() = "while"; 
 }
