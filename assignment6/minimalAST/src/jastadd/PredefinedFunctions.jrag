@@ -1,0 +1,26 @@
+aspect PredefinedFunctions {
+       syn nta List<FunctionDec> Program.predefinedFunctions() {
+               List<FunctionDec> list = new List<FunctionDec>();
+               // Create objects of type FunctionDec and add them to the list
+
+	       FunctionDec f1 = new FunctionDec();
+	       IdDecl print = new IdDecl(); 
+	       print.setID("print");
+	       IdDecl param = new IdDecl();
+	       List<IdDecl> paramList = new List<IdDecl>();
+	       paramList.add(param);
+	       f1.setIdDecl(print);
+	       f1.setParamList(paramList);
+	       f1.setCompoundStmt(new CompoundStmt(new List<Stmt>()));
+
+	       FunctionDec f2 = new FunctionDec();
+	       IdDecl read = new IdDecl();
+	       read.setID("read");
+	       f2.setIdDecl(read);
+	       f2.setParamList(new List<IdDecl>());
+	       f2.setCompoundStmt(new CompoundStmt(new List<Stmt>()));
+	       list.add(f1);
+	       list.add(f2);
+  	       return list;
+       }
+}

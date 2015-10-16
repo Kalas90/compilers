@@ -1,0 +1,143 @@
+/**
+ * @author jesper.oqvist@cs.lth.se
+ */
+aspect CodeGen {
+
+	public void Program.genCode(PrintStream out) {
+		out.println(".global _start");
+		out.println(".data");
+		out.println(".text");
+		out.println("_start:");
+		out.println("	call main");	
+		out.println("	movq $0, %rdi");
+		out.println("	movq $60, %rax");
+		out.println("	syscall");
+		
+		for(FunctionDec dec : getFunctionDecList()) {
+			dec.genCode(out);	
+		}	
+		
+		
+	}
+
+	public void FunctionDec.genCode(PrintStream out) {
+		
+		out.println(getIdDecl().getID() + ":");
+		out.println("	pushq %rbp");
+		out.println("	movq %rsp, %rbp");
+		getCompoundStmt().genCode(out);
+	}
+
+	public void CompoundStmt.genCode(PrintStream out) {
+		for(Stmt stmt : getStmtList()){
+			stmt.genCode(out);
+		} 
+	}
+
+	abstract public void Stmt.genCode(PrintStream out);
+
+	public void ReturnStmt.genCode(PrintStream out) {
+		out.println("	movq %rbp, %rsp");
+		out.println("	popq %rbp");
+		getExpr().genEval(out);
+		out.println("	ret");
+	}
+	
+	public void FunctionStmt.genCode(PrintStream out){
+		getFunctionCall().genEval(out);
+	}
+	public void WhileStmt.genCode(PrintStream out){}
+	public void IfStmt.genCode(PrintStream out){}
+	public void DeclStmt.genCode(PrintStream out){}
+	public void AssignStmt.genCode(PrintStream out){}
+	/**
+ 	 * Generate code to evaluate the expression and
+ 	 * store the result in RAX.
+ 	 *
+ 	 * This must be implemented for every subclass of Expr!
+ 	**/ 
+	abstract public void Expr.genEval(PrintStream out);
+
+	public void IntUse.genEval(PrintStream out) {
+		out.println("	movq $" + getINT() + ", %rax");
+	}
+
+	public void IdUse.genEval(PrintStream out) {
+		out.println("	movq $0, %rax");
+	}
+
+	public void FunctionCall.genEval(PrintStream out) {
+		for(int i = getNumExpr() - 1; i > -1; i--){
+			getExpr(i).genEval(out);
+			out.println("	pushq %rax");
+		}
+		out.println("	call " + getIdUse().getID());
+	}
+
+	public void Mul.genEval(PrintStream out) {
+		getLeft().genEval(out);
+		out.println("        pushq %rax");
+		getRight().genEval(out);
+		out.println("        movq %rax, %rbx");
+		out.println("        popq %rax");
+		out.println("        imulq %rbx, %rax");
+	}
+
+	public void Div.genEval(PrintStream out) {
+		getLeft().genEval(out);
+		out.println("        pushq %rax");
+		getRight().genEval(out);
+		out.println("        movq %rax, %rbx");
+		out.println("        popq %rax");
+		out.println("        movq $0, %rdx");// NB: clear RDX to prepare division RDX:RAX / RBX
+		out.println("        idivq %rbx");
+	}
+
+	public void Add.genEval(PrintStream out) {
+		out.println("	movq $0, %rax");
+	}
+	public void Sub.genEval(PrintStream out) {
+		out.println("	movq $0, %rax");
+	}
+	public void Mod.genEval(PrintStream out) {
+		out.println("	movq $0, %rax");
+	}
+	public void Equal.genEval(PrintStream out) {
+		out.println("	movq $0, %rax");
+	}
+	public void NEqual.genEval(PrintStream out) {
+		out.println("	movq $0, %rax");
+	}
+	public void Greater.genEval(PrintStream out) {
+		out.println("	movq $0, %rax");
+	}
+	public void Less.genEval(PrintStream out) {
+		out.println("	movq $0, %rax");
+	}
+	public void LessEqual.genEval(PrintStream out) {
+		out.println("	movq $0, %rax");
+	}
+	public void GreaterEqual.genEval(PrintStream out) {
+		out.println("	movq $0, %rax");
+	}
+	public void ParExpr.genEval(PrintStream out) {
+		out.println("	movq $0, %rax");
+	}
+	/*
+ 	 * Address of local variable variable in the current stack frame.
+	syn String IdDecl.address() = "-"+(localIndex()*8)+"(%rbp)";
+
+ 	 * Local variable counting.
+	syn int ASTNode.numLocals() = lastNode().localIndex() - localIndex();
+
+ 	 * Local variable numbering.
+	syn int ASTNode.localIndex() = prevNode().localIndex();
+	eq Program.localIndex() = 0;
+	eq IdDecl.localIndex() = prevNode().localIndex() + 1;
+
+	inh ASTNode ASTNode.prevNode();
+	eq ASTNode.getChild(int i).prevNode() = prevNode(i);
+	syn ASTNode ASTNode.lastNode() = prevNode(getNumChild());
+	syn ASTNode ASTNode.prevNode(int i) = i>0 ? getChild(i-1).lastNode() : this;
+ 	**/
+}

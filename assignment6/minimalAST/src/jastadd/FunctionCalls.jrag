@@ -1,0 +1,26 @@
+import java.util.HashSet;
+
+aspect FunctionCalls {
+    coll HashSet<FunctionDec> FunctionDec.functionCalls() [new HashSet<FunctionDec>()] with add root FunctionDec;
+
+    inh FunctionDec FunctionCall.enclosingFunction();
+
+    eq FunctionDec.getChild().enclosingFunction() = this;
+    
+    FunctionCall contributes getIdUse().decl().function()
+	to FunctionDec.functionCalls() for enclosingFunction();
+
+
+/* REACHABLE */
+
+    syn HashSet<FunctionDec> FunctionDec.reachable() circular [new HashSet<FunctionDec>()] {
+	HashSet<FunctionDec> funcs = new HashSet<FunctionDec>();
+	for(FunctionDec reached : functionCalls()) {
+		funcs.add(reached);
+		//if(reached.getIdDecl().getID().equals("print")) continue;
+		funcs.addAll(reached.reachable());
+	}
+	return funcs;
+    }
+}
+

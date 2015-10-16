@@ -1,0 +1,42 @@
+Program ::= FunctionDec*; 
+
+FunctionDec ::= IdDecl Param:IdDecl* CompoundStmt;
+
+abstract Expr;
+abstract BinExpr: Expr ::= Left:Expr Right:Expr;
+IdUse: Expr ::= <ID>; 
+IntUse: Expr ::= <INT>;
+FunctionCall : Expr ::= IdUse Expr*;
+ParExpr : Expr ::= Expr;
+
+Add : BinExpr;
+Sub : BinExpr;
+Mul : BinExpr;
+Div : BinExpr;
+Mod : BinExpr;
+
+Equal : BinExpr;
+NEqual : BinExpr;
+Greater : BinExpr;
+Less : BinExpr;
+GreaterEqual : BinExpr;
+LessEqual : BinExpr;
+
+abstract Stmt;
+FunctionStmt : Stmt ::= FunctionCall;
+ReturnStmt : Stmt ::= Expr;
+WhileStmt : Stmt ::= Expr CompoundStmt;
+IfStmt : Stmt ::= If:Expr Then:CompoundStmt [Else:CompoundStmt];
+AssignStmt: Stmt ::= IdUse Expr;
+DeclStmt : Stmt ::= IdDecl [Expr];
+
+CompoundStmt ::= Stmt*;
+IdDecl ::= <ID>;
+UnknownDecl : IdDecl;
+PredefinedFunctions : FunctionDec;
+UnknownFunc : FunctionDec;
+
+abstract Type ::= <Type:String>;
+IntType: Type;
+BoolType: Type;
+UnknownType: Type;
