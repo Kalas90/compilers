@@ -6,6 +6,7 @@ aspect CodeGen {
 	public void Program.genCode(PrintStream out) {
 		out.println(".global _start");
 		out.println(".data");
+		out.println("buf: .skip 1024");
 		out.println(".text");
 		out.println("_start:");
 		out.println("	call main");	
@@ -94,13 +95,30 @@ aspect CodeGen {
 	}
 
 	public void Add.genEval(PrintStream out) {
-		out.println("	movq $0, %rax");
+		getLeft().genEval(out);
+		out.println("	pushq %rax");
+		getRight().genEval(out);	
+		out.println("	movq %rax, %rbx");
+		out.println("	popq %rax");
+		out.println("	addq %rbx, %rax");
 	}
 	public void Sub.genEval(PrintStream out) {
-		out.println("	movq $0, %rax");
+		getLeft().genEval(out);
+		out.println("	pushq %rax");
+		getRight().genEval(out);	
+		out.println("	movq %rax, %rbx");
+		out.println("	popq %rax");
+		out.println("	subq %rbx, %rax");
 	}
 	public void Mod.genEval(PrintStream out) {
-		out.println("	movq $0, %rax");
+		getLeft().genEval(out);
+		out.println("        pushq %rax");
+		getRight().genEval(out);
+		out.println("	movq %rax, %rbx");
+		out.println("	popq %rax");
+		out.println("	movq $0, %rdx");// NB: clear RDX to prepare division RDX:RAX / RBX
+		out.println("	idivq %rbx");
+		out.println("	movq %rdx, %rax");
 	}
 	public void Equal.genEval(PrintStream out) {
 		out.println("	movq $0, %rax");
@@ -121,7 +139,7 @@ aspect CodeGen {
 		out.println("	movq $0, %rax");
 	}
 	public void ParExpr.genEval(PrintStream out) {
-		out.println("	movq $0, %rax");
+		getExpr().genEval(out);
 	}
 	/*
  	 * Address of local variable variable in the current stack frame.
@@ -141,7 +159,7 @@ aspect CodeGen {
 	syn ASTNode ASTNode.prevNode(int i) = i>0 ? getChild(i-1).lastNode() : this;
  	**/
 
-	public void Program.helperFunctions(Printstream out) {
+	public void Program.helperFunctions(PrintStream out) {
 	    
 		// helper functions
 		out.println("# Procedure to read number from stdin");

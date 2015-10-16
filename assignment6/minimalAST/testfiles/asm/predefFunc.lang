@@ -1,0 +1,4 @@
+int main() {
+	print(420);
+	return 1;
+}

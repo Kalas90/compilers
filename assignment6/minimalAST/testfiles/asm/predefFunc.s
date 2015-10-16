@@ -10,6 +10,9 @@ _start:
 main:
 	pushq %rbp
 	movq %rsp, %rbp
+	movq $420, %rax
+	pushq %rax
+	call print
 	movq %rbp, %rsp
 	popq %rbp
 	movq $1, %rax

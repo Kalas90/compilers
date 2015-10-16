@@ -10,6 +10,49 @@ _start:
 main:
 	pushq %rbp
 	movq %rsp, %rbp
+	movq $4, %rax
+	pushq %rax
+	movq $2, %rax
+	movq %rax, %rbx
+	popq %rax
+	addq %rbx, %rax
+	pushq %rax
+	call print
+	movq $4, %rax
+	pushq %rax
+	movq $2, %rax
+	movq %rax, %rbx
+	popq %rax
+	subq %rbx, %rax
+	pushq %rax
+	call print
+	movq $5, %rax
+        pushq %rax
+	movq $2, %rax
+	movq %rax, %rbx
+	popq %rax
+	movq $0, %rdx
+	idivq %rbx
+	movq %rdx, %rax
+	pushq %rax
+	call print
+	movq $4, %rax
+        pushq %rax
+	movq $2, %rax
+        movq %rax, %rbx
+        popq %rax
+        imulq %rbx, %rax
+	pushq %rax
+	call print
+	movq $4, %rax
+        pushq %rax
+	movq $2, %rax
+        movq %rax, %rbx
+        popq %rax
+        movq $0, %rdx
+        idivq %rbx
+	pushq %rax
+	call print
 	movq %rbp, %rsp
 	popq %rbp
 	movq $1, %rax
