@@ -1,0 +1,12 @@
+int main() {
+	int a = 1;
+	int b = 2;
+	return b;
+}
+
+int f() {
+	int c = 3;
+	int d = 4;
+	return d;
+}
+

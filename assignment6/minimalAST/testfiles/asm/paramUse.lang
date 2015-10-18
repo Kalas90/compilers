@@ -1,0 +1,11 @@
+int main() {
+	int a = 1;
+	int b = 2;
+	print(mul(42, 10));
+	return 1;
+}
+
+int mul(int a, int b) {
+	return a * b;
+}
+	
