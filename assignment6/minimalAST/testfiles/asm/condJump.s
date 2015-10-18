@@ -30,11 +30,13 @@ main_0_0_then:
 	movq $1, %rax
 	pushq %rax
 	call print
+	addq $8, %rsp
 	jmp main_0_0_end
 main_0_0_else:
 	movq $2, %rax
 	pushq %rax
 	call print
+	addq $8, %rsp
 main_0_0_end:
 	jmp main_0_end
 main_0_else:

@@ -33,6 +33,7 @@ main_2_begin:
 	movq -8(%rbp), %rax
 	pushq %rax
 	call print
+	addq $8, %rsp
 	jmp main_2_begin
 main_2_end:
 	movq $1, %rax

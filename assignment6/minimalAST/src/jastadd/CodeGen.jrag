@@ -102,6 +102,9 @@ aspect CodeGen {
 			out.println("	pushq %rax");
 		}
 		out.println("	call " + getIdUse().getID());
+		if(getNumExpr() > 0) {
+			out.println("	addq $" + (getNumExpr() * 8) + ", %rsp");
+		}
 	}
 
 	public void BinExpr.genConditionalJump(PrintStream out, String label) {

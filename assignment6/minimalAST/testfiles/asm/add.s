@@ -19,6 +19,7 @@ main:
 	addq %rbx, %rax
 	pushq %rax
 	call print
+	addq $8, %rsp
 	movq $4, %rax
         pushq %rax
 	movq $2, %rax
@@ -27,6 +28,7 @@ main:
 	subq %rbx, %rax
 	pushq %rax
 	call print
+	addq $8, %rsp
 	movq $5, %rax
         pushq %rax
 	movq $2, %rax
@@ -37,6 +39,7 @@ main:
 	movq %rdx, %rax
 	pushq %rax
 	call print
+	addq $8, %rsp
 	movq $4, %rax
         pushq %rax
 	movq $2, %rax
@@ -45,6 +48,7 @@ main:
         imulq %rbx, %rax
 	pushq %rax
 	call print
+	addq $8, %rsp
 	movq $4, %rax
         pushq %rax
 	movq $2, %rax
@@ -54,6 +58,7 @@ main:
         idivq %rbx
 	pushq %rax
 	call print
+	addq $8, %rsp
 	movq $1, %rax
 	movq %rbp, %rsp
 	popq %rbp

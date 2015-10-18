@@ -20,8 +20,10 @@ main:
 	movq $42, %rax
 	pushq %rax
 	call mul
+	addq $16, %rsp
 	pushq %rax
 	call print
+	addq $8, %rsp
 	movq $1, %rax
 	movq %rbp, %rsp
 	popq %rbp

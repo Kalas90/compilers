@@ -16,6 +16,7 @@ main:
 	call f
 	pushq %rax
 	call print
+	addq $8, %rsp
 	movq $1, %rax
 	movq %rbp, %rsp
 	popq %rbp

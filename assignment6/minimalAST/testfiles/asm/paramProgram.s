@@ -18,6 +18,7 @@ main:
 	movq $1, %rax
 	pushq %rax
 	call f
+	addq $24, %rsp
 	movq $1, %rax
 	movq %rbp, %rsp
 	popq %rbp

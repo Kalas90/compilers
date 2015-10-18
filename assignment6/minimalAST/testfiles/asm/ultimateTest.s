@@ -81,6 +81,7 @@ gcd2_0_end:
 	movq 24(%rbp), %rax
 	pushq %rax
 	call gcd2
+	addq $16, %rsp
 	movq %rbp, %rsp
 	popq %rbp
 	ret
@@ -97,26 +98,32 @@ main:
 	movq -8(%rbp), %rax
 	pushq %rax
 	call gcd1
+	addq $16, %rsp
 	pushq %rax
 	call print
+	addq $8, %rsp
 	movq -16(%rbp), %rax
 	pushq %rax
 	movq -8(%rbp), %rax
 	pushq %rax
 	call gcd2
+	addq $16, %rsp
 	pushq %rax
 	call print
+	addq $8, %rsp
 	movq -16(%rbp), %rax
 	pushq %rax
 	movq -8(%rbp), %rax
 	pushq %rax
 	call gcd1
+	addq $16, %rsp
         pushq %rax
 	movq -16(%rbp), %rax
 	pushq %rax
 	movq -8(%rbp), %rax
 	pushq %rax
 	call gcd2
+	addq $16, %rsp
         movq %rax, %rbx
         popq %rax
 	subq %rbx, %rax
@@ -124,6 +131,7 @@ main:
 	movq -24(%rbp), %rax
 	pushq %rax
 	call print
+	addq $8, %rsp
 	movq $0, %rax
 	movq %rbp, %rsp
 	popq %rbp
