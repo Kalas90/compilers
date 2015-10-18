@@ -50,7 +50,12 @@ aspect CodeGen {
 	public void WhileStmt.genCode(PrintStream out){}
 	public void IfStmt.genCode(PrintStream out){
 		getIf().genEval(out);
+		if(hasElse()) {
+			getElse().genCode(out);
+			out.println("	j " + getIf().genConditionalJump() + "_end:");
+		}
 		getThen().genCode(out);
+		out.println("	" + getIf().genConditionalJump() + "_end:");
 	}
 	public void DeclStmt.genCode(PrintStream out){}
 	public void AssignStmt.genCode(PrintStream out){}
@@ -120,8 +125,7 @@ aspect CodeGen {
 		genExprEval(out);
 		String label = genConditionalJump(out);
 		out.println("	cmp %rax, %rbx");		
-		out.println("	je " + label);
-		out.println(label +":");
+		out.println("	jne " + label + "_end");
 	}
 	public void NEqual.genEval(PrintStream out) {
 		genExprEval(out);
