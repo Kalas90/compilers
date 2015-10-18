@@ -10,28 +10,38 @@ _start:
 main:
 	pushq %rbp
 	movq %rsp, %rbp
+	subq $0, %rsp
 	movq $4, %rax
         pushq %rax
 	movq $4, %rax
         movq %rax, %rbx
         popq %rax
-	cmp %rax, %rbx
-	je main_0_if
-main_0_if:
+	cmp %rbx, %rax
+	jne main_0_else
+main_0_then:
 	movq $3, %rax
         pushq %rax
 	movq $2, %rax
         movq %rax, %rbx
         popq %rax
-	cmp %rax, %rbx
-	je main_0_0_if
-main_0_0_if:
+	cmp %rbx, %rax
+	jne main_0_0_else
+main_0_0_then:
 	movq $1, %rax
 	pushq %rax
 	call print
+	jmp main_0_0_end
+main_0_0_else:
+	movq $2, %rax
+	pushq %rax
+	call print
+main_0_0_end:
+	jmp main_0_end
+main_0_else:
+main_0_end:
+	movq $1, %rax
 	movq %rbp, %rsp
 	popq %rbp
-	movq $1, %rax
 	ret
 # Procedure to read number from stdin
 # C signature: long int read(void)

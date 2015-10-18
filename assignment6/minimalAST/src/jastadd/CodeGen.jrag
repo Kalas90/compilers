@@ -21,11 +21,11 @@ aspect CodeGen {
 		helperFunctions(out);
 	}
 
-	public void FunctionDec.genCode(PrintStream out) {
-		
+	public void FunctionDec.genCode(PrintStream out) {	
 		out.println(getIdDecl().getID() + ":");
 		out.println("	pushq %rbp");
 		out.println("	movq %rsp, %rbp");
+		out.println("	subq $" + numLocals()*8 + ", %rsp");
 		getCompoundStmt().genCode(out);
 	}
 
@@ -38,28 +38,48 @@ aspect CodeGen {
 	abstract public void Stmt.genCode(PrintStream out);
 
 	public void ReturnStmt.genCode(PrintStream out) {
+		getExpr().genEval(out);
 		out.println("	movq %rbp, %rsp");
 		out.println("	popq %rbp");
-		getExpr().genEval(out);
 		out.println("	ret");
 	}
 	
 	public void FunctionStmt.genCode(PrintStream out){
 		getFunctionCall().genEval(out);
 	}
-	public void WhileStmt.genCode(PrintStream out){}
+	public void WhileStmt.genCode(PrintStream out){
+		String label = generateLabel();
+		out.println(label + "begin:");
+		getExpr().genEval(out);
+		((BinExpr) getExpr()).genConditionalJump(out, label + "end");
+		getCompoundStmt().genCode(out);
+		out.println("	jmp " + label + "begin");
+		out.println(label + "end:");	 
+	}
 	public void IfStmt.genCode(PrintStream out){
-	    String label = generateLabel();
-	    ((BinExpr) getIf()).genConditionalJump(out, label);
+	    	String label = generateLabel();
+	    	getIf().genEval(out);
+	    	((BinExpr) getIf()).genConditionalJump(out, label + "else");
+		out.println(label + "then:");
+		getThen().genCode(out);
+		out.println("	jmp " + label + "end");
+		out.println(label + "else:");
 		if(hasElse()) {
 			getElse().genCode(out);
-			out.println("	j " + label + "_end:");
 		}
-		getThen().genCode(out);
-		out.println("	" + label + "_end:");
+		out.println(label + "end:");
 	}
-	public void DeclStmt.genCode(PrintStream out){}
-	public void AssignStmt.genCode(PrintStream out){}
+	public void DeclStmt.genCode(PrintStream out){
+		if(hasExpr()) {
+			getExpr().genEval(out);
+			out.println("	movq %rax, " + getIdDecl().address());
+		}
+	}
+	public void AssignStmt.genCode(PrintStream out){
+		getExpr().genEval(out);
+		out.println("	movq %rax, " + getIdUse().decl().address());
+	}
+
 	/**
  	 * Generate code to evaluate the expression and
  	 * store the result in RAX.
@@ -73,7 +93,7 @@ aspect CodeGen {
 	}
 
 	public void IdUse.genEval(PrintStream out) {
-		out.println("	movq $0, %rax");
+		out.println("	movq " + decl().address() + ", %rax");
 	}
 
 	public void FunctionCall.genEval(PrintStream out) {
@@ -85,15 +105,19 @@ aspect CodeGen {
 	}
 
 	public void BinExpr.genConditionalJump(PrintStream out, String label) {
-		out.println("	cmp %rax, %rbx");		
-		out.println("	" + jumpCondition() + " " + label + "_end");
+		out.println("	cmp %rbx, %rax");		
+		out.println("	" + jumpCondition() + " " + label);
 		
 	} 
 
 	syn String BinExpr.jumpCondition() = "";
-	syn String Equal.jumpCondition() = "jne";
-	syn String NEqual.jumpCondition() = "je";
-	syn String Greater.jumpCondition() = "je";
+	eq Equal.jumpCondition() = "jne";
+	eq NEqual.jumpCondition() = "je";
+	eq Greater.jumpCondition() = "jle";
+	eq Less.jumpCondition() = "jge";
+	eq GreaterEqual.jumpCondition() = "jl";
+	eq LessEqual.jumpCondition() = "jg";
+
 	
 	public void BinExpr.genExprEval(PrintStream out) {
 		getLeft().genEval(out);
@@ -149,23 +173,36 @@ aspect CodeGen {
 	public void ParExpr.genEval(PrintStream out) {
 		getExpr().genEval(out);
 	}
-	/*
- 	 * Address of local variable variable in the current stack frame.
-	syn String IdDecl.address() = "-"+(localIndex()*8)+"(%rbp)";
 
- 	 * Local variable counting.
+	inh String ASTNode.address();	
+
+	eq Program.getChild().address() = "";
+
+	eq DeclStmt.getIdDecl().address() = "-"+(getIdDecl().localIndex()*8)+"(%rbp)";
+	
+	eq FunctionDec.getParam(int index).address() {
+		return (8*(2+index))+"(%rbp)";
+	}
+
 	syn int ASTNode.numLocals() = lastNode().localIndex() - localIndex();
 
- 	 * Local variable numbering.
 	syn int ASTNode.localIndex() = prevNode().localIndex();
 	eq Program.localIndex() = 0;
-	eq IdDecl.localIndex() = prevNode().localIndex() + 1;
-
+	eq FunctionDec.localIndex() = 0;
+	eq IdDecl.localIndex() {
+		if(isVariable() && !isParam()){
+			return prevNode().localIndex() + 1;
+		}
+		return prevNode().localIndex();
+	}
 	inh ASTNode ASTNode.prevNode();
 	eq ASTNode.getChild(int i).prevNode() = prevNode(i);
 	syn ASTNode ASTNode.lastNode() = prevNode(getNumChild());
 	syn ASTNode ASTNode.prevNode(int i) = i>0 ? getChild(i-1).lastNode() : this;
- 	**/
+ 	
+	inh boolean IdDecl.isParam();
+	eq Program.getChild().isParam() = false;
+	eq FunctionDec.getParam(int index).isParam() = true;
 
 	public void Program.helperFunctions(PrintStream out) {
 	    

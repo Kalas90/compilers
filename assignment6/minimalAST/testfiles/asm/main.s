@@ -10,9 +10,18 @@ _start:
 main:
 	pushq %rbp
 	movq %rsp, %rbp
+	subq $0, %rsp
+	movq $4, %rax
+        pushq %rax
+	movq $2, %rax
+        movq %rax, %rbx
+        popq %rax
+	subq %rbx, %rax
+	pushq %rax
+	call print
+	movq $1, %rax
 	movq %rbp, %rsp
 	popq %rbp
-	movq $1, %rax
 	ret
 # Procedure to read number from stdin
 # C signature: long int read(void)
